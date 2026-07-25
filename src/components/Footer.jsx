@@ -5,22 +5,25 @@ export default function Footer() {
   const go = (page) => navigate('/' + page)
 
   const linkStyle = {
-    display: 'block', fontSize: 13, color: 'var(--text-muted)', marginBottom: 6,
-    textDecoration: 'none', transition: 'color 0.15s'
+    display: 'block', fontSize: 14, color: 'rgba(255, 255, 255, 0.65)', marginBottom: 8,
+    textDecoration: 'none', transition: 'color 0.2s'
   }
 
   return (
-    <footer style={{ borderTop:'1px solid var(--border)', padding:'40px 0 24px', marginTop:60 }}>
+    <footer className="footer-dark">
       <div className="container">
         <div className="grid-4" style={{ gap: 32 }}>
           <div>
-            <h5 style={{ fontWeight: 700, marginBottom: 12, fontSize: 14 }}>AgriSense AI</h5>
-            <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6 }}>
-              AI-powered farming for every Nigerian farmer.
+            <div style={{ marginBottom: 16 }}>
+              <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.02em' }}>AgriSense</span>
+            </div>
+            <p style={{ fontSize: 14, color: 'rgba(255, 255, 255, 0.65)', lineHeight: 1.6 }}>
+              The field analytics platform delivering real-time crop insights and AI diagnosis for smart farming.
             </p>
           </div>
+
           <div>
-            <h5 style={{ fontWeight: 700, marginBottom: 12, fontSize: 14 }}>Quick Links</h5>
+            <h5 style={{ fontWeight: 700, marginBottom: 16, fontSize: 15, color: '#ffffff', letterSpacing: '-0.01em' }}>Platform</h5>
             {['detect','chat','marketplace','prices'].map(p => {
               const labels = { detect: 'Disease Detection', chat: 'AI Assistant', marketplace: 'Marketplace', prices: 'Market Prices' }
               return (
@@ -30,21 +33,24 @@ export default function Footer() {
               )
             })}
           </div>
+
           <div>
-            <h5 style={{ fontWeight: 700, marginBottom: 12, fontSize: 14 }}>Resources</h5>
-            {[['about','About Us'],['features','Features'],['news','News'],['forum','Community']].map(([p, label]) => (
+            <h5 style={{ fontWeight: 700, marginBottom: 16, fontSize: 15, color: '#ffffff', letterSpacing: '-0.01em' }}>Company</h5>
+            {[['about','About Us'],['features','Features'],['news','News'],['forum','Community Forum']].map(([p, label]) => (
               <a key={p} href="#" onClick={(e) => { e.preventDefault(); go(p) }} style={linkStyle}>{label}</a>
             ))}
           </div>
+
           <div>
-            <h5 style={{ fontWeight: 700, marginBottom: 12, fontSize: 14 }}>Legal</h5>
-            {[['privacy','Privacy Policy'],['terms','Terms of Service'],['contact','Contact']].map(([p, label]) => (
+            <h5 style={{ fontWeight: 700, marginBottom: 16, fontSize: 15, color: '#ffffff', letterSpacing: '-0.01em' }}>Legal & Help</h5>
+            {[['privacy','Privacy Policy'],['terms','Terms of Service'],['contact','Contact Us']].map(([p, label]) => (
               <a key={p} href="#" onClick={(e) => { e.preventDefault(); go(p) }} style={linkStyle}>{label}</a>
             ))}
           </div>
         </div>
-        <div style={{ textAlign: 'center', paddingTop: 24, marginTop: 24, borderTop: '1px solid var(--border)', fontSize: 13, color: 'var(--text-muted)' }}>
-          &copy; 2026 AgriSense AI. Built for Nigerian farmers.
+
+        <div style={{ textAlign: 'center', paddingTop: 28, marginTop: 40, borderTop: '1px solid rgba(255, 255, 255, 0.1)', fontSize: 13, color: 'rgba(255, 255, 255, 0.5)' }}>
+          &copy; 2026 AgriSense. All rights reserved. Precision field analytics for modern agriculture.
         </div>
       </div>
     </footer>
