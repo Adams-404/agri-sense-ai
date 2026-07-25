@@ -5,36 +5,40 @@ export default function Home() {
 
   return (
     <section className="page-hero-section">
-      {/* 100VH FULL VIEWPORT HERO SECTION */}
+      {/* 100VH FULL VIEWPORT HERO SECTION WITH FADED BOTTOM EDGE */}
       <div className="hero-wrapper-full">
         <div className="hero-card-full">
           <div className="hero-card-overlay"></div>
           <div className="hero-content-inner">
 
-            {/* Upper Right Copy & Actions Block */}
-            <div className="hero-mid-section">
+            {/* Upper Right Copy & Real Action Buttons */}
+            <div className="hero-mid-section animate-slide-up animate-delay-1">
               <div className="hero-microcopy-block">
                 <p className="hero-microcopy-text">
-                  We developed an easy-to-use, easy-to-operate, comprehensive system for gaining insights from drones and satellites. Compatible with drones & machinery, our platform delivers on-the-farm data assimilation.
+                  AI-powered agricultural platform for crop disease diagnosis, real-time weather telemetry, and market prices tailored for modern farming enterprise.
                 </p>
                 <div className="hero-microcopy-actions">
                   <button className="btn-pill-white" onClick={() => navigate('/detect')}>
-                    Free Trial
+                    Detect Crop Disease
                   </button>
-                  <button className="btn-pill-translucent" onClick={() => navigate('/features')}>
-                    See All Products
+                  <button className="btn-pill-translucent" onClick={() => navigate('/chat')}>
+                    Ask AI Assistant
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* Bottom Main Headline & Explore Cue */}
-            <div className="hero-bottom-section">
+            {/* Bottom Headline & Animated Explore Cue */}
+            <div className="hero-bottom-section animate-slide-up animate-delay-2">
               <h1 className="hero-headline-main">
                 The Most <em className="serif-italic">Powerful</em> Field Analytics Platform For Crop Insights
               </h1>
-              <div className="hero-explore-cue" onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}>
-                <span>Explore More</span> ↓
+              <div 
+                className="hero-explore-cue" 
+                onClick={() => window.scrollTo({ top: window.innerHeight * 0.9, behavior: 'smooth' })}
+              >
+                <span>Explore Platform</span>
+                <span className="hero-explore-arrow">↓</span>
               </div>
             </div>
 
@@ -44,13 +48,13 @@ export default function Home() {
 
       {/* MINIMAL FEATURE HIGHLIGHTS */}
       <div className="container mt-4">
-        <div className="section-header-minimal text-center">
+        <div className="section-header-minimal text-center animate-slide-up animate-delay-3">
           <span className="badge-minimal">INTELLIGENT AGRICULTURE</span>
           <h2 className="section-title-main">
             Engineered for <em className="serif-italic">Precision Farming</em>
           </h2>
           <p className="section-subtitle">
-            Empowering agricultural enterprises and farmers across Nigeria with AI diagnosis, real-time weather telemetry, and direct market access.
+            Empowering agricultural enterprises and farmers across Nigeria with instant AI diagnosis, local language AI guidance, and live market prices.
           </p>
         </div>
 
@@ -59,20 +63,27 @@ export default function Home() {
             {
               num: '01',
               title: 'AI Crop Diagnostics',
-              desc: 'Instant plant disease detection powered by advanced visual neural models trained on sub-Saharan crop conditions.'
+              desc: 'Snap a crop photo for immediate disease detection and custom treatment recommendations.',
+              route: '/detect'
             },
             {
               num: '02',
-              title: 'Native Voice Assistant',
-              desc: 'Ask questions in English, Hausa, Yoruba, Igbo, Fulfulde, or Kanuri and receive localized farming recommendations.'
+              title: 'Native Multilingual Voice',
+              desc: 'Get agricultural advice in English, Hausa, Yoruba, Igbo, Fulfulde, and Kanuri.',
+              route: '/chat'
             },
             {
               num: '03',
-              title: 'Real-Time Market Telemetry',
-              desc: 'Access live commodity prices across regional hubs to maximize harvest yield values and trade directly.'
+              title: 'Market & Weather Telemetry',
+              desc: 'Monitor real-time commodity prices and hyper-local rain forecasts before harvesting.',
+              route: '/prices'
             }
-          ].map(item => (
-            <div key={item.title} className="card card-minimal">
+          ].map((item, idx) => (
+            <div 
+              key={item.title} 
+              className={`card card-minimal animate-slide-up animate-delay-${idx + 1}`}
+              onClick={() => navigate(item.route)}
+            >
               <span className="card-num">{item.num}</span>
               <h4 className="card-title">{item.title}</h4>
               <p className="card-desc">{item.desc}</p>
@@ -81,7 +92,7 @@ export default function Home() {
         </div>
 
         {/* STATS STRIP */}
-        <div className="stats-strip-card">
+        <div className="stats-strip-card animate-slide-up animate-delay-3">
           <div className="grid-3">
             <div>
               <div className="stat-value">12,400+</div>
