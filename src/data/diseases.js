@@ -1,0 +1,20 @@
+export const diseases = [
+  { name: 'Cassava Mosaic Disease', emoji: '🍃', conf: '94.2%',
+    treatment: 'Remove and destroy infected plants. Use resistant varieties like TME 419. Apply insecticide to control whitefly vectors.',
+    prevention: 'Plant certified virus-free cuttings. Use intercropping with legumes. Maintain field sanitation.' },
+  { name: 'Maize Rust', emoji: '🌽', conf: '91.7%',
+    treatment: 'Apply fungicides containing tebuconazole or propiconazole. Remove infected leaves. Improve air circulation.',
+    prevention: 'Plant resistant hybrids. Practice crop rotation. Avoid overhead irrigation.' },
+  { name: 'Tomato Late Blight', emoji: '🍅', conf: '96.1%',
+    treatment: 'Apply copper-based fungicides immediately. Remove and destroy affected fruits and leaves.',
+    prevention: 'Use resistant varieties. Ensure proper spacing. Water at soil level not on leaves.' },
+  { name: 'Yam Anthracnose', emoji: '🥔', conf: '88.9%',
+    treatment: 'Remove infected vines. Apply mancozeb or copper fungicides. Improve drainage.',
+    prevention: 'Use disease-free setts. Practice crop rotation. Plant in well-drained soil.' },
+  { name: 'Rice Blast', emoji: '🌾', conf: '93.5%',
+    treatment: 'Apply tricyclazole or carbendazim. Reduce nitrogen fertilizer. Flood fields to suppress disease.',
+    prevention: 'Plant resistant varieties. Use balanced fertilization. Space planting to reduce humidity.' },
+  { name: 'Sorghum Smut', emoji: '🌿', conf: '90.3%',
+    treatment: 'Remove and destroy infected heads before spores release. Apply seed treatment fungicides.',
+    prevention: 'Use certified treated seeds. Practice crop rotation. Remove crop residues.' }
+]
