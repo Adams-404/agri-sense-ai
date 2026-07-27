@@ -597,7 +597,70 @@
     }
     @media (max-width: 968px) {
       .header-login-btn {
-        display: none;
+        display: none !important;
+      }
+      .menu-toggle {
+        display: none !important;
+      }
+    }
+
+    /* ===== MOBILE FLOATING BOTTOM NAV ===== */
+    .mobile-bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 440px;
+      height: 64px;
+      background: var(--bg-nav-floating);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border-nav-floating);
+      border-radius: 50px;
+      z-index: 1000;
+      align-items: center;
+      justify-content: space-around;
+      padding: 0 10px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    }
+    .mobile-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 500;
+      gap: 3px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font);
+    }
+    .mobile-nav-item svg {
+      transition: transform 0.2s ease, stroke 0.2s ease;
+      stroke: var(--text-muted);
+    }
+    .mobile-nav-item.active {
+      color: var(--primary);
+    }
+    .mobile-nav-item.active svg {
+      stroke: var(--primary);
+      transform: scale(1.1);
+    }
+    @media (max-width: 768px) {
+      .mobile-bottom-nav {
+        display: flex;
+      }
+      .nav-links {
+        display: none !important;
+      }
+      .hide-on-mobile-pages {
+        display: none !important;
       }
     }
   </style>
@@ -632,11 +695,15 @@
       </div>
     </div>
   </nav>
+  <a href="#" class="header-login-btn" id="headerLoginBtn" onclick="navigate('login'); return false;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+    Login
+  </a>
+  <a href="#" class="header-login-btn hidden" id="headerLogoutBtn" onclick="logout(); return false;" style="color: #dc2626 !important;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+    Logout
+  </a>
 
-  <!-- Separate floating login button on the side on its own -->
-  <a href="#" class="header-login-btn" id="headerLoginBtn" onclick="navigate('login'); return false;">Login</a>
-
- 
   <!-- ===== LANGUAGE MODAL (simple dropdown) ===== -->
   <div id="langModal" class="hidden" style="position:fixed;top:70px;right:24px;z-index:999;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;box-shadow:var(--shadow);min-width:160px;">
     <div style="font-weight:600;font-size:13px;margin-bottom:8px;padding:0 8px;">Select Language</div>
@@ -663,6 +730,30 @@
       <button onclick="navigate('terms')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">Terms</button>
       <button onclick="logout()" id="logoutBtn" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:#dc2626;text-align:center;grid-column: span 2;" class="hidden">Logout</button>
     </div>
+  </div>
+
+  <!-- ===== MOBILE BOTTOM FLOATING NAVIGATION ===== -->
+  <div class="mobile-bottom-nav">
+    <button class="mobile-nav-item active" onclick="navigate('home')" id="mobTabHome">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      <span>Home</span>
+    </button>
+    <button class="mobile-nav-item" onclick="navigate('detect')" id="mobTabDetect">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+      <span>Detect</span>
+    </button>
+    <button class="mobile-nav-item" onclick="navigate('chat')" id="mobTabChat">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+      <span>Assistant</span>
+    </button>
+    <button class="mobile-nav-item" onclick="navigate('marketplace')" id="mobTabMarket">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+      <span>Market</span>
+    </button>
+    <button class="mobile-nav-item" onclick="handleMobileAuthTab();" id="mobTabAuth">
+      <svg id="mobAuthIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+      <span id="mobAuthText">Login</span>
+    </button>
   </div>
 
   <!-- =============================== -->
@@ -1349,6 +1440,16 @@
         currentPage = '404';
       }
 
+      // Toggle footer visibility on mobile (only show on home and login pages)
+      const footer = document.querySelector('footer');
+      if (footer) {
+        if (currentPage === 'home' || currentPage === 'login') {
+          footer.classList.remove('hide-on-mobile-pages');
+        } else {
+          footer.classList.add('hide-on-mobile-pages');
+        }
+      }
+
       navLinks.forEach(a => {
         a.classList.toggle('active', a.dataset.page === page);
       });
@@ -1357,6 +1458,23 @@
       
       // Close mobile nav
       document.getElementById('navLinks').classList.remove('open');
+
+      // Sync active tab for mobile floating bottom nav
+      const tabMap = {
+        'home': 'mobTabHome',
+        'detect': 'mobTabDetect',
+        'chat': 'mobTabChat',
+        'marketplace': 'mobTabMarket',
+        'login': 'mobTabAuth'
+      };
+      document.querySelectorAll('.mobile-nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      const activeTabId = tabMap[page];
+      if (activeTabId) {
+        const tabEl = document.getElementById(activeTabId);
+        if (tabEl) tabEl.classList.add('active');
+      }
     }
 
     let isLoggedIn = false;
@@ -1366,7 +1484,11 @@
       navigate('dashboard');
       document.getElementById('moreNavLink').classList.remove('hidden');
       document.getElementById('headerLoginBtn').classList.add('hidden');
-      document.getElementById('logoutBtn').classList.remove('hidden');
+      document.getElementById('headerLogoutBtn').classList.remove('hidden');
+      
+      // Update Mobile auth tab
+      document.getElementById('mobAuthText').textContent = 'Logout';
+      document.getElementById('mobAuthIcon').innerHTML = '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line>';
     }
 
     function logout() {
@@ -1375,7 +1497,19 @@
       navigate('home');
       document.getElementById('moreNavLink').classList.add('hidden');
       document.getElementById('headerLoginBtn').classList.remove('hidden');
-      document.getElementById('logoutBtn').classList.add('hidden');
+      document.getElementById('headerLogoutBtn').classList.add('hidden');
+      
+      // Update Mobile auth tab
+      document.getElementById('mobAuthText').textContent = 'Login';
+      document.getElementById('mobAuthIcon').innerHTML = '<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line>';
+    }
+
+    function handleMobileAuthTab() {
+      if (isLoggedIn) {
+        logout();
+      } else {
+        navigate('login');
+      }
     }
 
     // Nav link clicks
