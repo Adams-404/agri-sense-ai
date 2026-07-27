@@ -99,19 +99,22 @@
       left: 50%;
       transform: translateX(-50%);
       width: fit-content;
-      max-width: calc(100vw - 32px);
+      max-width: calc(100vw - 32.5rem);
       height: 56px;
       background: var(--bg-nav-floating);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       border: 1px solid var(--border-nav-floating);
       border-radius: 50px;
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      box-shadow: none;
       z-index: 1000;
       display: flex;
       align-items: center;
       padding: 0 10px 0 20px;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @media (max-width: 968px) {
+      nav { max-width: calc(100vw - 32px); }
     }
     nav .nav-inner {
       display: flex;
@@ -563,6 +566,40 @@
     .toast.success { border-left:4px solid #16a34a; }
     .toast.error { border-left:4px solid #dc2626; }
     .toast.info { border-left:4px solid var(--primary); }
+
+    /* ===== SEPARATE FLOATING LOGIN BUTTON (styled like header) ===== */
+    .header-login-btn {
+      position: fixed;
+      top: 18px;
+      right: 24px;
+      z-index: 1001;
+      height: 56px;
+      padding: 0 24px;
+      background: var(--bg-nav-floating);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border-nav-floating);
+      border-radius: 50px;
+      color: var(--primary) !important;
+      font-weight: 600;
+      font-size: 13.5px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+    .header-login-btn:hover {
+      background: rgba(26, 107, 60, 0.1);
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+    @media (max-width: 968px) {
+      .header-login-btn {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -581,9 +618,8 @@
         <a href="#" data-page="marketplace">Marketplace</a>
         <a href="#" data-page="prices">Market Prices</a>
         <a href="#" data-page="weather">Weather</a>
-        <a href="#" data-page="dashboard">Dashboard</a>
         <a href="#" data-page="forum">Forum</a>
-        <a href="#" data-page="more">More ▼</a>
+        <a href="#" data-page="more" id="moreNavLink" class="hidden">More ▼</a>
       </div>
       <div class="nav-right">
         <button class="lang-toggle" onclick="toggleLang()" title="Language" aria-label="Select language">
@@ -596,6 +632,9 @@
       </div>
     </div>
   </nav>
+
+  <!-- Separate floating login button on the side on its own -->
+  <a href="#" class="header-login-btn" id="headerLoginBtn" onclick="navigate('login'); return false;">Login</a>
 
  
   <!-- ===== LANGUAGE MODAL (simple dropdown) ===== -->
@@ -612,16 +651,17 @@
   <!-- ===== SIDEBAR / MORE DROPDOWN ===== -->
   <div id="moreDropdown" class="hidden" style="position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:999;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;min-width:260px;max-width:90vw;">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-      <button onclick="navigate('about')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">ℹ️ About</button>
-      <button onclick="navigate('features')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">✨ Features</button>
-      <button onclick="navigate('news')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">📰 News</button>
-      <button onclick="navigate('profile')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">👤 Profile</button>
-      <button onclick="navigate('contact')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">📞 Contact</button>
-      <button onclick="navigate('login')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">🔑 Login</button>
-      <button onclick="navigate('register')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">📝 Register</button>
-      <button onclick="navigate('admin')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">🛡️ Admin</button>
-      <button onclick="navigate('privacy')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">🔒 Privacy</button>
-      <button onclick="navigate('terms')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">📄 Terms</button>
+      <button onclick="navigate('dashboard')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">Dashboard</button>
+      <button onclick="navigate('profile')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">Profile</button>
+      <button onclick="navigate('about')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">About</button>
+      <button onclick="navigate('features')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">Features</button>
+      <button onclick="navigate('news')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">News</button>
+      <button onclick="navigate('contact')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">Contact</button>
+      <button onclick="navigate('register')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">Register</button>
+      <button onclick="navigate('admin')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">Admin</button>
+      <button onclick="navigate('privacy')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">Privacy</button>
+      <button onclick="navigate('terms')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">Terms</button>
+      <button onclick="logout()" id="logoutBtn" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:#dc2626;text-align:center;grid-column: span 2;" class="hidden">Logout</button>
     </div>
   </div>
 
@@ -679,20 +719,26 @@
     <!-- Quick Features -->
     <div class="container" style="margin-top:-40px;position:relative;z-index:2;">
       <div class="grid-3">
-        <div class="card text-center">
-          <div style="font-size:2.5rem;margin-bottom:8px;">📸</div>
+        <div class="card text-center feature-card" onclick="navigate('detect')" style="cursor:pointer;">
+          <div class="feature-icon-badge">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+          </div>
           <h4>Disease Detection</h4>
-          <p style="font-size:13px;color:var(--text-muted);">Snap a photo of your crop and get instant diagnosis</p>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:6px;">Snap a photo of your crop and get instant diagnosis</p>
         </div>
-        <div class="card text-center">
-          <div style="font-size:2.5rem;margin-bottom:8px;">🗣️</div>
+        <div class="card text-center feature-card" onclick="navigate('chat')" style="cursor:pointer;">
+          <div class="feature-icon-badge">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+          </div>
           <h4>Voice Guidance</h4>
-          <p style="font-size:13px;color:var(--text-muted);">Listen to farming advice in your native language</p>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:6px;">Listen to farming advice in your native language</p>
         </div>
-        <div class="card text-center">
-          <div style="font-size:2.5rem;margin-bottom:8px;">📊</div>
+        <div class="card text-center feature-card" onclick="navigate('prices')" style="cursor:pointer;">
+          <div class="feature-icon-badge">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line><line x1="2" y1="20" x2="22" y2="20"></line></svg>
+          </div>
           <h4>Market Prices</h4>
-          <p style="font-size:13px;color:var(--text-muted);">Real-time prices for crops across Nigeria</p>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:6px;">Real-time prices for crops across Nigeria</p>
         </div>
       </div>
     </div>
@@ -1060,7 +1106,7 @@
     <div class="container" style="max-width:440px;">
       <div class="auth-card card">
         <h2>🔑 Login</h2>
-        <form onsubmit="event.preventDefault();showToast('Logged in successfully! Welcome back.','success')">
+        <form onsubmit="event.preventDefault();loginUser();">
           <div class="form-group"><label>Email</label><input type="email" placeholder="farmer@example.com" required /></div>
           <div class="form-group"><label>Password</label><input type="password" placeholder="••••••••" required /></div>
           <div style="text-align:right;margin-bottom:16px;">
@@ -1311,6 +1357,25 @@
       
       // Close mobile nav
       document.getElementById('navLinks').classList.remove('open');
+    }
+
+    let isLoggedIn = false;
+    function loginUser() {
+      isLoggedIn = true;
+      showToast('Logged in successfully! Welcome back.', 'success');
+      navigate('dashboard');
+      document.getElementById('moreNavLink').classList.remove('hidden');
+      document.getElementById('headerLoginBtn').classList.add('hidden');
+      document.getElementById('logoutBtn').classList.remove('hidden');
+    }
+
+    function logout() {
+      isLoggedIn = false;
+      showToast('Logged out successfully.', 'info');
+      navigate('home');
+      document.getElementById('moreNavLink').classList.add('hidden');
+      document.getElementById('headerLoginBtn').classList.remove('hidden');
+      document.getElementById('logoutBtn').classList.add('hidden');
     }
 
     // Nav link clicks
