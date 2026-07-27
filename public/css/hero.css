@@ -1,0 +1,262 @@
+/* ============================================================
+   AgriSense AI — HERO
+   True full-bleed slideshow hero
+   ============================================================ */
+
+/* ---- Hero Wrapper ---- */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end; /* content anchored toward bottom-left */
+}
+
+/* ---- Slideshow Background ---- */
+.hero-slideshow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1.04);
+  transition: opacity 1.2s ease, transform 7s ease;
+  will-change: opacity, transform;
+}
+.hero-slide.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ---- Gradient Overlay ---- */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  /* dark at bottom-left for text readability, transparent at top-right */
+  background:
+    linear-gradient(
+      to top,
+      rgba(4, 10, 6, 0.88) 0%,
+      rgba(4, 10, 6, 0.52) 42%,
+      rgba(4, 10, 6, 0.18) 72%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to right,
+      rgba(4, 10, 6, 0.55) 0%,
+      transparent 60%
+    );
+}
+
+/* ---- Hero Content ---- */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 680px;
+  padding: clamp(100px, 15vw, 140px) 48px clamp(60px, 8vw, 100px);
+  color: #fff;
+}
+
+@media (max-width: 760px) {
+  .hero-content { padding: 100px 24px 80px; max-width: 100%; }
+}
+
+/* ---- Hero Badge ---- */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 18px;
+  border-radius: 50px;
+  background: rgba(22, 163, 74, 0.22);
+  border: 1px solid rgba(74, 222, 128, 0.4);
+  color: #4ade80;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  backdrop-filter: blur(8px);
+}
+.hero-badge-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ---- Hero Heading ---- */
+.hero-content h1 {
+  color: #fff;
+  font-size: clamp(2.2rem, 5.5vw, 4rem);
+  line-height: 1.12;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.2);
+}
+.hero-content h1 .highlight {
+  color: var(--green-light);
+  position: relative;
+}
+
+/* ---- Hero Description ---- */
+.hero-content p {
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.7;
+  margin-bottom: 32px;
+  max-width: 520px;
+}
+
+/* ---- Hero CTA Buttons ---- */
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+.hero-actions .btn-white {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+}
+.hero-actions .btn-white:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: #fff;
+}
+
+/* ---- Hero Stats Row ---- */
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+.hero-stats .stat { }
+.hero-stats .num {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.hero-stats .label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* ---- Nav Arrows ---- */
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #fff;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s;
+}
+.hero-arrow:hover { background: rgba(255, 255, 255, 0.25); transform: translateY(-50%) scale(1.08); }
+.hero-arrow.prev { left: 24px; }
+.hero-arrow.next { right: 24px; }
+@media (max-width: 600px) {
+  .hero-arrow { display: none; }
+}
+
+/* ---- Slide Dots ---- */
+.hero-dots {
+  position: absolute;
+  bottom: 28px;
+  right: 48px;
+  z-index: 3;
+  display: flex;
+  gap: 8px;
+}
+.hero-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.25s;
+  padding: 0;
+}
+.hero-dot.active {
+  background: #fff;
+  border-color: #fff;
+  width: 24px;
+  border-radius: 4px;
+}
+@media (max-width: 600px) {
+  .hero-dots { right: 24px; bottom: 24px; }
+}
+
+/* ---- Quick-Feature Cards below hero ---- */
+.hero-features-row {
+  position: relative;
+  z-index: 2;
+  margin-top: -52px;
+  padding: 0 24px 40px;
+}
+.hero-features-row .container {}
+
+.feature-quick-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.feature-quick-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+  border-color: var(--green);
+}
+.feature-quick-card .fq-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--green-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.feature-quick-card .fq-icon svg {
+  width: 22px; height: 22px;
+  stroke: var(--green);
+  fill: none;
+  stroke-width: 1.8;
+}
+.feature-quick-card h4 { font-size: 15px; margin-bottom: 2px; }
+.feature-quick-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+@media (max-width: 760px) {
+  .hero-features-row { margin-top: 0; padding: 16px 16px 32px; }
+}

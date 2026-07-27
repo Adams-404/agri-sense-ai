@@ -2,569 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#1a6b3c" />
-  <meta name="description" content="AgriSense AI — AI-Powered Agricultural Assistant for Nigerian Farmers" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#16a34a" />
+  <meta name="description" content="AgriSense AI — AI-Powered Agricultural Assistant for Nigerian Farmers. Detect crop diseases, check market prices, get AI advice in your local language." />
+  <meta property="og:title" content="AgriSense AI — Smart Farming for Nigeria" />
+  <meta property="og:description" content="AI-powered crop disease detection, market prices, weather forecasts and farming advice for Nigerian farmers." />
   <title>AgriSense AI — Smart Farming for Nigeria</title>
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    /* ===== RESET & BASE ===== */
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-    :root {
-      --primary:#1a6b3c; --primary-light:#2d8c4e; --primary-dark:#124a2a;
-      --accent:#f5a623; --accent-hover:#e0951a;
-      --bg:#f0f7f2; --bg-card:#ffffff; --bg-glass:rgba(255,255,255,0.75);
-      --text:#1a1a2e; --text-muted:#6b7280;
-      --border:rgba(26,107,60,0.15);
-      --shadow:0 8px 32px rgba(0,0,0,0.08);
-      --radius:16px; --radius-sm:10px;
-      --nav-height:64px;
-      --font:'Inter',-apple-system,sans-serif;
-      --bg-nav-floating: rgba(255, 255, 255, 0.84);
-      --border-nav-floating: rgba(26, 107, 60, 0.2);
-    }
-    .dark { --bg:#0f1a14; --bg-card:#1a2e22; --bg-glass:rgba(15,26,20,0.85);
-      --text:#f0f7f2; --text-muted:#9ca3af;
-      --border:rgba(255,255,255,0.08);
-      --shadow:0 8px 32px rgba(0,0,0,0.4);
-      --bg-nav-floating: rgba(15, 26, 20, 0.78);
-      --border-nav-floating: rgba(255, 255, 255, 0.16); }
-    body {
-      font-family:var(--font); background:var(--bg); color:var(--text);
-      transition:background 0.3s,color 0.3s; overflow-x:hidden;
-      min-height:100vh;
-    }
-    a { color:var(--primary-light); text-decoration:none; }
-    img { max-width:100%; display:block; }
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-    /* ===== UTILITY ===== */
-    .container { max-width:1200px; margin:0 auto; padding:0 20px; }
-    .btn {
-      display:inline-flex; align-items:center; gap:8px;
-      padding:12px 28px; border-radius:50px; border:none; cursor:pointer;
-      font-weight:600; font-size:15px; transition:all 0.25s;
-      font-family:var(--font);
-    }
-    .btn-primary { background:var(--primary); color:#fff; }
-    .btn-primary:hover { background:var(--primary-light); transform:translateY(-2px); box-shadow:0 8px 24px rgba(26,107,60,0.3); }
-    .btn-accent { background:var(--accent); color:#1a1a2e; }
-    .btn-accent:hover { background:var(--accent-hover); transform:translateY(-2px); }
-    .btn-outline { background:transparent; border:2px solid var(--primary); color:var(--primary); }
-    .btn-outline:hover { background:var(--primary); color:#fff; }
-    .btn-danger { background:#dc2626; color:#fff; }
-    .btn-danger:hover { background:#b91c1c; }
-    .btn-sm { padding:8px 18px; font-size:13px; }
-    .glass {
-      background:var(--bg-glass); backdrop-filter:blur(16px);
-      -webkit-backdrop-filter:blur(16px); border:1px solid var(--border);
-      border-radius:var(--radius); box-shadow:var(--shadow);
-    }
-    .card {
-      background:var(--bg-card); border-radius:var(--radius);
-      border:1px solid var(--border); padding:24px;
-      transition:transform 0.2s,box-shadow 0.2s;
-    }
-    .card:hover { transform:translateY(-4px); box-shadow:var(--shadow); }
-    .section-title { font-size:2rem; font-weight:700; margin-bottom:8px; }
-    .section-sub { color:var(--text-muted); margin-bottom:32px; font-size:1.05rem; }
-    .badge {
-      display:inline-block; padding:4px 14px; border-radius:50px;
-      font-size:12px; font-weight:600; background:rgba(26,107,60,0.12);
-      color:var(--primary);
-    }
-    .tag { 
-      display:inline-block; padding:6px 14px; border-radius:50px;
-      font-size:12px; font-weight:500; background:rgba(245,166,35,0.15);
-      color:var(--accent); margin:3px; cursor:pointer;
-    }
-    .tag.active { background:var(--accent); color:#1a1a2e; }
-    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
-    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
-    .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
-    .text-center { text-align:center; }
-    .mt-1 { margin-top:8px; } .mt-2 { margin-top:16px; } .mt-3 { margin-top:24px; } .mt-4 { margin-top:32px; }
-    .mb-1 { margin-bottom:8px; } .mb-2 { margin-bottom:16px; } .mb-3 { margin-bottom:24px; } .mb-4 { margin-bottom:32px; }
-    .flex { display:flex; } .flex-center { align-items:center; justify-content:center; }
-    .gap-1 { gap:8px; } .gap-2 { gap:16px; } .gap-3 { gap:24px; }
-    .hidden { display:none !important; }
-    .fade-in { animation:fadeIn 0.5s ease; }
-    @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
-
-    /* ===== FLOATING NAVIGATION ===== */
-    nav {
-      position: fixed;
-      top: 18px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: fit-content;
-      max-width: calc(100vw - 32px);
-      height: 56px;
-      background: var(--bg-nav-floating);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid var(--border-nav-floating);
-      border-radius: 50px;
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.08);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      padding: 0 10px 0 20px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    nav .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      width: 100%;
-    }
-    .logo {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      letter-spacing: -0.3px;
-      text-decoration: none;
-    }
-    .logo span { color: var(--accent); }
-    .nav-links { display: flex; gap: 4px; align-items: center; }
-    .nav-links a {
-      padding: 7px 15px;
-      border-radius: 50px;
-      font-size: 13.5px;
-      font-weight: 500;
-      color: var(--text);
-      transition: all 0.25s ease;
-      white-space: nowrap;
-    }
-    .nav-links a:hover {
-      background: rgba(26, 107, 60, 0.12);
-      color: var(--primary);
-    }
-    .nav-links a.active {
-      background: var(--primary);
-      color: #ffffff;
-      font-weight: 600;
-      box-shadow: 0 4px 14px rgba(26, 107, 60, 0.3);
-    }
-    .nav-right { display: flex; align-items: center; gap: 6px; }
-    .theme-toggle, .lang-toggle, .menu-toggle {
-      background: rgba(128, 128, 128, 0.08);
-      border: 1px solid var(--border);
-      color: var(--text);
-      cursor: pointer;
-      font-size: 1.1rem;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-      font-family: var(--font);
-    }
-    .theme-toggle:hover, .lang-toggle:hover, .menu-toggle:hover {
-      background: var(--primary);
-      color: #ffffff;
-      border-color: var(--primary);
-      transform: scale(1.05);
-    }
-    .menu-toggle { display: none; font-size: 1.3rem; }
-
-    /* ===== HERO FULL-VIEWPORT SLIDESHOW ===== */
-    .hero {
-      position: relative;
-      width: 100%;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 120px 20px 80px;
-      overflow: hidden;
-      color: #ffffff;
-    }
-    .hero-slideshow {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-    }
-    .hero-slide {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-position: center;
-      opacity: 0;
-      transform: scale(1.05);
-      transition: opacity 1.2s ease-in-out, transform 6s ease-out;
-    }
-    .hero-slide.active {
-      opacity: 1;
-      transform: scale(1);
-    }
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(12, 38, 22, 0.88) 0%, rgba(18, 56, 32, 0.78) 50%, rgba(10, 25, 17, 0.92) 100%);
-      z-index: 1;
-      pointer-events: none;
-    }
-    .hero-content {
-      max-width: 900px;
-      text-align: center;
-      position: relative;
-      z-index: 2;
-      margin: 0 auto;
-    }
-    .hero h1 {
-      font-size: 3.5rem;
-      font-weight: 800;
-      line-height: 1.18;
-      margin-bottom: 20px;
-      color: #ffffff;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.4);
-    }
-    .hero h1 span {
-      color: #4ade80;
-      text-shadow: 0 0 25px rgba(74, 222, 128, 0.4);
-    }
-    .hero p {
-      font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.92);
-      margin: 0 auto 36px;
-      max-width: 760px;
-      line-height: 1.7;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    }
-    .hero-actions {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .hero-stats {
-      display: flex;
-      gap: 48px;
-      justify-content: center;
-      margin-top: 48px;
-    }
-    .hero-stats div { text-align: center; }
-    .hero-stats .num {
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: #4ade80;
-      text-shadow: 0 0 15px rgba(74, 222, 128, 0.3);
-    }
-    .hero-stats .label {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.85);
-    }
-
-    /* Slideshow Navigation Controls */
-    .hero-slide-nav {
-      position: absolute;
-      bottom: 28px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 3;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      padding: 8px 20px;
-      border-radius: 50px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-    }
-    .hero-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.4);
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .hero-dot.active {
-      background: #4ade80;
-      width: 28px;
-      border-radius: 20px;
-      box-shadow: 0 0 12px #4ade80;
-    }
-    .hero-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 3;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #ffffff;
-      font-size: 1.4rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-    .hero-arrow:hover {
-      background: rgba(26, 107, 60, 0.85);
-      border-color: #4ade80;
-      transform: translateY(-50%) scale(1.1);
-    }
-    .hero-arrow.prev { left: 24px; }
-    .hero-arrow.next { right: 24px; }
-
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 2.2rem; }
-      .hero p { font-size: 1rem; }
-      .hero-stats { gap: 24px; flex-wrap: wrap; }
-      .hero-arrow { display: none; }
-    }
-
-    /* ===== PAGE SECTIONS ===== */
-    .page { display:none; padding-top:calc(var(--nav-height) + 20px); min-height:100vh; }
-    .page.active { display:block; animation:fadeIn 0.35s ease; }
-    .page-header {
-      padding:40px 0 20px; text-align:center;
-    }
-    .page-header h2 { font-size:2.2rem; font-weight:700; }
-    .page-header p { color:var(--text-muted); margin-top:8px; }
-
-    /* ===== DISEASE DETECTION ===== */
-    .upload-zone {
-      border:2px dashed var(--border); border-radius:var(--radius);
-      padding:48px 24px; text-align:center; cursor:pointer;
-      transition:all 0.3s; background:var(--bg-card);
-    }
-    .upload-zone:hover, .upload-zone.dragover { border-color:var(--primary); background:rgba(26,107,60,0.05); }
-    .upload-zone .icon { font-size:3rem; margin-bottom:12px; }
-    .upload-zone p { color:var(--text-muted); }
-    .upload-zone input { display:none; }
-    .result-card {
-      margin-top:24px; padding:24px; border-radius:var(--radius);
-      background:var(--bg-card); border:1px solid var(--border);
-    }
-    .result-card .disease-name { font-size:1.4rem; font-weight:700; color:var(--primary); }
-    .result-card .confidence { font-size:1.1rem; color:var(--accent); font-weight:600; }
-    .result-card .treatment { margin-top:12px; padding:16px; background:rgba(26,107,60,0.06); border-radius:var(--radius-sm); }
-
-    /* ===== CHAT ===== */
-    .chat-container {
-      max-width:800px; margin:0 auto; background:var(--bg-card);
-      border-radius:var(--radius); border:1px solid var(--border);
-      display:flex; flex-direction:column; height:560px;
-    }
-    .chat-messages { flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; gap:12px; }
-    .chat-message {
-      max-width:80%; padding:12px 18px; border-radius:16px;
-      font-size:14px; line-height:1.5; animation:fadeIn 0.3s ease;
-    }
-    .chat-message.user {
-      align-self:flex-end; background:var(--primary); color:#fff;
-      border-bottom-right-radius:4px;
-    }
-    .chat-message.assistant {
-      align-self:flex-start; background:rgba(26,107,60,0.08); 
-      border-bottom-left-radius:4px;
-    }
-    .chat-message .msg-label { font-size:11px; font-weight:600; opacity:0.6; margin-bottom:4px; }
-    .chat-input-area {
-      display:flex; gap:8px; padding:16px; border-top:1px solid var(--border);
-    }
-    .chat-input-area input {
-      flex:1; padding:12px 16px; border-radius:50px; border:1px solid var(--border);
-      background:var(--bg); font-family:var(--font); font-size:14px;
-      outline:none; color:var(--text);
-    }
-    .chat-input-area input:focus { border-color:var(--primary); }
-    .chat-input-area button {
-      width:48px; height:48px; border-radius:50%; border:none;
-      background:var(--primary); color:#fff; cursor:pointer;
-      font-size:1.2rem; transition:0.2s;
-    }
-    .chat-input-area button:hover { background:var(--primary-light); }
-    .lang-selector {
-      display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; justify-content:center;
-    }
-    .lang-selector button {
-      padding:6px 16px; border-radius:50px; border:1px solid var(--border);
-      background:var(--bg); color:var(--text); cursor:pointer;
-      font-size:12px; font-weight:500; transition:0.2s; font-family:var(--font);
-    }
-    .lang-selector button.active { background:var(--primary); color:#fff; border-color:var(--primary); }
-
-    /* ===== MARKETPLACE ===== */
-    .marketplace-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:20px; }
-    .product-card { background:var(--bg-card); border-radius:var(--radius); border:1px solid var(--border); overflow:hidden; transition:0.2s; }
-    .product-card:hover { transform:translateY(-4px); box-shadow:var(--shadow); }
-    .product-card .img { height:160px; background:linear-gradient(135deg,var(--primary-light),var(--primary-dark)); display:flex; align-items:center; justify-content:center; color:#fff; font-size:2.5rem; }
-    .product-card .body { padding:16px; }
-    .product-card .body h4 { font-size:1rem; margin-bottom:4px; }
-    .product-card .body .price { font-weight:700; color:var(--primary); font-size:1.15rem; }
-    .product-card .body .meta { font-size:12px; color:var(--text-muted); margin-top:4px; display:flex; gap:8px; }
-
-    /* ===== MARKET PRICES ===== */
-    .price-table { width:100%; border-collapse:collapse; }
-    .price-table th, .price-table td { padding:12px 16px; text-align:left; border-bottom:1px solid var(--border); }
-    .price-table th { font-weight:600; color:var(--text-muted); font-size:13px; text-transform:uppercase; letter-spacing:0.5px; }
-    .price-table td { font-size:14px; }
-    .price-table .up { color:#16a34a; }
-    .price-table .down { color:#dc2626; }
-
-    /* ===== WEATHER ===== */
-    .weather-main { display:grid; grid-template-columns:2fr 1fr; gap:20px; }
-    .weather-current { padding:24px; background:linear-gradient(135deg,var(--primary),var(--primary-dark)); border-radius:var(--radius); color:#fff; }
-    .weather-current .temp { font-size:3.5rem; font-weight:800; }
-    .weather-current .condition { font-size:1.1rem; opacity:0.9; }
-    .weather-current .details { display:flex; gap:24px; margin-top:16px; }
-    .weather-current .details div { text-align:center; }
-    .weather-current .details .val { font-weight:700; font-size:1.1rem; }
-    .weather-current .details .lbl { font-size:12px; opacity:0.7; }
-    .weather-week { display:grid; grid-template-columns:repeat(7,1fr); gap:8px; }
-    .weather-day { text-align:center; padding:12px 4px; background:var(--bg-card); border-radius:var(--radius-sm); border:1px solid var(--border); }
-    .weather-day .day-name { font-size:12px; font-weight:600; }
-    .weather-day .day-temp { font-size:14px; font-weight:700; margin-top:4px; }
-
-    /* ===== FORUM ===== */
-    .forum-post { padding:20px; border-bottom:1px solid var(--border); cursor:pointer; transition:0.2s; }
-    .forum-post:hover { background:rgba(26,107,60,0.03); }
-    .forum-post h4 { font-size:1rem; margin-bottom:4px; }
-    .forum-post .meta { font-size:12px; color:var(--text-muted); display:flex; gap:12px; }
-
-    /* ===== DASHBOARD ===== */
-    .stat-card {
-      background:var(--bg-card); border-radius:var(--radius); padding:24px;
-      border:1px solid var(--border); text-align:center;
-    }
-    .stat-card .stat-num { font-size:2rem; font-weight:800; color:var(--primary); }
-    .stat-card .stat-label { font-size:13px; color:var(--text-muted); margin-top:4px; }
-
-    /* ===== PROFILE ===== */
-    .profile-card { max-width:500px; margin:0 auto; text-align:center; }
-    .profile-avatar { width:100px; height:100px; border-radius:50%; background:var(--primary); margin:0 auto 16px; display:flex; align-items:center; justify-content:center; font-size:2.5rem; color:#fff; }
-
-    /* ===== ADMIN ===== */
-    .admin-table { width:100%; border-collapse:collapse; }
-    .admin-table th, .admin-table td { padding:10px 14px; text-align:left; border-bottom:1px solid var(--border); font-size:14px; }
-    .admin-table th { font-weight:600; color:var(--text-muted); font-size:12px; text-transform:uppercase; }
-
-    /* ===== AUTH ===== */
-    .auth-card { max-width:440px; margin:40px auto; padding:32px; }
-    .auth-card h2 { text-align:center; margin-bottom:24px; }
-    .form-group { margin-bottom:16px; }
-    .form-group label { display:block; font-size:14px; font-weight:500; margin-bottom:6px; }
-    .form-group input, .form-group select, .form-group textarea {
-      width:100%; padding:12px 16px; border-radius:var(--radius-sm);
-      border:1px solid var(--border); background:var(--bg);
-      font-family:var(--font); font-size:14px; outline:none; color:var(--text);
-    }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--primary); }
-    .form-group textarea { resize:vertical; min-height:80px; }
-    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-
-    /* ===== FOOTER ===== */
-    footer {
-      border-top:1px solid var(--border); padding:40px 0 24px;
-      margin-top:60px;
-    }
-    footer .grid-4 { gap:32px; }
-    footer h5 { font-weight:700; margin-bottom:12px; font-size:14px; }
-    footer a { display:block; font-size:13px; color:var(--text-muted); margin-bottom:6px; }
-    footer a:hover { color:var(--primary); }
-    .footer-bottom { text-align:center; padding-top:24px; margin-top:24px; border-top:1px solid var(--border); font-size:13px; color:var(--text-muted); }
-
-    /* ===== RESPONSIVE ===== */
-    @media(max-width:968px) {
-      nav {
-        width: calc(100vw - 24px);
-        padding: 0 8px 0 16px;
-      }
-      .nav-links {
-        display: none;
-        position: fixed;
-        top: 80px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: calc(100vw - 32px);
-        max-width: 480px;
-        background: var(--bg-nav-floating);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid var(--border-nav-floating);
-        border-radius: 24px;
-        flex-direction: column;
-        padding: 16px;
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
-        gap: 6px;
-      }
-      .nav-links.open { display: flex; }
-      .nav-links a { width: 100%; text-align: center; padding: 10px; border-radius: 12px; }
-      .menu-toggle { display: flex; }
-      .grid-2, .grid-3, .grid-4 { grid-template-columns:1fr 1fr; }
-      .weather-main { grid-template-columns:1fr; }
-      .weather-week { grid-template-columns:repeat(4,1fr); }
-      .hero h1 { font-size:2.4rem; }
-    }
-    @media(max-width:640px) {
-      .grid-2, .grid-3, .grid-4 { grid-template-columns:1fr; }
-      .hero h1 { font-size:1.8rem; }
-      .hero-stats { gap:20px; flex-wrap:wrap; }
-      .hero-stats .num { font-size:1.4rem; }
-      .weather-week { grid-template-columns:repeat(3,1fr); }
-      .form-row { grid-template-columns:1fr; }
-      .section-title { font-size:1.5rem; }
-      .page-header h2 { font-size:1.6rem; }
-    }
-    @media(max-width:400px) {
-      .weather-week { grid-template-columns:repeat(2,1fr); }
-    }
-
-    /* ===== LOADER ===== */
-    .loader {
-      width:24px; height:24px; border:3px solid var(--border);
-      border-top-color:var(--primary); border-radius:50%;
-      animation:spin 0.6s linear infinite; margin:0 auto;
-    }
-    @keyframes spin { to{transform:rotate(360deg)} }
-
-    /* ===== TOAST ===== */
-    .toast {
-      position:fixed; bottom:24px; right:24px; z-index:9999;
-      padding:14px 24px; border-radius:var(--radius-sm);
-      background:var(--bg-card); border:1px solid var(--border);
-      box-shadow:0 8px 32px rgba(0,0,0,0.15);
-      font-size:14px; font-weight:500; transform:translateY(100px);
-      opacity:0; transition:all 0.4s;
-    }
-    .toast.show { transform:translateY(0); opacity:1; }
-    .toast.success { border-left:4px solid #16a34a; }
-    .toast.error { border-left:4px solid #dc2626; }
-    .toast.info { border-left:4px solid var(--primary); }
-  </style>
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/nav.css" />
+  <link rel="stylesheet" href="/css/hero.css" />
+  <link rel="stylesheet" href="/css/pages.css" />
+  <link rel="stylesheet" href="/css/components.css" />
 </head>
 <body>
 
   <!-- ===== TOAST ===== -->
   <div id="toast" class="toast"></div>
 
-  <!-- ===== NAV ===== -->
-  <nav>
+  <!-- ===== FLOATING NAV ===== -->
+  <nav role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
-      <a href="#" class="logo" onclick="navigate('home')">🌿 Agri<span>Sense</span> AI</a>
+      <!-- Logo -->
+      <a href="#" class="logo" onclick="navigate('home'); return false;" aria-label="AgriSense AI Home">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22V12M12 12C12 6.5 6 3 6 3s0 6 6 9M12 12c0-5.5 6-9 6-9s0 6-6 9"/>
+          </svg>
+        </div>
+        Agri<span>Sense</span> AI
+      </a>
+
+      <!-- Nav Links -->
       <div class="nav-links" id="navLinks">
-        <a href="#" class="active" data-page="home">Home</a>
+        <!-- Mobile close button -->
+        <button class="mobile-close" onclick="document.getElementById('navLinks').classList.remove('open')" aria-label="Close menu">&#10005;</button>
+        <a href="#" data-page="home" class="active">Home</a>
         <a href="#" data-page="detect">Disease Detection</a>
         <a href="#" data-page="chat">AI Assistant</a>
         <a href="#" data-page="marketplace">Marketplace</a>
@@ -572,212 +51,273 @@
         <a href="#" data-page="weather">Weather</a>
         <a href="#" data-page="dashboard">Dashboard</a>
         <a href="#" data-page="forum">Forum</a>
-        <a href="#" data-page="more">More ▼</a>
+        <a href="#" data-page="more">More &#9660;</a>
       </div>
+
+      <!-- Right Actions -->
       <div class="nav-right">
-        <button class="lang-toggle" onclick="toggleLang()" title="Language">🌐</button>
-        <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
-        <button class="menu-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+        <!-- Language toggle -->
+        <button class="nav-icon-btn" id="langToggleBtn" onclick="toggleLang()" aria-label="Select language" title="Language">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </button>
+        <!-- Theme toggle -->
+        <button class="nav-icon-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Dark mode">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+        <!-- Hamburger -->
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="6"  x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
       </div>
     </div>
   </nav>
 
- 
-  <!-- ===== LANGUAGE MODAL (simple dropdown) ===== -->
-  <div id="langModal" class="hidden" style="position:fixed;top:70px;right:24px;z-index:999;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;box-shadow:var(--shadow);min-width:160px;">
-    <div style="font-weight:600;font-size:13px;margin-bottom:8px;padding:0 8px;">Select Language</div>
-    <button onclick="setLang('en')" style="display:block;width:100%;padding:8px 12px;border:none;background:none;cursor:pointer;text-align:left;border-radius:6px;font-family:var(--font);color:var(--text);font-size:14px;">🇬🇧 English</button>
-    <button onclick="setLang('ha')" style="display:block;width:100%;padding:8px 12px;border:none;background:none;cursor:pointer;text-align:left;border-radius:6px;font-family:var(--font);color:var(--text);font-size:14px;">🇳🇬 Hausa</button>
-    <button onclick="setLang('ful')" style="display:block;width:100%;padding:8px 12px;border:none;background:none;cursor:pointer;text-align:left;border-radius:6px;font-family:var(--font);color:var(--text);font-size:14px;">🇳🇬 Fulfulde</button>
-    <button onclick="setLang('yo')" style="display:block;width:100%;padding:8px 12px;border:none;background:none;cursor:pointer;text-align:left;border-radius:6px;font-family:var(--font);color:var(--text);font-size:14px;">🇳🇬 Yoruba</button>
-    <button onclick="setLang('ig')" style="display:block;width:100%;padding:8px 12px;border:none;background:none;cursor:pointer;text-align:left;border-radius:6px;font-family:var(--font);color:var(--text);font-size:14px;">🇳🇬 Igbo</button>
-    <button onclick="setLang('kr')" style="display:block;width:100%;padding:8px 12px;border:none;background:none;cursor:pointer;text-align:left;border-radius:6px;font-family:var(--font);color:var(--text);font-size:14px;">🇳🇬 Kanuri</button>
+  <!-- ===== LANGUAGE DROPDOWN ===== -->
+  <div id="langModal" class="lang-dropdown hidden" role="dialog" aria-label="Language selection">
+    <button class="lang-btn" onclick="setLang('en')">English</button>
+    <button class="lang-btn" onclick="setLang('ha')">Hausa</button>
+    <button class="lang-btn" onclick="setLang('ful')">Fulfulde</button>
+    <button class="lang-btn" onclick="setLang('yo')">Yoruba</button>
+    <button class="lang-btn" onclick="setLang('ig')">Igbo</button>
+    <button class="lang-btn" onclick="setLang('kr')">Kanuri</button>
   </div>
 
-  <!-- ===== SIDEBAR / MORE DROPDOWN ===== -->
-  <div id="moreDropdown" class="hidden" style="position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:999;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;min-width:260px;max-width:90vw;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-      <button onclick="navigate('about')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">ℹ️ About</button>
-      <button onclick="navigate('features')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">✨ Features</button>
-      <button onclick="navigate('news')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">📰 News</button>
-      <button onclick="navigate('profile')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">👤 Profile</button>
-      <button onclick="navigate('contact')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">📞 Contact</button>
-      <button onclick="navigate('login')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">🔑 Login</button>
-      <button onclick="navigate('register')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">📝 Register</button>
-      <button onclick="navigate('admin')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">🛡️ Admin</button>
-      <button onclick="navigate('privacy')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">🔒 Privacy</button>
-      <button onclick="navigate('terms')" style="padding:10px;border:none;background:none;cursor:pointer;border-radius:8px;font-family:var(--font);color:var(--text);text-align:center;">📄 Terms</button>
+  <!-- ===== MORE DROPDOWN ===== -->
+  <div id="moreDropdown" class="nav-dropdown hidden" role="dialog" aria-label="More pages">
+    <div class="more-grid">
+      <button class="more-btn" onclick="navigate('about')">About</button>
+      <button class="more-btn" onclick="navigate('features')">Features</button>
+      <button class="more-btn" onclick="navigate('news')">News</button>
+      <button class="more-btn" onclick="navigate('profile')">Profile</button>
+      <button class="more-btn" onclick="navigate('contact')">Contact</button>
+      <button class="more-btn" onclick="navigate('login')">Login</button>
+      <button class="more-btn" onclick="navigate('register')">Register</button>
+      <button class="more-btn" onclick="navigate('admin')">Admin</button>
+      <button class="more-btn" onclick="navigate('privacy')">Privacy</button>
+      <button class="more-btn" onclick="navigate('terms')">Terms</button>
     </div>
   </div>
 
-  <!-- =============================== -->
-  <!-- ===== HOME PAGE ===== -->
-  <!-- =============================== -->
+  <!-- ========================================================= -->
+  <!-- HOME PAGE                                                   -->
+  <!-- ========================================================= -->
   <section class="page active" id="page-home">
+
+    <!-- Full-bleed hero with slideshow -->
     <div class="hero">
-      <!-- Full-bleed background slideshow -->
+      <!-- Background slideshow -->
       <div class="hero-slideshow" id="heroSlideshow">
         <div class="hero-slide active" style="background-image: url('/hero-slide-1.png');"></div>
-        <div class="hero-slide" style="background-image: url('/hero-slide-2.png');"></div>
-        <div class="hero-slide" style="background-image: url('/hero-slide-3.png');"></div>
+        <div class="hero-slide"        style="background-image: url('/hero-slide-2.png');"></div>
+        <div class="hero-slide"        style="background-image: url('/hero-slide-3.png');"></div>
       </div>
-      
-      <!-- Gradient overlay for high text contrast -->
+
+      <!-- Overlay -->
       <div class="hero-overlay"></div>
 
-      <!-- Navigation Arrows -->
-      <button class="hero-arrow prev" onclick="changeHeroSlide(-1)" aria-label="Previous slide">❮</button>
-      <button class="hero-arrow next" onclick="changeHeroSlide(1)" aria-label="Next slide">❯</button>
+      <!-- Prev/Next arrows -->
+      <button class="hero-arrow prev" onclick="changeHeroSlide(-1)" aria-label="Previous slide">&#10094;</button>
+      <button class="hero-arrow next" onclick="changeHeroSlide(1)"  aria-label="Next slide">&#10095;</button>
 
-      <!-- Hero Content -->
+      <!-- Content -->
       <div class="hero-content">
-        <div class="badge mb-2" style="background: rgba(74, 222, 128, 0.22); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.35);" id="heroBadge">
-          🌱 AI-Powered Smart Farming
+        <div class="hero-badge">
+          <div class="hero-badge-dot"></div>
+          <span id="heroBadge">AI-Powered Smart Farming</span>
         </div>
-        <h1>Your AI Farming Assistant<br/>for <span>Nigerian Farmers</span></h1>
+
+        <h1>Your AI Farming Assistant<br>for <span class="highlight">Nigerian Farmers</span></h1>
+
         <p>
           Detect crop diseases instantly, get AI farming advice in your local language,
-          check market prices, sell your produce, and access weather forecasts — all
-          from your phone, even on low data.
+          check real-time market prices, sell your produce, and access weather forecasts —
+          all from your phone, even on low data.
         </p>
+
         <div class="hero-actions">
-          <button class="btn btn-primary" onclick="navigate('detect')">🔍 Detect Disease</button>
-          <button class="btn btn-accent" onclick="navigate('chat')">💬 Ask AI Assistant</button>
-          <button class="btn btn-outline" style="border-color: rgba(255,255,255,0.6); color: #ffffff;" onclick="navigate('register')">Get Started Free</button>
+          <button class="btn btn-primary btn-lg" onclick="navigate('detect')">Detect Disease</button>
+          <button class="btn btn-accent  btn-lg" onclick="navigate('chat')">Ask AI Assistant</button>
+          <button class="btn btn-white   btn-lg" onclick="navigate('register')">Get Started Free</button>
         </div>
+
         <div class="hero-stats">
-          <div><div class="num">12,400+</div><div class="label">Farmers Helped</div></div>
-          <div><div class="num">6</div><div class="label">Languages</div></div>
-          <div><div class="num">98%</div><div class="label">Disease Accuracy</div></div>
+          <div class="stat"><div class="num">12,400+</div><div class="label">Farmers Helped</div></div>
+          <div class="stat"><div class="num">6</div><div class="label">Languages</div></div>
+          <div class="stat"><div class="num">98%</div><div class="label">Disease Accuracy</div></div>
+          <div class="stat"><div class="num">36+</div><div class="label">Nigerian States</div></div>
         </div>
       </div>
 
-      <!-- Slide Indicator Dots -->
-      <div class="hero-slide-nav" id="heroDots">
+      <!-- Slide dots -->
+      <div class="hero-dots" id="heroDots">
         <button class="hero-dot active" onclick="setHeroSlide(0)" aria-label="Slide 1"></button>
-        <button class="hero-dot" onclick="setHeroSlide(1)" aria-label="Slide 2"></button>
-        <button class="hero-dot" onclick="setHeroSlide(2)" aria-label="Slide 3"></button>
+        <button class="hero-dot"        onclick="setHeroSlide(1)" aria-label="Slide 2"></button>
+        <button class="hero-dot"        onclick="setHeroSlide(2)" aria-label="Slide 3"></button>
       </div>
-    </div>
-    
+    </div><!-- /.hero -->
 
-    <!-- Quick Features -->
-    <div class="container" style="margin-top:-40px;position:relative;z-index:2;">
-      <div class="grid-3">
-        <div class="card text-center">
-          <div style="font-size:2.5rem;margin-bottom:8px;">📸</div>
-          <h4>Disease Detection</h4>
-          <p style="font-size:13px;color:var(--text-muted);">Snap a photo of your crop and get instant diagnosis</p>
-        </div>
-        <div class="card text-center">
-          <div style="font-size:2.5rem;margin-bottom:8px;">🗣️</div>
-          <h4>Voice Guidance</h4>
-          <p style="font-size:13px;color:var(--text-muted);">Listen to farming advice in your native language</p>
-        </div>
-        <div class="card text-center">
-          <div style="font-size:2.5rem;margin-bottom:8px;">📊</div>
-          <h4>Market Prices</h4>
-          <p style="font-size:13px;color:var(--text-muted);">Real-time prices for crops across Nigeria</p>
+    <!-- Quick-feature cards (overlap hero) -->
+    <div class="hero-features-row">
+      <div class="container">
+        <div class="grid-3">
+
+          <div class="feature-quick-card" onclick="navigate('detect')" role="button" tabindex="0">
+            <div class="fq-icon">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div>
+              <h4>Disease Detection</h4>
+              <p>Snap a photo of your crop and get an instant AI diagnosis with treatment steps.</p>
+            </div>
+          </div>
+
+          <div class="feature-quick-card" onclick="navigate('chat')" role="button" tabindex="0">
+            <div class="fq-icon">
+              <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div>
+              <h4>AI Voice Guidance</h4>
+              <p>Get farming advice in Hausa, Yoruba, Igbo, Fulfulde and more.</p>
+            </div>
+          </div>
+
+          <div class="feature-quick-card" onclick="navigate('prices')" role="button" tabindex="0">
+            <div class="fq-icon">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div>
+              <h4>Live Market Prices</h4>
+              <p>Real-time crop prices from Kano, Lagos, Ibadan and major markets.</p>
+            </div>
+          </div>
+
         </div>
       </div>
-    </div>
+    </div><!-- /.hero-features-row -->
+
   </section>
-  
-   <!-- =============================== -->
-  <!-- ===== DISEASE DETECTION ===== -->
-  <!-- =============================== -->
+
+  <!-- ========================================================= -->
+  <!-- DISEASE DETECTION                                          -->
+  <!-- ========================================================= -->
   <section class="page" id="page-detect">
     <div class="container">
       <div class="page-header">
-        <h2>🔍 Crop Disease Detection</h2>
-        <p>Upload a photo of your crop and our AI will diagnose the disease instantly</p>
+        <div class="section-label">AI Diagnostics</div>
+        <h2>Crop Disease Detection</h2>
+        <p>Upload a photo of your crop. Our AI will diagnose the disease and recommend treatment.</p>
       </div>
-      <div class="grid-2" style="max-width:900px;margin:0 auto;">
+
+      <div class="detect-grid">
+        <!-- Upload -->
         <div>
-          <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
-            <div class="icon">📷</div>
-            <p><strong>Tap to upload a crop photo</strong></p>
-            <p style="font-size:13px;margin-top:4px;">Supports: JPG, PNG, WEBP — Max 5MB</p>
-            <input type="file" id="fileInput" accept="image/*" onchange="handleImageUpload(event)" />
+          <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()" role="button" tabindex="0" aria-label="Upload crop photo">
+            <div class="upload-icon">
+              <svg viewBox="0 0 24 24"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+            </div>
+            <strong>Tap to upload a crop photo</strong>
+            <p>Supports: JPG, PNG, WEBP — Max 5 MB</p>
+            <input type="file" id="fileInput" accept="image/*" onchange="handleImageUpload(event)" aria-label="Select crop photo" />
           </div>
+
           <div id="imagePreview" class="hidden mt-2" style="text-align:center;">
-            <img id="previewImg" style="max-height:260px;border-radius:var(--radius-sm);margin:0 auto;" />
-            <button class="btn btn-primary btn-sm mt-2" onclick="analyzeDisease()">🔍 Analyze This Crop</button>
+            <img id="previewImg" style="max-height:260px;border-radius:var(--radius-sm);margin:0 auto;" alt="Uploaded crop" />
+            <button class="btn btn-primary mt-2" onclick="analyzeDisease()">Analyze Crop</button>
           </div>
         </div>
+
+        <!-- Result -->
         <div>
           <div id="diseaseResult" class="hidden result-card">
-            <div style="display:flex;justify-content:space-between;align-items:start;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
               <div>
                 <div class="badge">Diagnosis Result</div>
                 <div class="disease-name mt-2" id="diseaseName">—</div>
                 <div class="confidence mt-1" id="diseaseConfidence">—</div>
               </div>
-              <div style="font-size:2.5rem;" id="diseaseEmoji">🌿</div>
+              <div class="result-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 22c10-5.5 10-16.5 0-18C2 5.5 2 16.5 12 22z"/></svg>
+              </div>
             </div>
-            <div class="treatment" id="diseaseTreatment">
-              <strong>🛠️ Recommended Treatment:</strong>
-              <p style="margin-top:6px;font-size:14px;" id="treatmentText">—</p>
+            <div class="treatment mt-3">
+              <strong>Recommended Treatment</strong>
+              <p style="margin-top:8px;font-size:14px;color:var(--text-muted);" id="treatmentText">—</p>
             </div>
-            <div class="mt-2" id="diseasePrevention">
-              <strong>🛡️ Prevention Tips:</strong>
-              <p style="margin-top:4px;font-size:13px;color:var(--text-muted);" id="preventionText">—</p>
+            <div class="mt-3">
+              <strong style="font-size:13px;">Prevention Tips</strong>
+              <p style="margin-top:6px;font-size:13px;color:var(--text-muted);" id="preventionText">—</p>
             </div>
           </div>
+
           <div id="diseaseLoading" class="hidden text-center mt-4">
             <div class="loader"></div>
-            <p class="mt-2" style="color:var(--text-muted);">AI is analyzing your crop image...</p>
+            <p class="mt-2" style="color:var(--text-muted);font-size:14px;">AI is analyzing your crop image...</p>
           </div>
         </div>
       </div>
     </div>
   </section>
-  
-  <!-- =============================== -->
-  <!-- ===== AI CHAT ASSISTANT ===== -->
-  <!-- =============================== -->
+
+  <!-- ========================================================= -->
+  <!-- AI CHAT ASSISTANT                                           -->
+  <!-- ========================================================= -->
   <section class="page" id="page-chat">
     <div class="container">
       <div class="page-header">
-        <h2>💬 AI Farming Assistant</h2>
-        <p>Ask any farming question — get answers in your preferred language</p>
+        <div class="section-label">AI Assistant</div>
+        <h2>Farming AI Assistant</h2>
+        <p>Ask any farming question — get answers in your preferred language.</p>
       </div>
-      <div class="lang-selector" id="chatLangSelector">
-        <button class="active" data-lang="en">🇬🇧 English</button>
-        <button data-lang="ha">🇳🇬 Hausa</button>
-        <button data-lang="ful">🇳🇬 Fulfulde</button>
-        <button data-lang="yo">🇳🇬 Yoruba</button>
-        <button data-lang="ig">🇳🇬 Igbo</button>
-        <button data-lang="kr">🇳🇬 Kanuri</button>
+
+      <div class="chat-lang-selector" id="chatLangSelector">
+        <button class="active" data-lang="en">English</button>
+        <button data-lang="ha">Hausa</button>
+        <button data-lang="ful">Fulfulde</button>
+        <button data-lang="yo">Yoruba</button>
+        <button data-lang="ig">Igbo</button>
+        <button data-lang="kr">Kanuri</button>
       </div>
+
       <div class="chat-container">
         <div class="chat-messages" id="chatMessages">
           <div class="chat-message assistant">
-            <div class="msg-label">🌿 AgriSense AI</div>
-            Sannu! I'm your farming assistant. Ask me anything about crops, soil, pests, or farming techniques. 🇳🇬
+            <div class="msg-label">AgriSense AI</div>
+            Sannu! I'm your AI farming assistant. Ask me anything about crops, soil, pests, weather or market prices.
           </div>
         </div>
         <div class="chat-input-area">
-          <input type="text" id="chatInput" placeholder="Type your farming question..." onkeydown="if(event.key==='Enter')sendChat()" />
-          <button onclick="sendChat()">➤</button>
+          <input type="text" id="chatInput" placeholder="Type your farming question..." onkeydown="if(event.key==='Enter')sendChat()" aria-label="Chat message" />
+          <button class="send-btn" onclick="sendChat()" aria-label="Send message">
+            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
         </div>
       </div>
     </div>
   </section>
-  
-  
-  <!-- =============================== -->
-  <!-- ===== MARKETPLACE ===== -->
-  <!-- =============================== -->
+
+  <!-- ========================================================= -->
+  <!-- MARKETPLACE                                                 -->
+  <!-- ========================================================= -->
   <section class="page" id="page-marketplace">
     <div class="container">
       <div class="page-header">
-        <h2>🏪 Marketplace</h2>
-        <p>Buy fresh produce directly from Nigerian farmers</p>
+        <div class="section-label">Buy &amp; Sell</div>
+        <h2>Marketplace</h2>
+        <p>Buy fresh produce directly from Nigerian farmers or sell your own harvest.</p>
       </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;justify-content:center;">
-        <input type="text" placeholder="Search products..." id="marketSearch" oninput="renderMarketplace()" style="padding:10px 16px;border-radius:50px;border:1px solid var(--border);background:var(--bg);font-family:var(--font);font-size:14px;min-width:200px;color:var(--text);" />
-        <select id="marketFilter" onchange="renderMarketplace()" style="padding:10px 16px;border-radius:50px;border:1px solid var(--border);background:var(--bg);font-family:var(--font);font-size:14px;color:var(--text);">
+
+      <div class="market-top">
+        <input type="text" placeholder="Search products..." id="marketSearch" oninput="renderMarketplace()" aria-label="Search marketplace" style="max-width:220px;" />
+        <select id="marketFilter" onchange="renderMarketplace()" aria-label="Filter by category" style="max-width:180px;">
           <option value="all">All Categories</option>
           <option value="Grains">Grains</option>
           <option value="Vegetables">Vegetables</option>
@@ -787,109 +327,107 @@
         </select>
         <button class="btn btn-primary btn-sm" onclick="showAddProduct()">+ Sell Your Produce</button>
       </div>
+
       <div class="marketplace-grid" id="marketGrid"></div>
     </div>
   </section>
 
-  <!-- =============================== -->
-  <!-- ===== MARKET PRICES ===== -->
-  <!-- =============================== -->
+  <!-- ========================================================= -->
+  <!-- MARKET PRICES                                               -->
+  <!-- ========================================================= -->
   <section class="page" id="page-prices">
     <div class="container">
       <div class="page-header">
-        <h2>📊 Market Prices</h2>
-        <p>Real-time crop prices across major markets in Nigeria</p>
+        <div class="section-label">Live Data</div>
+        <h2>Market Prices</h2>
+        <p>Real-time crop prices across major markets in Nigeria.</p>
       </div>
       <div style="overflow-x:auto;">
         <table class="price-table" id="priceTable">
           <thead>
-            <tr><th>Crop</th><th>Market</th><th>Price (₦)</th><th>Unit</th><th>Trend</th><th>Updated</th></tr>
+            <tr><th>Crop</th><th>Market</th><th>Price (&#8358;)</th><th>Unit</th><th>Trend</th><th>Updated</th></tr>
           </thead>
           <tbody id="priceBody"></tbody>
         </table>
       </div>
     </div>
   </section>
-  
-  
-  <!-- =============================== -->
-  <!-- ===== WEATHER ===== -->
-  <!-- =============================== -->
+
+  <!-- ========================================================= -->
+  <!-- WEATHER                                                     -->
+  <!-- ========================================================= -->
   <section class="page" id="page-weather">
     <div class="container">
       <div class="page-header">
-        <h2>🌤️ Weather Forecast</h2>
-        <p>7-day weather forecast for your farming region</p>
+        <div class="section-label">Forecast</div>
+        <h2>Weather Forecast</h2>
+        <p>7-day weather forecast with farming advice for your region.</p>
       </div>
-      <div style="display:flex;gap:8px;margin-bottom:20px;justify-content:center;flex-wrap:wrap;">
-        <select id="weatherRegion" onchange="updateWeather()" style="padding:10px 16px;border-radius:50px;border:1px solid var(--border);background:var(--bg);font-family:var(--font);font-size:14px;color:var(--text);">
-          <option value="Kano">Kano</option>
-          <option value="Kaduna">Kaduna</option>
-          <option value="Lagos">Lagos</option>
-          <option value="Abuja">Abuja</option>
-          <option value="Ibadan">Ibadan</option>
-          <option value="Maiduguri">Maiduguri</option>
-          <option value="Jos">Jos</option>
-          <option value="Sokoto">Sokoto</option>
-          <option value="Enugu">Enugu</option>
-          <option value="Port Harcourt">Port Harcourt</option>
+
+      <div class="region-row">
+        <select id="weatherRegion" onchange="updateWeather()" aria-label="Select region">
+          <option>Kano</option><option>Kaduna</option><option>Lagos</option>
+          <option>Abuja</option><option>Ibadan</option><option>Maiduguri</option>
+          <option>Jos</option><option>Sokoto</option><option>Enugu</option>
+          <option>Port Harcourt</option>
         </select>
       </div>
+
       <div class="weather-main">
-        <div>
-          <div class="weather-current" id="weatherCurrent">
-            <div style="display:flex;justify-content:space-between;align-items:start;">
-              <div>
-                <div style="font-size:1.1rem;font-weight:600;" id="weatherCity">Kano</div>
-                <div class="temp" id="weatherTemp">32°C</div>
-                <div class="condition" id="weatherCondition">☀️ Sunny</div>
-              </div>
-              <div style="font-size:4rem;">☀️</div>
+        <div class="weather-current">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <div>
+              <div style="font-size:1rem;font-weight:600;opacity:0.8;" id="weatherCity">Kano</div>
+              <div class="temp" id="weatherTemp">32°C</div>
+              <div class="condition" id="weatherCondition">Sunny</div>
             </div>
-            <div class="details">
-              <div><div class="val" id="weatherHumidity">45%</div><div class="lbl">Humidity</div></div>
-              <div><div class="val" id="weatherWind">12 km/h</div><div class="lbl">Wind</div></div>
-              <div><div class="val" id="weatherRain">0%</div><div class="lbl">Rain</div></div>
-              <div><div class="val" id="weatherUv">6</div><div class="lbl">UV Index</div></div>
-            </div>
+            <div style="font-size:4rem;line-height:1;">&#9728;</div>
+          </div>
+          <div class="details">
+            <div><div class="val" id="weatherHumidity">45%</div><div class="lbl">Humidity</div></div>
+            <div><div class="val" id="weatherWind">12 km/h</div><div class="lbl">Wind</div></div>
+            <div><div class="val" id="weatherRain">0%</div><div class="lbl">Rain</div></div>
+            <div><div class="val" id="weatherUv">6</div><div class="lbl">UV Index</div></div>
           </div>
         </div>
-        <div class="card">
-          <h4 style="margin-bottom:12px;">Farming Advice</h4>
-          <p style="font-size:14px;color:var(--text-muted);" id="weatherAdvice">
-            ☀️ Good day for planting. Soil moisture levels are adequate. Consider irrigating in the evening.
-          </p>
-          <div class="mt-2" style="padding:12px;background:rgba(245,166,35,0.1);border-radius:var(--radius-sm);">
-            <strong style="font-size:13px;">🌱 Suggested Crops to Plant Now:</strong>
-            <p style="font-size:13px;margin-top:4px;color:var(--text-muted);" id="weatherCrops">Maize, Millet, Sorghum, Groundnut</p>
+
+        <div class="farming-advice">
+          <h4>Farming Advice</h4>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.7;" id="weatherAdvice">Good day for planting. Soil moisture levels are adequate.</p>
+          <div class="crop-suggestion">
+            <strong>Suggested Crops to Plant Now</strong>
+            <p style="font-size:13px;color:var(--text-muted);margin-top:4px;" id="weatherCrops">Maize, Millet, Sorghum, Groundnut</p>
           </div>
         </div>
       </div>
+
       <div class="mt-3">
         <h4 class="mb-2">7-Day Forecast</h4>
         <div class="weather-week" id="weatherWeek"></div>
       </div>
     </div>
   </section>
-  
-  
-  <!-- =============================== -->
-  <!-- ===== DASHBOARD ===== -->
-  <!-- =============================== -->
+
+  <!-- ========================================================= -->
+  <!-- DASHBOARD                                                   -->
+  <!-- ========================================================= -->
   <section class="page" id="page-dashboard">
     <div class="container">
       <div class="page-header">
-        <h2>📊 Your Dashboard</h2>
-        <p>Track your farming activities and insights</p>
+        <div class="section-label">Your Activity</div>
+        <h2>Dashboard</h2>
+        <p>Track your farming activities and insights.</p>
       </div>
-      <div class="grid-4" id="dashStats">
+
+      <div class="grid-4 dash-grid">
         <div class="stat-card"><div class="stat-num" id="dashDiseases">0</div><div class="stat-label">Diseases Detected</div></div>
         <div class="stat-card"><div class="stat-num" id="dashChats">0</div><div class="stat-label">AI Chat Sessions</div></div>
         <div class="stat-card"><div class="stat-num" id="dashProducts">0</div><div class="stat-label">Products Listed</div></div>
         <div class="stat-card"><div class="stat-num" id="dashPriceChecks">0</div><div class="stat-label">Price Checks</div></div>
       </div>
-      <div class="card mt-3">
-        <h4 class="mb-2">📈 Recent Activity</h4>
+
+      <div class="card">
+        <h4 class="mb-2">Recent Activity</h4>
         <div id="dashActivity">
           <p style="color:var(--text-muted);font-size:14px;">No activity yet. Start using AgriSense AI!</p>
         </div>
@@ -897,19 +435,21 @@
     </div>
   </section>
 
-  <!-- =============================== -->
-  <!-- ===== FORUM ===== -->
-  <!-- =============================== -->
+  <!-- ========================================================= -->
+  <!-- FORUM                                                       -->
+  <!-- ========================================================= -->
   <section class="page" id="page-forum">
     <div class="container">
       <div class="page-header">
-        <h2>💬 Community Forum</h2>
-        <p>Connect with fellow farmers, share knowledge, and ask questions</p>
+        <div class="section-label">Community</div>
+        <h2>Farmers Forum</h2>
+        <p>Connect with fellow farmers, share knowledge and ask questions.</p>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+
+      <div class="forum-top">
+        <div class="forum-top-left">
           <button class="btn btn-primary btn-sm" onclick="showNewPost()">+ New Post</button>
-          <select id="forumFilter" onchange="renderForum()" style="padding:8px 14px;border-radius:50px;border:1px solid var(--border);background:var(--bg);font-family:var(--font);font-size:13px;color:var(--text);">
+          <select id="forumFilter" onchange="renderForum()" aria-label="Filter topics">
             <option value="all">All Topics</option>
             <option value="Crops">Crops</option>
             <option value="Pests">Pests</option>
@@ -919,222 +459,281 @@
           </select>
         </div>
       </div>
+
       <div id="forumPosts"></div>
     </div>
   </section>
-  
-  <!-- =============================== -->
-  <!-- ===== OTHER PAGES (About, Features, News, Profile, Contact, Auth, Admin, Legal) ===== -->
-  <!-- =============================== -->
 
-  <!-- ABOUT -->
+  <!-- ========================================================= -->
+  <!-- ABOUT                                                       -->
+  <!-- ========================================================= -->
   <section class="page" id="page-about">
-    <div class="container" style="max-width:700px;">
+    <div class="container-sm">
       <div class="page-header">
-        <h2>ℹ️ About AgriSense AI</h2>
+        <div class="section-label">Who We Are</div>
+        <h2>About AgriSense AI</h2>
       </div>
       <div class="card">
-        <p style="line-height:1.8;color:var(--text-muted);">
-          <strong style="color:var(--text);">AgriSense AI</strong> is an AI-powered agricultural platform built specifically for Nigerian farmers. 
-          Founded in 2026, our mission is to democratize access to cutting-edge agricultural technology for every farmer — 
+        <p style="line-height:1.85;color:var(--text-muted);">
+          <strong style="color:var(--text);">AgriSense AI</strong> is an AI-powered agricultural platform built specifically for Nigerian farmers.
+          Founded in 2026, our mission is to democratise access to cutting-edge agricultural technology for every farmer —
           regardless of location, language, or technical ability.
         </p>
-        <p style="line-height:1.8;color:var(--text-muted); margin-top:16px;">
-          We combine computer vision, natural language processing, and local market data to deliver a comprehensive 
+        <p style="line-height:1.85;color:var(--text-muted);margin-top:16px;">
+          We combine computer vision, natural language processing, and local market data to deliver a comprehensive
           farming assistant that works on low-end smartphones and in low-connectivity environments.
         </p>
-        <div class="grid-2 mt-3" style="text-align:center;">
-          <div><div style="font-size:2rem;">🌍</div><strong>6+ Languages</strong></div>
-          <div><div style="font-size:2rem;">📱</div><strong>Works on 2G/3G</strong></div>
-          <div><div style="font-size:2rem;">🤝</div><strong>30+ Partners</strong></div>
-          <div><div style="font-size:2rem;">🌾</div><strong>12,400+ Farmers</strong></div>
+        <div class="about-stat-grid">
+          <div class="about-stat">
+            <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+            <strong>6+ Languages</strong>
+          </div>
+          <div class="about-stat">
+            <div class="icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg></div>
+            <strong>Works on 2G / 3G</strong>
+          </div>
+          <div class="about-stat">
+            <div class="icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <strong>30+ Partners</strong>
+          </div>
+          <div class="about-stat">
+            <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 22c10-5.5 10-16.5 0-18C2 5.5 2 16.5 12 22z"/></svg></div>
+            <strong>12,400+ Farmers</strong>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FEATURES -->
+  <!-- ========================================================= -->
+  <!-- FEATURES                                                    -->
+  <!-- ========================================================= -->
   <section class="page" id="page-features">
     <div class="container">
       <div class="page-header">
-        <h2>✨ Features</h2>
-        <p>Everything you need to farm smarter</p>
+        <div class="section-label">Platform Capabilities</div>
+        <h2>Features</h2>
+        <p>Everything you need to farm smarter.</p>
       </div>
       <div class="grid-2">
-        <div class="card"><h4>📸 AI Disease Detection</h4><p style="font-size:14px;color:var(--text-muted);margin-top:8px;">Snap a photo and get instant disease diagnosis with treatment recommendations.</p></div>
-        <div class="card"><h4>🗣️ Voice Assistant</h4><p style="font-size:14px;color:var(--text-muted);margin-top:8px;">Get farming advice read aloud in your preferred language.</p></div>
-        <div class="card"><h4>🌐 Multi-Language</h4><p style="font-size:14px;color:var(--text-muted);margin-top:8px;">English, Hausa, Fulfulde, Yoruba, Igbo, and Kanuri support.</p></div>
-        <div class="card"><h4>📊 Market Prices</h4><p style="font-size:14px;color:var(--text-muted);margin-top:8px;">Real-time crop prices from major Nigerian markets.</p></div>
-        <div class="card"><h4>🏪 Marketplace</h4><p style="font-size:14px;color:var(--text-muted);margin-top:8px;">Sell your produce directly to buyers across Nigeria.</p></div>
-        <div class="card"><h4>🌤️ Weather Forecast</h4><p style="font-size:14px;color:var(--text-muted);margin-top:8px;">7-day forecast with farming advice tailored to your region.</p></div>
-        <div class="card"><h4>📱 PWA & Offline</h4><p style="font-size:14px;color:var(--text-muted);margin-top:8px;">Works offline and installs on your phone — no app store needed.</p></div>
-        <div class="card"><h4>💬 Community Forum</h4><p style="font-size:14px;color:var(--text-muted);margin-top:8px;">Connect with other farmers, share knowledge, get help.</p></div>
+        <div class="card feature-grid-card">
+          <div class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+          <div><h4>AI Disease Detection</h4><p>Snap a photo and get instant disease diagnosis with treatment recommendations.</p></div>
+        </div>
+        <div class="card feature-grid-card">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <div><h4>Voice Assistant</h4><p>Get farming advice read aloud in your preferred language.</p></div>
+        </div>
+        <div class="card feature-grid-card">
+          <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div><h4>Multi-Language Support</h4><p>English, Hausa, Fulfulde, Yoruba, Igbo, and Kanuri.</p></div>
+        </div>
+        <div class="card feature-grid-card">
+          <div class="icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div><h4>Live Market Prices</h4><p>Real-time crop prices from major Nigerian markets.</p></div>
+        </div>
+        <div class="card feature-grid-card">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <div><h4>Marketplace</h4><p>Sell your produce directly to buyers across Nigeria.</p></div>
+        </div>
+        <div class="card feature-grid-card">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg></div>
+          <div><h4>Weather Forecast</h4><p>7-day forecast with farming advice tailored to your region.</p></div>
+        </div>
+        <div class="card feature-grid-card">
+          <div class="icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg></div>
+          <div><h4>PWA &amp; Offline</h4><p>Works offline and installs on your phone — no app store needed.</p></div>
+        </div>
+        <div class="card feature-grid-card">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div><h4>Community Forum</h4><p>Connect with farmers, share knowledge, and get help.</p></div>
+        </div>
       </div>
     </div>
   </section>
-  
-  <!-- NEWS -->
+
+  <!-- ========================================================= -->
+  <!-- NEWS                                                        -->
+  <!-- ========================================================= -->
   <section class="page" id="page-news">
     <div class="container">
       <div class="page-header">
-        <h2>📰 Agricultural News</h2>
-        <p>Latest news and updates for Nigerian farmers</p>
+        <div class="section-label">Agricultural News</div>
+        <h2>Latest News</h2>
+        <p>News and updates for Nigerian farmers.</p>
       </div>
       <div id="newsGrid" class="grid-3"></div>
     </div>
   </section>
 
-  <!-- PROFILE -->
+  <!-- ========================================================= -->
+  <!-- PROFILE                                                     -->
+  <!-- ========================================================= -->
   <section class="page" id="page-profile">
     <div class="container">
       <div class="page-header">
-        <h2>👤 My Profile</h2>
+        <div class="section-label">Account</div>
+        <h2>My Profile</h2>
       </div>
+
       <div class="profile-card card">
-        <div class="profile-avatar">👨‍🌾</div>
+        <div class="profile-avatar">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
         <h3 id="profileName">Farmer Demo</h3>
         <p style="color:var(--text-muted);font-size:14px;" id="profileEmail">farmer@agrisense.ai</p>
-        <div style="display:flex;gap:16px;justify-content:center;margin:16px 0;">
-          <span class="badge">🌾 Maize Farmer</span>
-          <span class="badge">📍 Kano State</span>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:16px 0;">
+          <span class="badge">Maize Farmer</span>
+          <span class="badge badge-amber">Kano State</span>
         </div>
-        <button class="btn btn-outline btn-sm" onclick="showToast('Profile editing coming soon!','info')">✏️ Edit Profile</button>
+        <button class="btn btn-outline btn-sm" onclick="showToast('Profile editing coming soon!','info')">Edit Profile</button>
       </div>
+
       <div class="card mt-3">
-        <h4 class="mb-2">⚙️ Settings</h4>
+        <h4 class="mb-3">Settings</h4>
         <div class="form-group">
           <label>Preferred Language</label>
-          <select id="profileLang" onchange="setLang(this.value)" style="padding:10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);font-family:var(--font);color:var(--text);">
+          <select id="profileLang" onchange="setLang(this.value)">
             <option value="en">English</option><option value="ha">Hausa</option><option value="ful">Fulfulde</option>
             <option value="yo">Yoruba</option><option value="ig">Igbo</option><option value="kr">Kanuri</option>
           </select>
         </div>
         <div class="form-group">
           <label>Theme</label>
-          <select id="profileTheme" onchange="toggleTheme()" style="padding:10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);font-family:var(--font);color:var(--text);">
+          <select id="profileTheme" onchange="toggleTheme()">
             <option value="light">Light</option><option value="dark">Dark</option>
           </select>
         </div>
       </div>
     </div>
   </section>
-  
-  <!-- CONTACT -->
+
+  <!-- ========================================================= -->
+  <!-- CONTACT                                                     -->
+  <!-- ========================================================= -->
   <section class="page" id="page-contact">
-    <div class="container" style="max-width:600px;">
+    <div class="container-sm">
       <div class="page-header">
-        <h2>📞 Contact Us</h2>
-        <p>We'd love to hear from you</p>
+        <div class="section-label">Get In Touch</div>
+        <h2>Contact Us</h2>
+        <p>We'd love to hear from you.</p>
       </div>
       <div class="card">
         <form onsubmit="event.preventDefault();showToast('Message sent! We will get back to you.','success')">
           <div class="form-row">
-            <div class="form-group"><label>Name</label><input type="text" required /></div>
-            <div class="form-group"><label>Email</label><input type="email" required /></div>
+            <div class="form-group"><label>Name</label><input type="text" required placeholder="Aliyu Bello" /></div>
+            <div class="form-group"><label>Email</label><input type="email" required placeholder="farmer@example.com" /></div>
           </div>
-          <div class="form-group"><label>Subject</label><input type="text" required /></div>
-          <div class="form-group"><label>Message</label><textarea rows="4" required></textarea></div>
-          <button class="btn btn-primary" type="submit">📨 Send Message</button>
+          <div class="form-group"><label>Subject</label><input type="text" required placeholder="Question about disease detection" /></div>
+          <div class="form-group"><label>Message</label><textarea rows="4" required placeholder="Tell us how we can help..."></textarea></div>
+          <button class="btn btn-primary" type="submit">Send Message</button>
         </form>
       </div>
     </div>
   </section>
 
-  <!-- LOGIN -->
+  <!-- ========================================================= -->
+  <!-- LOGIN                                                       -->
+  <!-- ========================================================= -->
   <section class="page" id="page-login">
-    <div class="container" style="max-width:440px;">
-      <div class="auth-card card">
-        <h2>🔑 Login</h2>
-        <form onsubmit="event.preventDefault();showToast('Logged in successfully! Welcome back.','success')">
-          <div class="form-group"><label>Email</label><input type="email" placeholder="farmer@example.com" required /></div>
-          <div class="form-group"><label>Password</label><input type="password" placeholder="••••••••" required /></div>
-          <div style="text-align:right;margin-bottom:16px;">
-            <a href="#" onclick="navigate('forgot')" style="font-size:13px;">Forgot password?</a>
-          </div>
-          <button class="btn btn-primary" style="width:100%;justify-content:center;">Login</button>
-        </form>
-        <p style="text-align:center;margin-top:16px;font-size:14px;color:var(--text-muted);">
-          Don't have an account? <a href="#" onclick="navigate('register')">Register</a>
-        </p>
-      </div>
-    </div>
-  </section>
-  
-  <!-- REGISTER -->
-  <section class="page" id="page-register">
-    <div class="container" style="max-width:500px;">
-      <div class="auth-card card">
-        <h2>📝 Create Account</h2>
-        <form onsubmit="event.preventDefault();showToast('Account created! Welcome to AgriSense AI 🌱','success')">
-          <div class="form-row">
-            <div class="form-group"><label>First Name</label><input type="text" required /></div>
-            <div class="form-group"><label>Last Name</label><input type="text" required /></div>
-          </div>
-          <div class="form-group"><label>Email</label><input type="email" required /></div>
-          <div class="form-group"><label>Phone</label><input type="tel" placeholder="+234..." required /></div>
-          <div class="form-group"><label>State</label>
-            <select style="padding:10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);font-family:var(--font);color:var(--text);">
-              <option>Kano</option><option>Kaduna</option><option>Lagos</option><option>Abuja</option>
-              <option>Ibadan</option><option>Maiduguri</option><option>Jos</option><option>Sokoto</option>
-              <option>Enugu</option><option>Port Harcourt</option><option>Other</option>
-            </select>
-          </div>
-          <div class="form-group"><label>Farming Type</label>
-            <select style="padding:10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);font-family:var(--font);color:var(--text);">
-              <option>Smallholder Farmer</option><option>Commercial Farmer</option>
-              <option>Extension Officer</option><option>Agricultural Student</option>
-              <option>Food Buyer</option><option>Government Agency</option><option>Other</option>
-            </select>
-          </div>
-          <div class="form-row">
-            <div class="form-group"><label>Password</label><input type="password" required /></div>
-            <div class="form-group"><label>Confirm</label><input type="password" required /></div>
-          </div>
-          <button class="btn btn-primary" style="width:100%;justify-content:center;">🌱 Create Account</button>
-        </form>
-        <p style="text-align:center;margin-top:16px;font-size:14px;color:var(--text-muted);">
-          Already registered? <a href="#" onclick="navigate('login')">Login</a>
-        </p>
-      </div>
+    <div class="auth-card card">
+      <h2>Login</h2>
+      <form onsubmit="event.preventDefault();showToast('Logged in successfully! Welcome back.','success')">
+        <div class="form-group"><label>Email</label><input type="email" placeholder="farmer@example.com" required /></div>
+        <div class="form-group"><label>Password</label><input type="password" placeholder="••••••••" required /></div>
+        <div style="text-align:right;margin-bottom:20px;">
+          <a href="#" onclick="navigate('forgot');return false;" style="font-size:13px;">Forgot password?</a>
+        </div>
+        <button class="btn btn-primary btn-block">Login</button>
+      </form>
+      <p style="text-align:center;margin-top:20px;font-size:14px;color:var(--text-muted);">
+        No account? <a href="#" onclick="navigate('register');return false;">Register</a>
+      </p>
     </div>
   </section>
 
-  <!-- FORGOT PASSWORD -->
-  <section class="page" id="page-forgot">
-    <div class="container" style="max-width:440px;">
-      <div class="auth-card card">
-        <h2>🔐 Reset Password</h2>
-        <p style="font-size:14px;color:var(--text-muted);text-align:center;margin-bottom:20px;">Enter your email and we'll send you a reset link</p>
-        <form onsubmit="event.preventDefault();showToast('Reset link sent to your email!','success')">
-          <div class="form-group"><label>Email</label><input type="email" required /></div>
-          <button class="btn btn-primary" style="width:100%;justify-content:center;">Send Reset Link</button>
-        </form>
-        <p style="text-align:center;margin-top:16px;"><a href="#" onclick="navigate('login')" style="font-size:14px;">← Back to Login</a></p>
-      </div>
+  <!-- ========================================================= -->
+  <!-- REGISTER                                                    -->
+  <!-- ========================================================= -->
+  <section class="page" id="page-register">
+    <div class="auth-card card" style="max-width:520px;">
+      <h2>Create Account</h2>
+      <form onsubmit="event.preventDefault();showToast('Account created! Welcome to AgriSense AI.','success')">
+        <div class="form-row">
+          <div class="form-group"><label>First Name</label><input type="text" required /></div>
+          <div class="form-group"><label>Last Name</label><input type="text" required /></div>
+        </div>
+        <div class="form-group"><label>Email</label><input type="email" required /></div>
+        <div class="form-group"><label>Phone</label><input type="tel" placeholder="+234..." required /></div>
+        <div class="form-group"><label>State</label>
+          <select>
+            <option>Kano</option><option>Kaduna</option><option>Lagos</option><option>Abuja</option>
+            <option>Ibadan</option><option>Maiduguri</option><option>Jos</option><option>Sokoto</option>
+            <option>Enugu</option><option>Port Harcourt</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Farming Type</label>
+          <select>
+            <option>Smallholder Farmer</option><option>Commercial Farmer</option>
+            <option>Extension Officer</option><option>Agricultural Student</option>
+            <option>Food Buyer</option><option>Government Agency</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Password</label><input type="password" required /></div>
+          <div class="form-group"><label>Confirm</label><input type="password" required /></div>
+        </div>
+        <button class="btn btn-primary btn-block">Create Account</button>
+      </form>
+      <p style="text-align:center;margin-top:20px;font-size:14px;color:var(--text-muted);">
+        Already registered? <a href="#" onclick="navigate('login');return false;">Login</a>
+      </p>
     </div>
   </section>
-  
-    <!-- ADMIN -->
+
+  <!-- ========================================================= -->
+  <!-- FORGOT PASSWORD                                             -->
+  <!-- ========================================================= -->
+  <section class="page" id="page-forgot">
+    <div class="auth-card card">
+      <h2>Reset Password</h2>
+      <p style="font-size:14px;color:var(--text-muted);text-align:center;margin-bottom:24px;">Enter your email and we'll send you a reset link.</p>
+      <form onsubmit="event.preventDefault();showToast('Reset link sent to your email!','success')">
+        <div class="form-group"><label>Email</label><input type="email" required /></div>
+        <button class="btn btn-primary btn-block">Send Reset Link</button>
+      </form>
+      <p style="text-align:center;margin-top:20px;">
+        <a href="#" onclick="navigate('login');return false;" style="font-size:14px;">&#8592; Back to Login</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- ADMIN                                                       -->
+  <!-- ========================================================= -->
   <section class="page" id="page-admin">
     <div class="container">
       <div class="page-header">
-        <h2>🛡️ Admin Dashboard</h2>
-        <p>Manage users, products, and platform data</p>
+        <div class="section-label">Administration</div>
+        <h2>Admin Dashboard</h2>
+        <p>Manage users, products, and platform data.</p>
       </div>
+
       <div class="grid-3 mb-4">
         <div class="stat-card"><div class="stat-num">12,400</div><div class="stat-label">Total Users</div></div>
         <div class="stat-card"><div class="stat-num">1,892</div><div class="stat-label">Active Farmers</div></div>
         <div class="stat-card"><div class="stat-num">4,561</div><div class="stat-label">Disease Checks</div></div>
       </div>
+
       <div class="card">
-        <h4 class="mb-2">📋 Recent Users</h4>
+        <h4 class="mb-3">Recent Users</h4>
         <div style="overflow-x:auto;">
           <table class="admin-table">
             <thead><tr><th>Name</th><th>Email</th><th>Type</th><th>State</th><th>Status</th><th>Action</th></tr></thead>
             <tbody>
-              <tr><td>Aliyu Bello</td><td>aliyu@email.com</td><td>Farmer</td><td>Kano</td><td><span style="color:#16a34a;">● Active</span></td><td><button class="btn btn-danger btn-sm">Suspend</button></td></tr>
-              <tr><td>Chioma Okafor</td><td>chioma@email.com</td><td>Trader</td><td>Enugu</td><td><span style="color:#16a34a;">● Active</span></td><td><button class="btn btn-danger btn-sm">Suspend</button></td></tr>
-              <tr><td>Musa Idris</td><td>musa@email.com</td><td>Extension Officer</td><td>Kaduna</td><td><span style="color:#f5a623;">● Pending</span></td><td><button class="btn btn-primary btn-sm">Approve</button></td></tr>
+              <tr><td>Aliyu Bello</td><td>aliyu@email.com</td><td>Farmer</td><td>Kano</td><td><span class="status-active">&#9679; Active</span></td><td><button class="btn btn-danger btn-sm">Suspend</button></td></tr>
+              <tr><td>Chioma Okafor</td><td>chioma@email.com</td><td>Trader</td><td>Enugu</td><td><span class="status-active">&#9679; Active</span></td><td><button class="btn btn-danger btn-sm">Suspend</button></td></tr>
+              <tr><td>Musa Idris</td><td>musa@email.com</td><td>Extension Officer</td><td>Kaduna</td><td><span class="status-pending">&#9679; Pending</span></td><td><button class="btn btn-primary btn-sm">Approve</button></td></tr>
             </tbody>
           </table>
         </div>
@@ -1142,747 +741,157 @@
     </div>
   </section>
 
-  <!-- PRIVACY -->
+  <!-- ========================================================= -->
+  <!-- PRIVACY                                                     -->
+  <!-- ========================================================= -->
   <section class="page" id="page-privacy">
-    <div class="container" style="max-width:700px;">
-      <div class="page-header"><h2>🔒 Privacy Policy</h2></div>
-      <div class="card">
-        <p style="line-height:1.8;color:var(--text-muted);">
-          At AgriSense AI, we take your privacy seriously. We collect minimal data needed to provide our services — 
-          primarily your name, email, location, and crop images you upload for disease detection.
-          We never share your data with third parties without your explicit consent.
-          Your crop images are used only for analysis and are not stored permanently unless you opt in.
-          Read our full policy for details on data handling, storage, and your rights.
-        </p>
+    <div class="container-sm">
+      <div class="page-header">
+        <div class="section-label">Legal</div>
+        <h2>Privacy Policy</h2>
+      </div>
+      <div class="card legal-content">
+        <p>At AgriSense AI, we take your privacy seriously. We collect minimal data needed to provide our services —
+        primarily your name, email, location, and crop images you upload for disease detection.
+        We never share your data with third parties without your explicit consent.
+        Your crop images are used only for analysis and are not stored permanently unless you opt in.
+        Read our full policy for details on data handling, storage, and your rights.</p>
       </div>
     </div>
   </section>
 
-  <!-- TERMS -->
+  <!-- ========================================================= -->
+  <!-- TERMS                                                       -->
+  <!-- ========================================================= -->
   <section class="page" id="page-terms">
-    <div class="container" style="max-width:700px;">
-      <div class="page-header"><h2>📄 Terms of Service</h2></div>
-      <div class="card">
-        <p style="line-height:1.8;color:var(--text-muted);">
-          By using AgriSense AI, you agree to provide accurate information and use the platform responsibly.
-          Disease detection results are AI-generated suggestions and should be verified with agricultural experts.
-          Marketplace transactions are between buyers and sellers — AgriSense AI facilitates but is not responsible
-          for transaction outcomes. We reserve the right to suspend accounts that violate our community guidelines.
-        </p>
+    <div class="container-sm">
+      <div class="page-header">
+        <div class="section-label">Legal</div>
+        <h2>Terms of Service</h2>
+      </div>
+      <div class="card legal-content">
+        <p>By using AgriSense AI, you agree to provide accurate information and use the platform responsibly.
+        Disease detection results are AI-generated suggestions and should be verified with agricultural experts.
+        Marketplace transactions are between buyers and sellers — AgriSense AI facilitates but is not responsible
+        for transaction outcomes. We reserve the right to suspend accounts that violate our community guidelines.</p>
       </div>
     </div>
   </section>
-  
-  <!-- 404 -->
+
+  <!-- ========================================================= -->
+  <!-- 404                                                         -->
+  <!-- ========================================================= -->
   <section class="page" id="page-404">
-    <div class="container text-center" style="padding-top:120px;">
-      <div style="font-size:6rem;">🌿</div>
-      <h2 style="font-size:3rem;margin:16px 0;">404</h2>
-      <p style="color:var(--text-muted);">Oops! This page doesn't exist.</p>
-      <button class="btn btn-primary mt-3" onclick="navigate('home')">← Go Home</button>
+    <div class="not-found">
+      <div class="big-num">404</div>
+      <h2>Page Not Found</h2>
+      <p style="color:var(--text-muted);margin-bottom:28px;">This page doesn't exist.</p>
+      <button class="btn btn-primary" onclick="navigate('home')">&#8592; Go Home</button>
     </div>
   </section>
 
-  <!-- ===== ADD PRODUCT MODAL ===== -->
-  <div id="addProductModal" class="hidden" style="position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;padding:20px;">
-    <div class="card" style="max-width:500px;width:100%;max-height:90vh;overflow-y:auto;">
-      <h4 class="mb-3">➕ List Your Produce</h4>
+  <!-- ========================================================= -->
+  <!-- ADD PRODUCT MODAL                                           -->
+  <!-- ========================================================= -->
+  <div id="addProductModal" class="modal-backdrop hidden">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeAddProduct()" aria-label="Close modal">&#10005;</button>
+      <h4>List Your Produce</h4>
       <form onsubmit="event.preventDefault();addProduct()">
-        <div class="form-group"><label>Product Name</label><input id="prodName" placeholder="e.g. Fresh Tomatoes" required /></div>
+        <div class="form-group"><label>Product Name</label><input id="prodName" placeholder="Fresh Tomatoes" required /></div>
         <div class="form-row">
           <div class="form-group"><label>Category</label>
-            <select id="prodCategory" style="padding:10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);font-family:var(--font);color:var(--text);">
+            <select id="prodCategory">
               <option>Grains</option><option>Vegetables</option><option>Fruits</option><option>Tubers</option><option>Livestock</option>
             </select>
           </div>
-          <div class="form-group"><label>Price (₦)</label><input type="number" id="prodPrice" placeholder="5000" required /></div>
+          <div class="form-group"><label>Price (&#8358;)</label><input type="number" id="prodPrice" placeholder="5000" required /></div>
         </div>
         <div class="form-group"><label>Unit</label>
-          <select id="prodUnit" style="padding:10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);font-family:var(--font);color:var(--text);">
-            <option>kg</option><option>bag</option><option>crate</option><option>piece</option><option>bunch</option>
-          </select>
+          <select id="prodUnit"><option>kg</option><option>bag</option><option>crate</option><option>piece</option><option>bunch</option></select>
         </div>
         <div class="form-group"><label>Location</label><input id="prodLocation" placeholder="Kano State" required /></div>
         <div class="form-group"><label>Description</label><textarea id="prodDesc" rows="2" placeholder="Fresh organic tomatoes..."></textarea></div>
         <div class="form-group"><label>Contact Phone</label><input id="prodPhone" placeholder="+234..." required /></div>
-        <div style="display:flex;gap:8px;">
-          <button class="btn btn-primary" type="submit">✅ List Product</button>
-          <button class="btn btn-outline" type="button" onclick="closeAddProduct()">Cancel</button>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-primary" type="submit">List Product</button>
+          <button class="btn btn-ghost" type="button" onclick="closeAddProduct()">Cancel</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- ===== NEW POST MODAL ===== -->
-  <div id="newPostModal" class="hidden" style="position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;padding:20px;">
-    <div class="card" style="max-width:500px;width:100%;">
-      <h4 class="mb-3">✏️ New Forum Post</h4>
+  <!-- ========================================================= -->
+  <!-- NEW FORUM POST MODAL                                        -->
+  <!-- ========================================================= -->
+  <div id="newPostModal" class="modal-backdrop hidden">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeNewPost()" aria-label="Close modal">&#10005;</button>
+      <h4>New Forum Post</h4>
       <form onsubmit="event.preventDefault();addForumPost()">
         <div class="form-group"><label>Title</label><input id="postTitle" placeholder="How to treat cassava mosaic?" required /></div>
         <div class="form-group"><label>Topic</label>
-          <select id="postTopic" style="padding:10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);font-family:var(--font);color:var(--text);">
+          <select id="postTopic">
             <option>Crops</option><option>Pests</option><option>Weather</option><option>Market</option><option>Techniques</option>
           </select>
         </div>
         <div class="form-group"><label>Content</label><textarea id="postContent" rows="4" placeholder="Share your question or knowledge..."></textarea></div>
-        <div style="display:flex;gap:8px;">
-          <button class="btn btn-primary" type="submit">📨 Post</button>
-          <button class="btn btn-outline" type="button" onclick="closeNewPost()">Cancel</button>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-primary" type="submit">Post</button>
+          <button class="btn btn-ghost" type="button" onclick="closeNewPost()">Cancel</button>
         </div>
       </form>
     </div>
   </div>
-  
-   <!-- ===== FOOTER ===== -->
+
+  <!-- ========================================================= -->
+  <!-- FOOTER                                                      -->
+  <!-- ========================================================= -->
   <footer>
     <div class="container">
       <div class="grid-4">
         <div>
-          <h5>🌿 AgriSense AI</h5>
-          <p style="font-size:13px;color:var(--text-muted);line-height:1.6;">AI-powered farming for every Nigerian farmer. Smart, simple, and accessible.</p>
+          <div class="footer-logo">Agri<span>Sense</span> AI</div>
+          <p>AI-powered farming for every Nigerian farmer. Smart, simple, and accessible.</p>
         </div>
         <div>
-          <h5>Quick Links</h5>
-          <a href="#" onclick="navigate('detect')">Disease Detection</a>
-          <a href="#" onclick="navigate('chat')">AI Assistant</a>
-          <a href="#" onclick="navigate('marketplace')">Marketplace</a>
-          <a href="#" onclick="navigate('prices')">Market Prices</a>
+          <h5>Product</h5>
+          <a href="#" onclick="navigate('detect');return false;">Disease Detection</a>
+          <a href="#" onclick="navigate('chat');return false;">AI Assistant</a>
+          <a href="#" onclick="navigate('marketplace');return false;">Marketplace</a>
+          <a href="#" onclick="navigate('prices');return false;">Market Prices</a>
+          <a href="#" onclick="navigate('weather');return false;">Weather</a>
         </div>
         <div>
-          <h5>Resources</h5>
-          <a href="#" onclick="navigate('about')">About Us</a>
-          <a href="#" onclick="navigate('features')">Features</a>
-          <a href="#" onclick="navigate('news')">News</a>
-          <a href="#" onclick="navigate('forum')">Community</a>
+          <h5>Company</h5>
+          <a href="#" onclick="navigate('about');return false;">About</a>
+          <a href="#" onclick="navigate('features');return false;">Features</a>
+          <a href="#" onclick="navigate('news');return false;">News</a>
+          <a href="#" onclick="navigate('forum');return false;">Community</a>
+          <a href="#" onclick="navigate('contact');return false;">Contact</a>
         </div>
         <div>
           <h5>Legal</h5>
-          <a href="#" onclick="navigate('privacy')">Privacy Policy</a>
-          <a href="#" onclick="navigate('terms')">Terms of Service</a>
-          <a href="#" onclick="navigate('contact')">Contact</a>
+          <a href="#" onclick="navigate('privacy');return false;">Privacy Policy</a>
+          <a href="#" onclick="navigate('terms');return false;">Terms of Service</a>
+          <a href="#" onclick="navigate('login');return false;">Login</a>
+          <a href="#" onclick="navigate('register');return false;">Register</a>
         </div>
       </div>
-      <div class="footer-bottom">© 2026 AgriSense AI. Built for Nigerian farmers. 🇳🇬</div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 AgriSense AI. Built for Nigerian farmers.</span>
+        <span class="footer-flag">&#127475;&#127468;</span>
+      </div>
     </div>
   </footer>
 
-  <script>
-  // ===== SPA NAVIGATION =====
-    let currentPage = 'home';
-    const pages = document.querySelectorAll('.page');
-    const navLinks = document.querySelectorAll('.nav-links a[data-page]');
+  <!-- ========================================================= -->
+  <!-- SCRIPTS (order matters: nav before features, init last)     -->
+  <!-- ========================================================= -->
+  <script src="/js/nav.js"></script>
+  <script src="/js/hero.js"></script>
+  <script src="/js/features.js"></script>
+  <script src="/js/init.js"></script>
 
-    function navigate(page) {
-      // Hide more dropdown
-      document.getElementById('moreDropdown').classList.add('hidden');
-      // Hide lang modal
-      document.getElementById('langModal').classList.add('hidden');
-
-      pages.forEach(p => p.classList.remove('active'));
-      const target = document.getElementById('page-' + page);
-      if (target) {
-        target.classList.add('active');
-        currentPage = page;
-      } else {
-        document.getElementById('page-404').classList.add('active');
-        currentPage = '404';
-      }
-
-      navLinks.forEach(a => {
-        a.classList.toggle('active', a.dataset.page === page);
-      });
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      
-      // Close mobile nav
-      document.getElementById('navLinks').classList.remove('open');
-    }
-
-    // Nav link clicks
-    document.querySelectorAll('.nav-links a').forEach(a => {
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        if (a.dataset.page === 'more') {
-          const dd = document.getElementById('moreDropdown');
-          dd.classList.toggle('hidden');
-          document.getElementById('langModal').classList.add('hidden');
-          return;
-        }
-        const page = a.dataset.page;
-        if (page) navigate(page);
-      });
-    });
-
-    // ===== THEME =====
-    let darkMode = false;
-    function toggleTheme() {
-      darkMode = !darkMode;
-      document.body.classList.toggle('dark', darkMode);
-      document.getElementById('themeBtn').textContent = darkMode ? '☀️' : '🌙';
-      if (document.getElementById('profileTheme')) {
-        document.getElementById('profileTheme').value = darkMode ? 'dark' : 'light';
-      }
-    }
-  
-  // ===== LANGUAGE =====
-    let currentLang = 'en';
-    function toggleLang() {
-      const m = document.getElementById('langModal');
-      m.classList.toggle('hidden');
-      document.getElementById('moreDropdown').classList.add('hidden');
-    }
-    function setLang(lang) {
-      currentLang = lang;
-      document.getElementById('langModal').classList.add('hidden');
-      if (document.getElementById('profileLang')) {
-        document.getElementById('profileLang').value = lang;
-      }
-      // Update chat lang selector
-      document.querySelectorAll('#chatLangSelector button').forEach(b => {
-        b.classList.toggle('active', b.dataset.lang === lang);
-      });
-      showToast(`🌐 Language changed to ${langLabels[lang] || 'English'}`, 'info');
-    }
-    const langLabels = { en:'English', ha:'Hausa', ful:'Fulfulde', yo:'Yoruba', ig:'Igbo', kr:'Kanuri' };
-
-    // Chat lang selector
-    document.querySelectorAll('#chatLangSelector button').forEach(b => {
-      b.addEventListener('click', () => setLang(b.dataset.lang));
-    });
-
-    // Click outside to close dropdowns
-    document.addEventListener('click', e => {
-      if (!e.target.closest('#langModal') && !e.target.closest('.lang-toggle')) {
-        document.getElementById('langModal').classList.add('hidden');
-      }
-      if (!e.target.closest('#moreDropdown') && !e.target.closest('[data-page="more"]')) {
-        document.getElementById('moreDropdown').classList.add('hidden');
-      }
-    });
-
-    // ===== TOAST =====
-    function showToast(msg, type = 'info') {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.className = 'toast ' + type + ' show';
-      clearTimeout(t._timeout);
-      t._timeout = setTimeout(() => t.classList.remove('show'), 3000);
-    }
-  
-  // ===== DISEASE DETECTION =====
-    let uploadedFile = null;
-
-    function handleImageUpload(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      if (file.size > 5 * 1024 * 1024) {
-        showToast('Image too large. Max 5MB.', 'error');
-        return;
-      }
-      uploadedFile = file;
-      const reader = new FileReader();
-      reader.onload = function(ev) {
-        document.getElementById('previewImg').src = ev.target.result;
-        document.getElementById('imagePreview').classList.remove('hidden');
-        document.getElementById('diseaseResult').classList.add('hidden');
-      };
-      reader.readAsDataURL(file);
-    }
-
-    function analyzeDisease() {
-      if (!uploadedFile) {
-        showToast('Please upload a crop image first.', 'error');
-        return;
-      }
-      document.getElementById('diseaseLoading').classList.remove('hidden');
-      document.getElementById('diseaseResult').classList.add('hidden');
-
-      // Simulate AI analysis
-      setTimeout(() => {
-        document.getElementById('diseaseLoading').classList.add('hidden');
-        document.getElementById('diseaseResult').classList.remove('hidden');
-
-        const diseases = [
-          { name: 'Cassava Mosaic Disease', emoji: '🍃', conf: '94.2%', 
-            treatment: 'Remove and destroy infected plants. Use resistant varieties like TME 419. Apply insecticide to control whitefly vectors.',
-            prevention: 'Plant certified virus-free cuttings. Use intercropping with legumes. Maintain field sanitation.' },
-          { name: 'Maize Rust', emoji: '🌽', conf: '91.7%',
-            treatment: 'Apply fungicides containing tebuconazole or propiconazole. Remove infected leaves. Improve air circulation.',
-            prevention: 'Plant resistant hybrids. Practice crop rotation. Avoid overhead irrigation.' },
-          { name: 'Tomato Late Blight', emoji: '🍅', conf: '96.1%',
-            treatment: 'Apply copper-based fungicides immediately. Remove and destroy affected fruits and leaves.',
-            prevention: 'Use resistant varieties. Ensure proper spacing. Water at soil level not on leaves.' },
-          { name: 'Yam Anthracnose', emoji: '🥔', conf: '88.9%',
-            treatment: 'Remove infected vines. Apply mancozeb or copper fungicides. Improve drainage.',
-            prevention: 'Use disease-free setts. Practice crop rotation. Plant in well-drained soil.' },
-          { name: 'Rice Blast', emoji: '🌾', conf: '93.5%',
-            treatment: 'Apply tricyclazole or carbendazim. Reduce nitrogen fertilizer. Flood fields to suppress disease.',
-            prevention: 'Plant resistant varieties. Use balanced fertilization. Space planting to reduce humidity.' },
-          { name: 'Sorghum Smut', emoji: '🌿', conf: '90.3%',
-            treatment: 'Remove and destroy infected heads before spores release. Apply seed treatment fungicides.',
-            prevention: 'Use certified treated seeds. Practice crop rotation. Remove crop residues.' }
-        ];
-
-        const result = diseases[Math.floor(Math.random() * diseases.length)];
-        document.getElementById('diseaseName').textContent = result.name;
-        document.getElementById('diseaseConfidence').textContent = `Confidence: ${result.conf}`;
-        document.getElementById('diseaseEmoji').textContent = result.emoji;
-        document.getElementById('treatmentText').textContent = result.treatment;
-        document.getElementById('preventionText').textContent = result.prevention;
-
-        // Update dashboard
-        updateDash('diseases');
-        showToast('✅ Diagnosis complete!', 'success');
-      }, 2500);
-    }
-  
-  
-    // ===== CHAT =====
-    function sendChat() {
-      const input = document.getElementById('chatInput');
-      const msg = input.value.trim();
-      if (!msg) return;
-
-      const container = document.getElementById('chatMessages');
-      
-      // Add user message
-      const userDiv = document.createElement('div');
-      userDiv.className = 'chat-message user';
-      userDiv.innerHTML = `<div class="msg-label">You</div>${escapeHtml(msg)}`;
-      container.appendChild(userDiv);
-      input.value = '';
-
-      // Simulate AI thinking
-      const typingDiv = document.createElement('div');
-      typingDiv.className = 'chat-message assistant';
-      typingDiv.innerHTML = `<div class="msg-label">🌿 AgriSense AI</div><div class="loader" style="margin:0;"></div>`;
-      container.appendChild(typingDiv);
-      container.scrollTop = container.scrollHeight;
-
-      const lang = currentLang;
-      const responses = {
-        en: [
-          "Great question! For maize farming in Nigeria, plant at the start of the rainy season (April-May). Use improved varieties like SAMMAZ 52. Apply NPK fertilizer at 2-3 weeks after planting.",
-          "To control fall armyworm, use neem extract spray or recommended insecticides like emamectin benzoate. Early detection is key — check for leaf damage every morning.",
-          "For cassava, the best planting time is at the onset of rains. Use disease-free cuttings 25cm long. Harvest after 12-18 months depending on the variety.",
-          "Tomatoes need well-drained soil with pH 5.5-6.5. Stake your plants to reduce disease. Water consistently — irregular watering causes blossom end rot.",
-          "Soil testing is important! Take samples from different parts of your farm, mix them, and test at an agricultural extension office. This tells you what nutrients your soil needs.",
-          "For poultry farming, ensure proper housing with ventilation. Vaccinate against Newcastle disease. Feed balanced rations with 18-20% protein for layers.",
-          "Rice farming: prepare your paddy field well. Flood to 5-10cm depth after transplanting. Apply nitrogen fertilizer at tillering and panicle initiation stages.",
-          "To make organic pesticide: blend 500g of neem leaves with 100g of garlic and 10g of chili. Soak in 5L water overnight, strain and spray."
-        ],
-        ha: [
-          "Tambaya mai kyau! Don noman masara a Najeriya, shuka a farkon damina (Afrilu-Mayu). Yi amfani da iri ingantattu kamar SAMMAZ 52. Yi amfani da taki NPK bayan makonni 2-3.",
-          "Don shawo kan tsutsar fall armyworm, yi amfani da ruwan neem ko magungunan kashe kwari kamar emamectin benzoate. Gano wuri yana da mahimmanci.",
-          "Don rogo, mafi kyawun lokacin shuka shine farkon damina. Yi amfani da tsire-tsire marasa cuta. Girbi bayan watanni 12-18.",
-          "Tumatir suna buƙatar ƙasa mai laushi da pH 5.5-6.5. Ɗora turakun don rage cututtuka. Yi shayarwa akai-akai.",
-          "Gwajin ƙasa yana da mahimmanci! Ɗauki samfura daga sassa daban-daban na gonarka, haɗa su, kuma gwada su a ofishin ƙaramar hukuma."
-        ],
-        yo: [
-          "Ibeere to dara! Fun gbigbin agbado ni Naijiria, gbin ni ibẹrẹ akoko ojo (Oṣu Kẹrin-Karun). Lo awọn iru didara bii SAMMAZ 52. Fi ajile NPK ni ọsẹ 2-3 lẹhin gbigbin.",
-          "Lati ṣakoso fall armyworm, lo omi neem tabi awọn oogun kokoro bi emamectin benzoate. Ṣawari ibẹrẹ ṣe pataki.",
-          "Fun gbigbin isu, akoko ti o dara julọ ni ibẹrẹ ojo. Lo awọn eso ti ko ni arun. Ikore lẹhin oṣu 12-18."
-        ],
-        ig: [
-          "Ajụjụ mara mma! Maka ịkụ ọka na Naijiria, kụọ na mmalite oge mmiri (Eprel-Mee). Jiri ụdị ndị ka mma dị ka SAMMAZ 52. Tinye fatịlaịza NPK n'izu 2-3 ka ịkụsịrị.",
-          "Iji chịkwaa fall armyworm, jiri mmiri neem ma ọ bụ ọgwụ ụmụ ahụhụ dị ka emamectin benzoate. Nchọpụta mbụ dị mkpa.",
-          "Maka akpu, oge kacha mma ịkụ ya bụ mmalite oge mmiri. Jiri mkpụrụ na-enweghị ọrịa. Gbute mgbe ọnwa 12-18 gachara."
-        ],
-        ful: [
-          "Lamɓe moƴƴe! Ngam remri masiro nder Naajeeriya, remu nder fuɗɗam dumgol (Abriil-Mee). Huutoro iri moƴƴi bana SAMMAZ 52. Huutoro ñamri NPK nder balɗe 14-21 caggal remri.",
-          "Ngam haɓugo bee nyiwu fall armyworm, huutoro ndiyam neem maa kahol bana emamectin benzoate. Yiɓugol subaka hino anndaa.",
-          "Ngam roogo, sahaaji ɓurɗi moƴƴude ngam remru ko fuɗɗam dumgol. Huutoro remruɗe ɗe ngalaa nyawu. Timminugo caggal lebbi 12-18."
-        ],
-        kr: [
-          "Tambayowu cidau! Kowa ngama masara shibe Najeriya, shiboro wanyike dagan (April-May). SAMMAZ 52 awa gowuri kuruwa. NPK taki wane 2-3 shibene ngaski.",
-          "Fall armyworm kashinangaro, neem nyiji awa emamectin benzoate defowo. Dagan cidau buktuwa.",
-          "Kowa ngama rogo, wanyike dagan shiboro cidau. Kesuwa awa kuruwa. 12-18 wunan kwaskene."
-        ]
-      };
-      
-      setTimeout(() => {
-        container.removeChild(typingDiv);
-        
-        const replyDiv = document.createElement('div');
-        replyDiv.className = 'chat-message assistant';
-        const responsesForLang = responses[lang] || responses['en'];
-        const reply = responsesForLang[Math.floor(Math.random() * responsesForLang.length)];
-        replyDiv.innerHTML = `<div class="msg-label">🌿 AgriSense AI (${langLabels[lang] || 'English'})</div>${escapeHtml(reply)}`;
-        container.appendChild(replyDiv);
-        container.scrollTop = container.scrollHeight;
-
-        updateDash('chats');
-      }, 1500 + Math.random() * 1500);
-    }
-
-    function escapeHtml(text) {
-      const d = document.createElement('div');
-      d.textContent = text;
-      return d.innerHTML;
-    }
-
-    // ===== MARKETPLACE =====
-    let products = [
-      { name:'Fresh Tomatoes', category:'Vegetables', price:6500, unit:'crate', location:'Kano State', phone:'+2348012345678', desc:'Farm-fresh Roma tomatoes' },
-      { name:'Organic Maize', category:'Grains', price:32000, unit:'bag', location:'Kaduna State', phone:'+2348023456789', desc:'White maize, freshly harvested' },
-      { name:'Cassava Tubers', category:'Tubers', price:8500, unit:'bag', location:'Benue State', phone:'+2348034567890', desc:'Sweet cassava, ready for gari processing' },
-      { name:'Yam Tubers', category:'Tubers', price:12000, unit:'bag', location:'Oyo State', phone:'+2348045678901', desc:'White yam, best for pounding' },
-      { name:'Fresh Peppers', category:'Vegetables', price:4500, unit:'crate', location:'Kano State', phone:'+2348056789012', desc:'Red tattasai and rodo' },
-      { name:'Honey (Pure)', category:'Other', price:3500, unit:'kg', location:'Adamawa State', phone:'+2348067890123', desc:'Natural forest honey' },
-      { name:'Soybeans', category:'Grains', price:28000, unit:'bag', location:'Benue State', phone:'+2348078901234', desc:'High-protein soybeans' },
-      { name:'Goat (Live)', category:'Livestock', price:45000, unit:'piece', location:'Sokoto State', phone:'+2348089012345', desc:'Healthy adult goat' },
-      { name:'Fresh Fish', category:'Livestock', price:2500, unit:'kg', location:'Lagos State', phone:'+2348090123456', desc:'Fresh tilapia from local pond' },
-      { name:'Groundnut', category:'Grains', price:22000, unit:'bag', location:'Kano State', phone:'+2348101234567', desc:'Dried groundnuts, premium quality' }
-    ];
-
-    function renderMarketplace() {
-      const grid = document.getElementById('marketGrid');
-      const search = document.getElementById('marketSearch').value.toLowerCase();
-      const filter = document.getElementById('marketFilter').value;
-      
-      let filtered = products;
-      if (search) filtered = filtered.filter(p => p.name.toLowerCase().includes(search));
-      if (filter !== 'all') filtered = filtered.filter(p => p.category === filter);
-
-      if (filtered.length === 0) {
-        grid.innerHTML = '<div class="text-center" style="grid-column:1/-1;padding:40px;color:var(--text-muted);">No products found. Be the first to list!</div>';
-        return;
-      }
-
-      grid.innerHTML = filtered.map((p, i) => `
-        <div class="product-card">
-          <div class="img">🌾</div>
-          <div class="body">
-            <h4>${escapeHtml(p.name)}</h4>
-            <div class="price">₦${p.price.toLocaleString()}/${p.unit}</div>
-            <div class="meta">
-              <span>📍 ${escapeHtml(p.location)}</span>
-              <span>📁 ${p.category}</span>
-            </div>
-            <p style="font-size:13px;color:var(--text-muted);margin-top:6px;">${escapeHtml(p.desc)}</p>
-            <button class="btn btn-primary btn-sm mt-2" onclick="contactSeller('${escapeHtml(p.phone)}', '${escapeHtml(p.name)}')">📞 Contact Seller</button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-  function contactSeller(phone, name) {
-      showToast(`📞 Contact ${name} at ${phone}`, 'info');
-    }
-
-    function showAddProduct() {
-      document.getElementById('addProductModal').classList.remove('hidden');
-    }
-
-    function closeAddProduct() {
-      document.getElementById('addProductModal').classList.add('hidden');
-    }
-
-    function addProduct() {
-      const name = document.getElementById('prodName').value.trim();
-      const category = document.getElementById('prodCategory').value;
-      const price = parseFloat(document.getElementById('prodPrice').value);
-      const unit = document.getElementById('prodUnit').value;
-      const location = document.getElementById('prodLocation').value.trim();
-      const desc = document.getElementById('prodDesc').value.trim();
-      const phone = document.getElementById('prodPhone').value.trim();
-
-      if (!name || !price || !location || !phone) {
-        showToast('Please fill all required fields.', 'error');
-        return;
-      }
-
-      products.unshift({ name, category, price, unit, location, desc, phone });
-      renderMarketplace();
-      closeAddProduct();
-      document.querySelector('#addProductModal form').reset();
-      showToast('✅ Product listed successfully!', 'success');
-      updateDash('products');
-    }
-
-    // ===== MARKET PRICES =====
-    const priceData = [
-      { crop:'Maize (White)', market:'Dawanau, Kano', price:28500, unit:'bag (100kg)', trend:'up' },
-      { crop:'Maize (Yellow)', market:'Bata, Nasarawa', price:27000, unit:'bag (100kg)', trend:'down' },
-      { crop:'Rice (Local)', market:'Aba, Abia', price:45000, unit:'bag (50kg)', trend:'up' },
-      { crop:'Rice (Imported)', market:'Mile 12, Lagos', price:52000, unit:'bag (50kg)', trend:'up' },
-      { crop:'Tomatoes', market:'Yankaba, Kano', price:5800, unit:'crate', trend:'down' },
-      { crop:'Peppers (Rodo)', market:'Kurmi, Kano', price:4200, unit:'crate', trend:'up' },
-      { crop:'Onions', market:'Gwadabawa, Sokoto', price:8500, unit:'bag', trend:'stable' },
-      { crop:'Cassava', market:'Otukpo, Benue', price:7500, unit:'bag', trend:'up' },
-      { crop:'Yam', market:'Bodija, Ibadan', price:11000, unit:'bag', trend:'stable' },
-      { crop:'Groundnut', market:'Sabon Gari, Kano', price:24000, unit:'bag', trend:'down' },
-      { crop:'Soybeans', market:'Makurdi, Benue', price:26500, unit:'bag', trend:'up' },
-      { crop:'Cowpea', market:'Mando, Kaduna', price:32000, unit:'bag', trend:'up' },
-      { crop:'Sorghum', market:'Gusau, Zamfara', price:19500, unit:'bag', trend:'down' },
-      { crop:'Millet', market:'Potiskum, Yobe', price:18000, unit:'bag', trend:'stable' },
-      { crop:'Cocoa', market:'Akure, Ondo', price:850000, unit:'tonne', trend:'up' }
-    ];
-  
-  function renderPrices() {
-      const tbody = document.getElementById('priceBody');
-      tbody.innerHTML = priceData.map(p => `
-        <tr>
-          <td><strong>${p.crop}</strong></td>
-          <td>${p.market}</td>
-          <td>₦${p.price.toLocaleString()}</td>
-          <td>${p.unit}</td>
-          <td class="${p.trend === 'up' ? 'up' : p.trend === 'down' ? 'down' : ''}">
-            ${p.trend === 'up' ? '📈 Up' : p.trend === 'down' ? '📉 Down' : '➡️ Stable'}
-          </td>
-          <td style="font-size:12px;color:var(--text-muted);">Today</td>
-        </tr>
-      `).join('');
-    }
-
-    // ===== WEATHER =====
-    const weatherData = {
-      'Kano': { temp:32, condition:'☀️ Sunny', humidity:45, wind:12, rain:0, uv:6, advice:'Good day for planting. Soil moisture levels are adequate.', crops:'Maize, Millet, Sorghum, Groundnut' },
-      'Kaduna': { temp:29, condition:'⛅ Partly Cloudy', humidity:52, wind:10, rain:10, uv:5, advice:'Good conditions for transplanting seedlings.', crops:'Maize, Yam, Cassava, Rice' },
-      'Lagos': { temp:30, condition:'🌧️ Light Rain', humidity:78, wind:15, rain:60, uv:3, advice:'Rain expected. Hold off on fertilizer application.', crops:'Cassava, Vegetables, Rice, Plantain' },
-      'Abuja': { temp:31, condition:'☀️ Sunny', humidity:40, wind:8, rain:0, uv:7, advice:'Ideal for groundnut and soybean planting.', crops:'Maize, Sorghum, Soybean, Groundnut' },
-      'Ibadan': { temp:28, condition:'⛅ Partly Cloudy', humidity:65, wind:9, rain:20, uv:4, advice:'Good for yam mound preparation.', crops:'Yam, Cassava, Maize, Cocoa' },
-      'Maiduguri': { temp:36, condition:'☀️ Sunny', humidity:25, wind:18, rain:0, uv:9, advice:'Very hot. Irrigate crops in the early morning or evening.', crops:'Millet, Sorghum, Cowpea, Groundnut' },
-      'Jos': { temp:25, condition:'⛅ Cloudy', humidity:58, wind:11, rain:15, uv:4, advice:'Cool conditions good for vegetable farming.', crops:'Potatoes, Cabbage, Tomatoes, Carrots' },
-      'Sokoto': { temp:34, condition:'☀️ Sunny', humidity:30, wind:14, rain:0, uv:8, advice:'Dry conditions. Focus on drought-resistant crops.', crops:'Sorghum, Millet, Cowpea, Groundnut' },
-      'Enugu': { temp:29, condition:'⛅ Partly Cloudy', humidity:62, wind:7, rain:30, uv:5, advice:'Good for cassava and yam planting.', crops:'Yam, Cassava, Maize, Palm Oil' },
-      'Port Harcourt': { temp:28, condition:'🌧️ Rainy', humidity:82, wind:13, rain:70, uv:2, advice:'Heavy rain expected. Ensure proper drainage.', crops:'Cassava, Plantain, Oil Palm, Vegetables' }
-    };
-
-    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-    function updateWeather() {
-      const region = document.getElementById('weatherRegion').value;
-      const data = weatherData[region] || weatherData['Kano'];
-      
-      document.getElementById('weatherCity').textContent = region;
-      document.getElementById('weatherTemp').textContent = `${data.temp}°C`;
-      document.getElementById('weatherCondition').textContent = data.condition;
-      document.getElementById('weatherHumidity').textContent = `${data.humidity}%`;
-      document.getElementById('weatherWind').textContent = `${data.wind} km/h`;
-      document.getElementById('weatherRain').textContent = `${data.rain}%`;
-      document.getElementById('weatherUv').textContent = data.uv;
-      document.getElementById('weatherAdvice').textContent = data.advice;
-      document.getElementById('weatherCrops').textContent = data.crops;
-
-      // 7-day forecast
-      const week = document.getElementById('weatherWeek');
-      const today = new Date();
-      week.innerHTML = '';
-      for (let i = 0; i < 7; i++) {
-        const d = new Date(today);
-        d.setDate(d.getDate() + i);
-        const dayTemp = data.temp + Math.floor(Math.random() * 6) - 3;
-        const icons = ['☀️', '⛅', '🌧️', '☀️', '⛅', '🌧️', '☀️'];
-        const icon = icons[(d.getDay() + i) % icons.length];
-        week.innerHTML += `
-          <div class="weather-day">
-            <div class="day-name">${dayNames[d.getDay()]}</div>
-            <div style="font-size:1.5rem;margin:4px 0;">${icon}</div>
-            <div class="day-temp">${dayTemp}°</div>
-          </div>
-        `;
-      }
-    }
-
-    // ===== FORUM =====
-    let forumPosts = [
-      { title:'Best practices for cassava farming in dry season?', topic:'Techniques', author:'Aliyu B.', date:'2 hours ago', content:'I need advice on how to maintain cassava during the dry months. Any tips?' },
-      { title:'Fall armyworm outbreak in Kaduna', topic:'Pests', author:'Fatima S.', date:'5 hours ago', content:'There is a serious armyworm infestation in my area. What is the best treatment?' },
-      { title:'Tomato prices dropping in Kano market', topic:'Market', author:'Chinedu O.', date:'1 day ago', content:'Tomato prices have dropped 30% this week. Anyone know why?' },
-      { title:'When to plant maize in Benue?', topic:'Crops', author:'Terseer A.', date:'2 days ago', content:'What is the optimal planting window for maize in Benue State this season?' },
-      { title:'Organic fertilizer recommendations', topic:'Techniques', author:'Grace O.', date:'3 days ago', content:'Looking for affordable organic fertilizer options for my vegetable farm.' },
-      { title:'Rainfall forecast for August in the North', topic:'Weather', author:'Sani M.', date:'4 days ago', content:'Any predictions for rainfall patterns this August in northern Nigeria?' }
-    ];
-
-    function renderForum() {
-      const container = document.getElementById('forumPosts');
-      const filter = document.getElementById('forumFilter').value;
-      let filtered = forumPosts;
-      if (filter !== 'all') filtered = filtered.filter(p => p.topic === filter);
-
-      if (filtered.length === 0) {
-        container.innerHTML = '<div class="text-center" style="padding:40px;color:var(--text-muted);">No posts yet. Start a discussion!</div>';
-        return;
-      }
-
-      container.innerHTML = filtered.map(p => `
-        <div class="forum-post">
-          <div style="display:flex;justify-content:space-between;align-items:start;">
-            <h4>${escapeHtml(p.title)}</h4>
-            <span class="badge">${p.topic}</span>
-          </div>
-          <p style="font-size:14px;color:var(--text-muted);margin:6px 0;">${escapeHtml(p.content)}</p>
-          <div class="meta">
-            <span>👤 ${escapeHtml(p.author)}</span>
-            <span>🕐 ${p.date}</span>
-          </div>
-        </div>
-      `).join('');
-    }
-  
-  function showNewPost() {
-      document.getElementById('newPostModal').classList.remove('hidden');
-    }
-
-    function closeNewPost() {
-      document.getElementById('newPostModal').classList.add('hidden');
-    }
-
-    function addForumPost() {
-      const title = document.getElementById('postTitle').value.trim();
-      const topic = document.getElementById('postTopic').value;
-      const content = document.getElementById('postContent').value.trim();
-      if (!title || !content) {
-        showToast('Please fill in title and content.', 'error');
-        return;
-      }
-      forumPosts.unshift({
-        title, topic, author:'You', date:'Just now', content
-      });
-      renderForum();
-      closeNewPost();
-      document.querySelector('#newPostModal form').reset();
-      showToast('✅ Post added to community!', 'success');
-    }
-
-    // ===== DASHBOARD =====
-    const dashCounts = { diseases:0, chats:0, products:0, priceChecks:0 };
-
-    function updateDash(type) {
-      if (dashCounts[type] !== undefined) {
-        dashCounts[type]++;
-        document.getElementById('dashDiseases').textContent = dashCounts.diseases;
-        document.getElementById('dashChats').textContent = dashCounts.chats;
-        document.getElementById('dashProducts').textContent = dashCounts.products;
-        document.getElementById('dashPriceChecks').textContent = dashCounts.priceChecks;
-      }
-      updateActivity();
-    }
-
-    function updateActivity() {
-      const container = document.getElementById('dashActivity');
-      const activities = [];
-      if (dashCounts.diseases > 0) activities.push(`🔍 ${dashCounts.diseases} disease ${dashCounts.diseases === 1 ? 'detection' : 'detections'}`);
-      if (dashCounts.chats > 0) activities.push(`💬 ${dashCounts.chats} AI chat ${dashCounts.chats === 1 ? 'session' : 'sessions'}`);
-      if (dashCounts.products > 0) activities.push(`🏪 ${dashCounts.products} product${dashCounts.products > 1 ? 's' : ''} listed`);
-      if (activities.length === 0) {
-        container.innerHTML = '<p style="color:var(--text-muted);font-size:14px;">No activity yet. Start using AgriSense AI!</p>';
-      } else {
-        container.innerHTML = activities.map(a => `<div style="padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;">${a}</div>`).join('');
-      }
-    }
-
-    // ===== NEWS =====
-    const newsArticles = [
-      { title:'Federal Government Launches New Agricultural Extension Program', source:'NAN', date:'2 days ago', summary:'The FG has announced a ₦50 billion program to train 10,000 extension officers across Nigeria.' },
-      { title:'Cassava Value Chain: Nigeria Targets ₦20 Trillion Export by 2027', source:'Business Day', date:'4 days ago', summary:'New processing technologies and export partnerships aimed at boosting cassava revenue.' },
-      { title:'Dry Season Farming Gets Boost with New Irrigation Scheme', source:'Daily Trust', date:'1 week ago', summary:'The government launches 15 new irrigation projects across northern states to support dry season farming.' },
-      { title:'Climate-Smart Agriculture: Nigeria Adopts New Farming Techniques', source:'Premium Times', date:'1 week ago', summary:'Farmers trained in drought-resistant crops and water-efficient techniques to combat climate change.' },
-      { title:'Maize Production Hits Record High in 2025 Season', source:'AgriNews NG', date:'2 weeks ago', summary:'Nigerian maize production reaches 15 million metric tonnes, driven by improved varieties and good rainfall.' }
-    ];
-  
-  function renderNews() {
-      const grid = document.getElementById('newsGrid');
-      grid.innerHTML = newsArticles.map(n => `
-        <div class="card">
-          <div class="badge mb-1">📰 ${escapeHtml(n.source)}</div>
-          <h4 style="font-size:1rem;margin-bottom:6px;">${escapeHtml(n.title)}</h4>
-          <p style="font-size:13px;color:var(--text-muted);">${escapeHtml(n.summary)}</p>
-          <p style="font-size:12px;color:var(--text-muted);margin-top:8px;">🕐 ${n.date}</p>
-        </div>
-      `).join('');
-    }
-
-    // ===== PRICES TAB NAV =====
-    // Add price check tracking
-    document.querySelector('[data-page="prices"]').addEventListener('click', () => {
-      updateDash('priceChecks');
-    });
-
-    // ===== HERO SLIDESHOW CONTROLLER =====
-    let currentHeroSlide = 0;
-    let heroSlideTimer = null;
-    const heroBadges = [
-      '🌱 AI-Powered Smart Farming',
-      '📊 Real-Time Crop Diagnostic Analytics',
-      '🌾 Community Market & Produce Prices'
-    ];
-
-    function showHeroSlide(index) {
-      const slides = document.querySelectorAll('.hero-slide');
-      const dots = document.querySelectorAll('.hero-dot');
-      const badge = document.getElementById('heroBadge');
-      if (!slides.length) return;
-
-      currentHeroSlide = (index + slides.length) % slides.length;
-
-      slides.forEach((s, i) => {
-        if (i === currentHeroSlide) {
-          s.classList.add('active');
-        } else {
-          s.classList.remove('active');
-        }
-      });
-
-      dots.forEach((d, i) => {
-        if (i === currentHeroSlide) {
-          d.classList.add('active');
-        } else {
-          d.classList.remove('active');
-        }
-      });
-
-      if (badge && heroBadges[currentHeroSlide]) {
-        badge.textContent = heroBadges[currentHeroSlide];
-      }
-    }
-
-    function changeHeroSlide(direction) {
-      showHeroSlide(currentHeroSlide + direction);
-      resetHeroSlideTimer();
-    }
-
-    function setHeroSlide(index) {
-      showHeroSlide(index);
-      resetHeroSlideTimer();
-    }
-
-    function resetHeroSlideTimer() {
-      if (heroSlideTimer) clearInterval(heroSlideTimer);
-      heroSlideTimer = setInterval(() => {
-        showHeroSlide(currentHeroSlide + 1);
-      }, 4500);
-    }
-
-    // ===== INIT =====
-    renderMarketplace();
-    renderPrices();
-    updateWeather();
-    renderForum();
-    renderNews();
-    updateActivity();
-    resetHeroSlideTimer();
-
-    // Service worker registration placeholder for PWA
-    if ('serviceWorker' in navigator) {
-      // In production, register a real SW
-      console.log('PWA: Service worker support available');
-    }
-
-    // Keyboard shortcut: Ctrl+/ to focus chat
-    document.addEventListener('keydown', e => {
-      if (e.ctrlKey && e.key === '/') {
-        e.preventDefault();
-        const chatInput = document.getElementById('chatInput');
-        if (chatInput) {
-          navigate('chat');
-          setTimeout(() => chatInput.focus(), 400);
-        }
-      }
-    });
-
-    showToast('🌱 Welcome to AgriSense AI! Ask me anything about farming.', 'info');
-  </script>
 </body>
 </html>

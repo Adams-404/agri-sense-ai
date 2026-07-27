@@ -1,0 +1,112 @@
+/* ============================================================
+   AgriSense AI — PAGES
+   Layout for every inner page section
+   ============================================================ */
+
+/* ---- All inner pages get top padding for the fixed nav ---- */
+.page:not(#page-home) {
+  padding-top: calc(var(--nav-height) + 20px);
+  min-height: 100dvh;
+}
+
+/* ---- Disease Detection ---- */
+#page-detect .detect-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  max-width: 920px;
+  margin: 0 auto;
+}
+@media (max-width: 700px) {
+  #page-detect .detect-grid { grid-template-columns: 1fr; }
+}
+
+/* ---- Dashboard ---- */
+#page-dashboard .dash-grid { margin-bottom: 28px; }
+
+/* ---- Prices ---- */
+#page-prices .overflow-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+#page-prices .filter-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  justify-content: center;
+}
+#page-prices .filter-row input,
+#page-prices .filter-row select {
+  max-width: 220px;
+  border-radius: 50px;
+}
+
+/* ---- Weather ---- */
+#page-weather .region-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+#page-weather .region-row select {
+  max-width: 240px;
+  border-radius: 50px;
+  text-align: center;
+}
+
+/* ---- Forum ---- */
+#page-forum .forum-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+#page-forum .forum-top-left { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+#page-forum .forum-top select {
+  border-radius: 50px;
+  padding: 9px 18px;
+  width: auto;
+}
+
+/* ---- Marketplace ---- */
+#page-marketplace .market-top {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  justify-content: center;
+  align-items: center;
+}
+#page-marketplace .market-top input,
+#page-marketplace .market-top select {
+  max-width: 220px;
+  border-radius: 50px;
+}
+
+/* ---- Auth pages ---- */
+#page-login,
+#page-register,
+#page-forgot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#page-login.active,
+#page-register.active,
+#page-forgot.active { display: flex; }
+
+/* ---- Admin ---- */
+#page-admin .admin-header { margin-bottom: 28px; }
+
+/* ---- Legal (Privacy / Terms) ---- */
+#page-privacy .legal-content,
+#page-terms .legal-content {
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.85;
+  color: var(--text-muted);
+}
+#page-privacy .legal-content h3,
+#page-terms .legal-content h3 {
+  color: var(--text);
+  margin: 24px 0 8px;
+}
