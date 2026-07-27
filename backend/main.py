@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+# pyrefly: ignore [missing-import]
 from groq import Groq
 import os
 from dotenv import load_dotenv
@@ -66,6 +67,27 @@ async def chat(request: ChatRequest):
         return {"reply": response_text}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+# Serve static files in production if dist folder exists
+dist_path = os.path.join(os.path.dirname(__file__), "../dist")
+if os.path.exists(dist_path):
+    assets_path = os.path.join(dist_path, "assets")
+    if os.path.exists(assets_path):
+        app.mount("/assets", StaticFiles(directory=assets_path), name="assets")
+        
+    @app.get("/")
+    async def serve_index():
+        return FileResponse(os.path.join(dist_path, "index.html"))
+        
+    @app.get("/{path_name:path}")
+    async def serve_static_or_index(path_name: str):
+        file_path = os.path.join(dist_path, path_name)
+        if os.path.exists(file_path) and os.path.isfile(file_path):
+            return FileResponse(file_path)
+        return FileResponse(os.path.join(dist_path, "index.html"))
 
 if __name__ == "__main__":
     import uvicorn

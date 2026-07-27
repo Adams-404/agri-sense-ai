@@ -714,8 +714,9 @@
     /* ===== CHAT ASSISTANT (CHATGPT STYLE WITH SIDEBAR) ===== */
     #page-chat {
       display: none;
-      padding-top: var(--nav-height) !important;
-      height: calc(100vh - var(--nav-height));
+      height: calc(100dvh - 90px);
+      margin-top: 80px;
+      padding-top: 0 !important;
       flex-direction: column;
       overflow: hidden;
       background: var(--bg);
@@ -1633,15 +1634,16 @@
       }
 
       #page-chat {
-        /* subtract top header and mobile floating bottom nav height */
-        height: calc(100vh - var(--nav-height) - 84px) !important;
+        height: calc(100dvh - 158px) !important;
+        margin-top: 74px !important;
+        padding-top: 0 !important;
       }
       .chat-mobile-header {
         display: flex !important;
       }
       .chat-sidebar {
         position: fixed !important;
-        top: var(--nav-height) !important;
+        top: 74px !important;
         bottom: 84px !important;
         left: -280px !important;
         z-index: 100 !important;
@@ -3291,31 +3293,25 @@
       // Add user message
       const userDiv = document.createElement('div');
       userDiv.className = 'chat-message user';
-      userDiv.innerHTML = `
-        <div class="chat-message-bubble">
-          <div class="msg-label">You</div>
-          ${escapeHtml(msg)}
-        </div>
-      `;
+      userDiv.innerHTML = `<div class="chat-message-bubble"><div class="msg-label">You</div>${escapeHtml(msg)}</div>`;
       container.appendChild(userDiv);
       input.value = '';
 
       // Show AI thinking indicator
       const typingDiv = document.createElement('div');
       typingDiv.className = 'chat-message assistant';
-      typingDiv.innerHTML = `
-        <div class="chat-message-bubble">
-          <div class="msg-label">🌿 AgriSense AI</div>
-          <div class="loader" style="margin:0;"></div>
-        </div>
-      `;
+      typingDiv.innerHTML = `<div class="chat-message-bubble"><div class="msg-label">🌿 AgriSense AI</div><div class="loader" style="margin:0;"></div></div>`;
       container.appendChild(typingDiv);
       container.scrollTop = container.scrollHeight;
 
       const lang = currentLang;
 
-      // Fetch from local Python backend API calling Groq model
-      fetch('http://localhost:8000/api/chat', {
+      // Construct API host dynamically (localhost:8000 in dev; relative path in production)
+      const apiHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+        ? 'http://localhost:8000' 
+        : '';
+
+      fetch(`${apiHost}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: msg, language: lang })
@@ -3329,12 +3325,7 @@
 
           const replyDiv = document.createElement('div');
           replyDiv.className = 'chat-message assistant';
-          replyDiv.innerHTML = `
-            <div class="chat-message-bubble">
-              <div class="msg-label">🌿 AgriSense AI (${langLabels[lang] || 'English'})</div>
-              ${formatMarkdown(data.reply)}
-            </div>
-          `;
+          replyDiv.innerHTML = `<div class="chat-message-bubble"><div class="msg-label">🌿 AgriSense AI (${langLabels[lang] || 'English'})</div>${formatMarkdown(data.reply)}</div>`;
           container.appendChild(replyDiv);
           container.scrollTop = container.scrollHeight;
 
@@ -3346,12 +3337,7 @@
 
           const errorDiv = document.createElement('div');
           errorDiv.className = 'chat-message assistant';
-          errorDiv.innerHTML = `
-            <div class="chat-message-bubble" style="border-color: rgba(220, 38, 38, 0.2); background: rgba(220, 38, 38, 0.05); color: var(--text);">
-              <div class="msg-label" style="color: #dc2626;">🌿 AgriSense AI (Error)</div>
-              Unable to connect to the AI Assistant. Please make sure the Python backend is running on port 8000.
-            </div>
-          `;
+          errorDiv.innerHTML = `<div class="chat-message-bubble" style="border-color: rgba(220, 38, 38, 0.2); background: rgba(220, 38, 38, 0.05); color: var(--text);"><div class="msg-label" style="color: #dc2626;">🌿 AgriSense AI (Error)</div>Unable to connect to the AI Assistant. Please make sure the Python backend is running on port 8000.</div>`;
           container.appendChild(errorDiv);
           container.scrollTop = container.scrollHeight;
         });
@@ -3810,6 +3796,14 @@
         console.error('Speech recognition error:', event.error);
         if (event.error === 'not-allowed') {
           showToast('🎤 Microphone access denied. Please check permissions.', 'error');
+        } else if (event.error === 'network') {
+          showToast('🌐 Speech recognition network error. Please verify your connection.', 'error');
+          const transcriptEl = document.getElementById('voiceTranscript');
+          const statusEl = document.getElementById('voiceStatus');
+          if (statusEl) statusEl.textContent = 'Connection Error';
+          if (transcriptEl) transcriptEl.textContent = 'Speech recognition requires an active internet connection. Please verify your network and try again.';
+        } else {
+          showToast(`🎤 Speech recognition error: ${event.error}`, 'error');
         }
         stopVoiceRecognition();
       };
@@ -3817,7 +3811,7 @@
       recognition.onend = () => {
         if (voiceIsListening) {
           const text = document.getElementById('voiceTranscript').textContent;
-          if (text && text !== 'Speak now...' && text !== 'Listening...') {
+          if (text && text !== 'Speak now...' && text !== 'Listening...' && !text.includes('requires an active internet connection') && !text.includes('speech recognition is unsupported')) {
             const input = document.getElementById('chatInput');
             if (input) {
               input.value = text;
@@ -3826,8 +3820,10 @@
             }
           } else {
             stopVoiceRecognition();
-            document.getElementById('voiceStatus').textContent = 'Tap to speak';
-            document.getElementById('voiceTranscript').textContent = 'Try speaking again';
+            const statusEl = document.getElementById('voiceStatus');
+            const transcriptEl = document.getElementById('voiceTranscript');
+            if (statusEl && statusEl.textContent !== 'Connection Error') statusEl.textContent = 'Tap to speak';
+            if (transcriptEl && statusEl && statusEl.textContent !== 'Connection Error') transcriptEl.textContent = 'Try speaking again';
           }
         }
       };
@@ -3846,12 +3842,22 @@
         const langCodeMap = {
           en: 'en-US',
           ha: 'ha-NG',
-          ful: 'ff-NG',
           yo: 'yo-NG',
           ig: 'ig-NG',
-          kr: 'kr-NG'
+          // Fulfulde and Kanuri are unsupported by Web Speech API, fall back to English
+          ful: 'en-US',
+          kr: 'en-US'
         };
         recognition.lang = langCodeMap[currentLang] || 'en-US';
+
+        if (currentLang === 'ful' || currentLang === 'kr') {
+          setTimeout(() => {
+            const statusEl = document.getElementById('voiceStatus');
+            const transcriptEl = document.getElementById('voiceTranscript');
+            if (statusEl) statusEl.textContent = 'Listening (English)...';
+            if (transcriptEl) transcriptEl.textContent = `${langLabels[currentLang]} speech recognition is unsupported. Speak in English instead...`;
+          }, 50);
+        }
 
         try {
           recognition.start();
