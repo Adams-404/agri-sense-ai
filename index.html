@@ -711,93 +711,293 @@
     }
 
     /* ===== CHAT ===== */
-    .chat-container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: var(--bg-card);
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
+    /* ===== CHAT ASSISTANT (CHATGPT STYLE WITH SIDEBAR) ===== */
+    #page-chat {
+      display: none;
+      padding-top: var(--nav-height) !important;
+      height: calc(100vh - var(--nav-height));
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--bg);
+      min-height: 0 !important;
+    }
+    
+    #page-chat.active {
+      display: flex !important;
+    }
+    
+    #page-chat .container {
+      max-width: 100% !important;
+      width: 100% !important;
+      height: 100% !important;
+      padding: 0 !important;
       display: flex;
       flex-direction: column;
-      height: 560px;
+      overflow: hidden;
     }
 
-    .chat-messages {
+    .chat-layout {
+      display: flex;
+      flex: 1;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Sidebar Styles */
+    .chat-sidebar {
+      width: 280px;
+      background: var(--bg-card);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      z-index: 50;
+      transition: transform 0.3s ease;
+    }
+
+    .chat-sidebar-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chat-sidebar-header h4 {
+      margin: 0;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .chat-sidebar-close-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.1rem;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .chat-sidebar-content {
       flex: 1;
       overflow-y: auto;
       padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 24px;
+    }
+
+    .sidebar-section h5 {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin: 0 0 12px 0;
+    }
+
+    .chat-sidebar .lang-selector {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 0;
+      justify-content: flex-start;
+      width: 100%;
+    }
+
+    .chat-sidebar .lang-selector button {
+      width: 100%;
+      text-align: left;
+      padding: 12px 16px !important;
+      border-radius: 10px !important;
+      background: rgba(128, 128, 128, 0.04) !important;
+      border: 1px solid var(--border) !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      color: var(--text) !important;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start !important;
+      gap: 8px;
+      transition: all 0.2s ease !important;
+      margin: 0 !important;
+    }
+
+    .chat-sidebar .lang-selector button:hover {
+      background: rgba(26, 107, 60, 0.08) !important;
+      border-color: var(--primary) !important;
+      color: var(--primary) !important;
+    }
+
+    .chat-sidebar .lang-selector button.active {
+      background: var(--primary) !important;
+      color: #fff !important;
+      border-color: var(--primary) !important;
+    }
+
+    /* Mobile Headers / Overlays */
+    .chat-mobile-header {
+      display: none;
+      align-items: center;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card);
+      flex-shrink: 0;
+    }
+
+    .chat-sidebar-toggle-btn {
+      background: none;
+      border: none;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: rgba(128,128,128,0.08);
+    }
+
+    .chat-sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 98;
+      backdrop-filter: blur(2px);
+    }
+
+    /* Main Chat Workspace */
+    .chat-container-full {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 30px 20px 110px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
     .chat-message {
-      max-width: 80%;
-      padding: 12px 18px;
-      border-radius: 16px;
-      font-size: 14px;
-      line-height: 1.5;
-      animation: fadeIn 0.3s ease;
-      white-space: pre-wrap;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      background: none !important;
+      border: none !important;
+      padding: 0 !important;
+      max-width: 800px !important;
     }
 
-    .chat-message.user {
+    .chat-message-bubble {
+      padding: 16px 24px;
+      border-radius: 18px;
+      font-size: 14.5px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      max-width: 85%;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.02);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .chat-message.user .chat-message-bubble {
       align-self: flex-end;
       background: var(--primary);
       color: #fff;
       border-bottom-right-radius: 4px;
     }
 
-    .chat-message.assistant {
+    .chat-message.assistant .chat-message-bubble {
       align-self: flex-start;
-      background: rgba(26, 107, 60, 0.08);
+      background: var(--bg-card);
+      color: var(--text);
+      border: 1px solid var(--border);
       border-bottom-left-radius: 4px;
     }
 
-    .chat-message .msg-label {
+    .chat-message-bubble .msg-label {
       font-size: 11px;
       font-weight: 600;
       opacity: 0.6;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    .chat-input-area {
+    .chat-input-wrapper {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, var(--bg) 60%, transparent);
+      padding: 24px 20px;
       display: flex;
-      gap: 8px;
-      padding: 16px;
-      border-top: 1px solid var(--border);
+      justify-content: center;
+      pointer-events: none;
+      z-index: 10;
     }
 
-    .chat-input-area input {
-      flex: 1;
-      padding: 12px 16px;
-      border-radius: 50px;
+    .chat-input-box {
+      pointer-events: auto;
+      width: 100%;
+      max-width: 800px;
+      background: var(--bg-card);
       border: 1px solid var(--border);
-      background: var(--bg);
-      font-family: var(--font);
-      font-size: 14px;
+      border-radius: 50px;
+      padding: 6px 8px 6px 24px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      gap: 10px;
+    }
+
+    .chat-input-box input {
+      flex: 1;
+      border: none;
+      background: transparent;
       outline: none;
+      font-family: var(--font);
+      font-size: 14.5px;
       color: var(--text);
+      padding: 10px 0;
     }
 
-    .chat-input-area input:focus {
-      border-color: var(--primary);
-    }
-
-    .chat-input-area button {
-      width: 48px;
-      height: 48px;
+    .chat-input-box button {
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       border: none;
       background: var(--primary);
       color: #fff;
       cursor: pointer;
-      font-size: 1.2rem;
-      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
     }
 
-    .chat-input-area button:hover {
+    .chat-input-box button:hover {
       background: var(--primary-light);
+      transform: scale(1.05);
     }
 
     .lang-selector {
@@ -1431,6 +1631,36 @@
       body {
         padding-bottom: 96px !important;
       }
+
+      #page-chat {
+        /* subtract top header and mobile floating bottom nav height */
+        height: calc(100vh - var(--nav-height) - 84px) !important;
+      }
+      .chat-mobile-header {
+        display: flex !important;
+      }
+      .chat-sidebar {
+        position: fixed !important;
+        top: var(--nav-height) !important;
+        bottom: 84px !important;
+        left: -280px !important;
+        z-index: 100 !important;
+        box-shadow: 5px 0 25px rgba(0,0,0,0.15) !important;
+        transition: left 0.3s ease !important;
+        height: auto !important;
+      }
+      .chat-sidebar.open {
+        left: 0 !important;
+      }
+      .chat-sidebar-close-btn {
+        display: block !important;
+      }
+      .chat-messages {
+        padding: 20px 15px 90px !important;
+      }
+      .chat-input-wrapper {
+        padding: 12px 10px !important;
+      }
     }
   </style>
 </head>
@@ -1759,28 +1989,56 @@
   <!-- =============================== -->
   <section class="page" id="page-chat">
     <div class="container">
-      <div class="page-header">
-        <h2>💬 AI Farming Assistant</h2>
-        <p>Ask any farming question — get answers in your preferred language</p>
+      <div class="chat-sidebar-overlay" id="chatSidebarOverlay" onclick="toggleChatSidebar(false)"></div>
+      
+      <!-- Mobile minimal header -->
+      <div class="chat-mobile-header">
+        <button class="chat-sidebar-toggle-btn" onclick="toggleChatSidebar()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          <span>Language: English</span>
+        </button>
       </div>
-      <div class="lang-selector" id="chatLangSelector">
-        <button class="active" data-lang="en">🇬🇧 English</button>
-        <button data-lang="ha">🇳🇬 Hausa</button>
-        <button data-lang="ful">🇳🇬 Fulfulde</button>
-        <button data-lang="yo">🇳🇬 Yoruba</button>
-        <button data-lang="ig">🇳🇬 Igbo</button>
-        <button data-lang="kr">🇳🇬 Kanuri</button>
-      </div>
-      <div class="chat-container">
-        <div class="chat-messages" id="chatMessages">
-          <div class="chat-message assistant">
-            <div class="msg-label">🌿 AgriSense AI</div>Sannu! I'm your farming assistant. Ask me anything about crops, soil, pests, or farming techniques.
+
+      <div class="chat-layout">
+        <!-- Sidebar -->
+        <aside class="chat-sidebar">
+          <div class="chat-sidebar-header">
+            <h4>Settings</h4>
+            <button class="chat-sidebar-close-btn" onclick="toggleChatSidebar(false)">✕</button>
           </div>
-        </div>
-        <div class="chat-input-area">
-          <input type="text" id="chatInput" placeholder="Type your farming question..."
-            onkeydown="if(event.key==='Enter')sendChat()" />
-          <button onclick="sendChat()">➤</button>
+          <div class="chat-sidebar-content">
+            <div class="sidebar-section">
+              <h5>Preferred Language</h5>
+              <div class="lang-selector" id="chatLangSelector">
+                <button class="active" data-lang="en">🇬🇧 English</button>
+                <button data-lang="ha">🇳🇬 Hausa</button>
+                <button data-lang="ful">🇳🇬 Fulfulde</button>
+                <button data-lang="yo">🇳🇬 Yoruba</button>
+                <button data-lang="ig">🇳🇬 Igbo</button>
+                <button data-lang="kr">🇳🇬 Kanuri</button>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <div class="chat-container-full">
+          <div class="chat-messages" id="chatMessages">
+            <div class="chat-message assistant">
+              <div class="chat-message-bubble">
+                <div class="msg-label">🌿 AgriSense AI</div>Sannu! I'm your farming assistant. Ask me anything about crops, soil, pests, or farming techniques.
+              </div>
+            </div>
+          </div>
+          <div class="chat-input-wrapper">
+            <div class="chat-input-box">
+              <input type="text" id="chatInput" placeholder="Type your farming question..."
+                onkeydown="if(event.key==='Enter')sendChat()" />
+              <button onclick="sendChat()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -2481,13 +2739,18 @@
         currentPage = '404';
       }
 
-      // Toggle footer visibility on mobile (only show on home and login pages)
+      // Toggle footer visibility (hide completely on chat page; otherwise limit to home/login on mobile)
       const footer = document.querySelector('footer');
       if (footer) {
-        if (currentPage === 'home' || currentPage === 'login') {
-          footer.classList.remove('hide-on-mobile-pages');
+        if (currentPage === 'chat') {
+          footer.style.display = 'none';
         } else {
-          footer.classList.add('hide-on-mobile-pages');
+          footer.style.display = '';
+          if (currentPage === 'home' || currentPage === 'login') {
+            footer.classList.remove('hide-on-mobile-pages');
+          } else {
+            footer.classList.add('hide-on-mobile-pages');
+          }
         }
       }
 
@@ -2515,6 +2778,15 @@
       if (activeTabId) {
         const tabEl = document.getElementById(activeTabId);
         if (tabEl) tabEl.classList.add('active');
+      }
+
+      if (page === 'chat') {
+        const chatMessages = document.getElementById('chatMessages');
+        if (chatMessages) {
+          setTimeout(() => {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+          }, 50);
+        }
       }
     }
 
@@ -2636,6 +2908,20 @@
       document.getElementById('moreDropdown').classList.add('hidden');
     }
 
+    function toggleChatSidebar(show) {
+      const sidebar = document.querySelector('.chat-sidebar');
+      const overlay = document.getElementById('chatSidebarOverlay');
+      if (!sidebar || !overlay) return;
+      const shouldShow = (show !== undefined) ? show : !sidebar.classList.contains('open');
+      if (shouldShow) {
+        sidebar.classList.add('open');
+        overlay.classList.add('active');
+      } else {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+      }
+    }
+
     function setLang(lang) {
       currentLang = lang;
       document.getElementById('langModal').classList.add('hidden');
@@ -2646,6 +2932,15 @@
       document.querySelectorAll('#chatLangSelector button').forEach(b => {
         b.classList.toggle('active', b.dataset.lang === lang);
       });
+
+      // Update mobile toggle label
+      const toggleLabel = document.querySelector('.chat-sidebar-toggle-btn span');
+      if (toggleLabel) {
+        toggleLabel.textContent = `Language: ${langLabels[lang] || 'English'}`;
+      }
+
+      // Close mobile sidebar drawer after selecting a language
+      toggleChatSidebar(false);
 
       // DYNAMIC TRANSLATION ENGINE: Translate all elements with data-i18n attribute
       document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -2664,9 +2959,12 @@
     }
     const langLabels = { en: 'English', ha: 'Hausa', ful: 'Fulfulde', yo: 'Yoruba', ig: 'Igbo', kr: 'Kanuri' };
 
-    // Chat lang selector
-    document.querySelectorAll('#chatLangSelector button').forEach(b => {
-      b.addEventListener('click', () => setLang(b.dataset.lang));
+    // Chat lang selector event delegation
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('#chatLangSelector button');
+      if (btn) {
+        setLang(btn.dataset.lang);
+      }
     });
 
     // Click outside to close dropdowns
@@ -2779,14 +3077,24 @@
       // Add user message
       const userDiv = document.createElement('div');
       userDiv.className = 'chat-message user';
-      userDiv.innerHTML = `<div class="msg-label">You</div>${escapeHtml(msg)}`;
+      userDiv.innerHTML = `
+        <div class="chat-message-bubble">
+          <div class="msg-label">You</div>
+          ${escapeHtml(msg)}
+        </div>
+      `;
       container.appendChild(userDiv);
       input.value = '';
 
       // Show AI thinking indicator
       const typingDiv = document.createElement('div');
       typingDiv.className = 'chat-message assistant';
-      typingDiv.innerHTML = `<div class="msg-label">🌿 AgriSense AI</div><div class="loader" style="margin:0;"></div>`;
+      typingDiv.innerHTML = `
+        <div class="chat-message-bubble">
+          <div class="msg-label">🌿 AgriSense AI</div>
+          <div class="loader" style="margin:0;"></div>
+        </div>
+      `;
       container.appendChild(typingDiv);
       container.scrollTop = container.scrollHeight;
 
@@ -2807,7 +3115,12 @@
 
           const replyDiv = document.createElement('div');
           replyDiv.className = 'chat-message assistant';
-          replyDiv.innerHTML = `<div class="msg-label">🌿 AgriSense AI (${langLabels[lang] || 'English'})</div>${formatMarkdown(data.reply)}`;
+          replyDiv.innerHTML = `
+            <div class="chat-message-bubble">
+              <div class="msg-label">🌿 AgriSense AI (${langLabels[lang] || 'English'})</div>
+              ${formatMarkdown(data.reply)}
+            </div>
+          `;
           container.appendChild(replyDiv);
           container.scrollTop = container.scrollHeight;
 
@@ -2819,9 +3132,12 @@
 
           const errorDiv = document.createElement('div');
           errorDiv.className = 'chat-message assistant';
-          errorDiv.style.borderColor = 'rgba(220, 38, 38, 0.2)';
-          errorDiv.style.background = 'rgba(220, 38, 38, 0.05)';
-          errorDiv.innerHTML = `<div class="msg-label" style="color: #dc2626;">🌿 AgriSense AI (Error)</div>Unable to connect to the AI Assistant. Please make sure the Python backend is running on port 8000.`;
+          errorDiv.innerHTML = `
+            <div class="chat-message-bubble" style="border-color: rgba(220, 38, 38, 0.2); background: rgba(220, 38, 38, 0.05); color: var(--text);">
+              <div class="msg-label" style="color: #dc2626;">🌿 AgriSense AI (Error)</div>
+              Unable to connect to the AI Assistant. Please make sure the Python backend is running on port 8000.
+            </div>
+          `;
           container.appendChild(errorDiv);
           container.scrollTop = container.scrollHeight;
         });
