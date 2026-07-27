@@ -22,11 +22,15 @@
       --radius:16px; --radius-sm:10px;
       --nav-height:64px;
       --font:'Inter',-apple-system,sans-serif;
+      --bg-nav-floating: rgba(255, 255, 255, 0.84);
+      --border-nav-floating: rgba(26, 107, 60, 0.2);
     }
     .dark { --bg:#0f1a14; --bg-card:#1a2e22; --bg-glass:rgba(15,26,20,0.85);
       --text:#f0f7f2; --text-muted:#9ca3af;
       --border:rgba(255,255,255,0.08);
-      --shadow:0 8px 32px rgba(0,0,0,0.4); }
+      --shadow:0 8px 32px rgba(0,0,0,0.4);
+      --bg-nav-floating: rgba(15, 26, 20, 0.78);
+      --border-nav-floating: rgba(255, 255, 255, 0.16); }
     body {
       font-family:var(--font); background:var(--bg); color:var(--text);
       transition:background 0.3s,color 0.3s; overflow-x:hidden;
@@ -88,56 +92,246 @@
     .fade-in { animation:fadeIn 0.5s ease; }
     @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
 
-    /* ===== NAVIGATION ===== */
+    /* ===== FLOATING NAVIGATION ===== */
     nav {
-      position:fixed; top:0; left:0; right:0; height:var(--nav-height);
-      background:var(--bg-glass); backdrop-filter:blur(20px);
-      -webkit-backdrop-filter:blur(20px); border-bottom:1px solid var(--border);
-      z-index:1000; display:flex; align-items:center; padding:0 24px;
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: fit-content;
+      max-width: calc(100vw - 32px);
+      height: 56px;
+      background: var(--bg-nav-floating);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border-nav-floating);
+      border-radius: 50px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      padding: 0 10px 0 20px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     nav .nav-inner {
-      max-width:1200px; width:100%; margin:0 auto;
-      display:flex; align-items:center; justify-content:space-between;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width: 100%;
     }
-    .logo { font-size:1.4rem; font-weight:800; color:var(--primary); display:flex; align-items:center; gap:8px; }
-    .logo span { color:var(--accent); }
-    .nav-links { display:flex; gap:6px; align-items:center; }
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: -0.3px;
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 4px; align-items: center; }
     .nav-links a {
-      padding:8px 14px; border-radius:8px; font-size:14px; font-weight:500;
-      color:var(--text); transition:all 0.2s; white-space:nowrap;
+      padding: 7px 15px;
+      border-radius: 50px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text);
+      transition: all 0.25s ease;
+      white-space: nowrap;
     }
-    .nav-links a:hover, .nav-links a.active { background:rgba(26,107,60,0.1); color:var(--primary); }
-    .nav-right { display:flex; align-items:center; gap:10px; }
+    .nav-links a:hover {
+      background: rgba(26, 107, 60, 0.12);
+      color: var(--primary);
+    }
+    .nav-links a.active {
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      box-shadow: 0 4px 14px rgba(26, 107, 60, 0.3);
+    }
+    .nav-right { display: flex; align-items: center; gap: 6px; }
     .theme-toggle, .lang-toggle, .menu-toggle {
-      background:none; border:none; color:var(--text); cursor:pointer;
-      font-size:1.2rem; padding:6px; border-radius:8px;
-      transition:background 0.2s; font-family:var(--font);
+      background: rgba(128, 128, 128, 0.08);
+      border: 1px solid var(--border);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 1.1rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      font-family: var(--font);
     }
-    .theme-toggle:hover, .lang-toggle:hover, .menu-toggle:hover { background:rgba(128,128,128,0.1); }
-    .menu-toggle { display:none; font-size:1.5rem; }
+    .theme-toggle:hover, .lang-toggle:hover, .menu-toggle:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: scale(1.05);
+    }
+    .menu-toggle { display: none; font-size: 1.3rem; }
 
-    /* ===== HERO ===== */
+    /* ===== HERO FULL-VIEWPORT SLIDESHOW ===== */
     .hero {
-      min-height:100vh; display:flex; align-items:center; justify-content:center;
-      padding:100px 20px 60px; position:relative; overflow:hidden;
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 20px 80px;
+      overflow: hidden;
+      color: #ffffff;
     }
-    .hero::before {
-      content:''; position:absolute; inset:0;
-      background:radial-gradient(ellipse at 20% 50%, rgba(26,107,60,0.12) 0%,transparent 60%),
-                 radial-gradient(ellipse at 80% 50%, rgba(245,166,35,0.08) 0%,transparent 60%);
-      pointer-events:none;
+    .hero-slideshow {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
     }
-    .hero-content { max-width:800px; text-align:center; position:relative; z-index:1; }
-    .hero h1 { font-size:3.2rem; font-weight:800; line-height:1.2; margin-bottom:16px; }
-    .hero h1 span { color:var(--primary); }
-    .hero p { font-size:1.15rem; color:var(--text-muted); margin-bottom:32px; line-height:1.7; }
-    .hero-actions { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transform: scale(1.05);
+      transition: opacity 1.2s ease-in-out, transform 6s ease-out;
+    }
+    .hero-slide.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(12, 38, 22, 0.88) 0%, rgba(18, 56, 32, 0.78) 50%, rgba(10, 25, 17, 0.92) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .hero-content {
+      max-width: 900px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      margin: 0 auto;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.18;
+      margin-bottom: 20px;
+      color: #ffffff;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .hero h1 span {
+      color: #4ade80;
+      text-shadow: 0 0 25px rgba(74, 222, 128, 0.4);
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.92);
+      margin: 0 auto 36px;
+      max-width: 760px;
+      line-height: 1.7;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
     .hero-stats {
-      display:flex; gap:40px; justify-content:center; margin-top:48px;
+      display: flex;
+      gap: 48px;
+      justify-content: center;
+      margin-top: 48px;
     }
-    .hero-stats div { text-align:center; }
-    .hero-stats .num { font-size:2rem; font-weight:800; color:var(--primary); }
-    .hero-stats .label { font-size:13px; color:var(--text-muted); }
+    .hero-stats div { text-align: center; }
+    .hero-stats .num {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #4ade80;
+      text-shadow: 0 0 15px rgba(74, 222, 128, 0.3);
+    }
+    .hero-stats .label {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    /* Slideshow Navigation Controls */
+    .hero-slide-nav {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 8px 20px;
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+    .hero-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .hero-dot.active {
+      background: #4ade80;
+      width: 28px;
+      border-radius: 20px;
+      box-shadow: 0 0 12px #4ade80;
+    }
+    .hero-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .hero-arrow:hover {
+      background: rgba(26, 107, 60, 0.85);
+      border-color: #4ade80;
+      transform: translateY(-50%) scale(1.1);
+    }
+    .hero-arrow.prev { left: 24px; }
+    .hero-arrow.next { right: 24px; }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.2rem; }
+      .hero p { font-size: 1rem; }
+      .hero-stats { gap: 24px; flex-wrap: wrap; }
+      .hero-arrow { display: none; }
+    }
 
     /* ===== PAGE SECTIONS ===== */
     .page { display:none; padding-top:calc(var(--nav-height) + 20px); min-height:100vh; }
@@ -293,18 +487,37 @@
 
     /* ===== RESPONSIVE ===== */
     @media(max-width:968px) {
+      nav {
+        width: calc(100vw - 24px);
+        padding: 0 8px 0 16px;
+      }
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100vw - 32px);
+        max-width: 480px;
+        background: var(--bg-nav-floating);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid var(--border-nav-floating);
+        border-radius: 24px;
+        flex-direction: column;
+        padding: 16px;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+        gap: 6px;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { width: 100%; text-align: center; padding: 10px; border-radius: 12px; }
+      .menu-toggle { display: flex; }
       .grid-2, .grid-3, .grid-4 { grid-template-columns:1fr 1fr; }
       .weather-main { grid-template-columns:1fr; }
       .weather-week { grid-template-columns:repeat(4,1fr); }
       .hero h1 { font-size:2.4rem; }
     }
     @media(max-width:640px) {
-      .nav-links { display:none; position:fixed; top:var(--nav-height); left:0; right:0;
-        background:var(--bg-card); flex-direction:column; padding:16px;
-        border-bottom:1px solid var(--border); box-shadow:var(--shadow);
-      }
-      .nav-links.open { display:flex; }
-      .menu-toggle { display:block; }
       .grid-2, .grid-3, .grid-4 { grid-template-columns:1fr; }
       .hero h1 { font-size:1.8rem; }
       .hero-stats { gap:20px; flex-wrap:wrap; }
@@ -313,7 +526,6 @@
       .form-row { grid-template-columns:1fr; }
       .section-title { font-size:1.5rem; }
       .page-header h2 { font-size:1.6rem; }
-      nav { padding:0 12px; }
     }
     @media(max-width:400px) {
       .weather-week { grid-template-columns:repeat(2,1fr); }
@@ -403,8 +615,25 @@
   <!-- =============================== -->
   <section class="page active" id="page-home">
     <div class="hero">
+      <!-- Full-bleed background slideshow -->
+      <div class="hero-slideshow" id="heroSlideshow">
+        <div class="hero-slide active" style="background-image: url('/hero-slide-1.png');"></div>
+        <div class="hero-slide" style="background-image: url('/hero-slide-2.png');"></div>
+        <div class="hero-slide" style="background-image: url('/hero-slide-3.png');"></div>
+      </div>
+      
+      <!-- Gradient overlay for high text contrast -->
+      <div class="hero-overlay"></div>
+
+      <!-- Navigation Arrows -->
+      <button class="hero-arrow prev" onclick="changeHeroSlide(-1)" aria-label="Previous slide">❮</button>
+      <button class="hero-arrow next" onclick="changeHeroSlide(1)" aria-label="Next slide">❯</button>
+
+      <!-- Hero Content -->
       <div class="hero-content">
-        <div class="badge mb-2">🌱 AI-Powered Smart Farming</div>
+        <div class="badge mb-2" style="background: rgba(74, 222, 128, 0.22); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.35);" id="heroBadge">
+          🌱 AI-Powered Smart Farming
+        </div>
         <h1>Your AI Farming Assistant<br/>for <span>Nigerian Farmers</span></h1>
         <p>
           Detect crop diseases instantly, get AI farming advice in your local language,
@@ -414,13 +643,20 @@
         <div class="hero-actions">
           <button class="btn btn-primary" onclick="navigate('detect')">🔍 Detect Disease</button>
           <button class="btn btn-accent" onclick="navigate('chat')">💬 Ask AI Assistant</button>
-          <button class="btn btn-outline" onclick="navigate('register')">Get Started Free</button>
+          <button class="btn btn-outline" style="border-color: rgba(255,255,255,0.6); color: #ffffff;" onclick="navigate('register')">Get Started Free</button>
         </div>
         <div class="hero-stats">
           <div><div class="num">12,400+</div><div class="label">Farmers Helped</div></div>
           <div><div class="num">6</div><div class="label">Languages</div></div>
           <div><div class="num">98%</div><div class="label">Disease Accuracy</div></div>
         </div>
+      </div>
+
+      <!-- Slide Indicator Dots -->
+      <div class="hero-slide-nav" id="heroDots">
+        <button class="hero-dot active" onclick="setHeroSlide(0)" aria-label="Slide 1"></button>
+        <button class="hero-dot" onclick="setHeroSlide(1)" aria-label="Slide 2"></button>
+        <button class="hero-dot" onclick="setHeroSlide(2)" aria-label="Slide 3"></button>
       </div>
     </div>
     
@@ -1564,6 +1800,61 @@
       updateDash('priceChecks');
     });
 
+    // ===== HERO SLIDESHOW CONTROLLER =====
+    let currentHeroSlide = 0;
+    let heroSlideTimer = null;
+    const heroBadges = [
+      '🌱 AI-Powered Smart Farming',
+      '📊 Real-Time Crop Diagnostic Analytics',
+      '🌾 Community Market & Produce Prices'
+    ];
+
+    function showHeroSlide(index) {
+      const slides = document.querySelectorAll('.hero-slide');
+      const dots = document.querySelectorAll('.hero-dot');
+      const badge = document.getElementById('heroBadge');
+      if (!slides.length) return;
+
+      currentHeroSlide = (index + slides.length) % slides.length;
+
+      slides.forEach((s, i) => {
+        if (i === currentHeroSlide) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+      });
+
+      dots.forEach((d, i) => {
+        if (i === currentHeroSlide) {
+          d.classList.add('active');
+        } else {
+          d.classList.remove('active');
+        }
+      });
+
+      if (badge && heroBadges[currentHeroSlide]) {
+        badge.textContent = heroBadges[currentHeroSlide];
+      }
+    }
+
+    function changeHeroSlide(direction) {
+      showHeroSlide(currentHeroSlide + direction);
+      resetHeroSlideTimer();
+    }
+
+    function setHeroSlide(index) {
+      showHeroSlide(index);
+      resetHeroSlideTimer();
+    }
+
+    function resetHeroSlideTimer() {
+      if (heroSlideTimer) clearInterval(heroSlideTimer);
+      heroSlideTimer = setInterval(() => {
+        showHeroSlide(currentHeroSlide + 1);
+      }, 4500);
+    }
+
     // ===== INIT =====
     renderMarketplace();
     renderPrices();
@@ -1571,6 +1862,7 @@
     renderForum();
     renderNews();
     updateActivity();
+    resetHeroSlideTimer();
 
     // Service worker registration placeholder for PWA
     if ('serviceWorker' in navigator) {
