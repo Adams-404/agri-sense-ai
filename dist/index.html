@@ -3336,18 +3336,23 @@
 
           const replyDiv = document.createElement('div');
           replyDiv.className = 'chat-message assistant';
-          const escapedText = data.reply.replace(/'/g, "\\'");
           replyDiv.innerHTML = `
             <div class="chat-message-bubble">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; gap: 8px;">
                 <div class="msg-label" style="margin-bottom: 0;">🌿 AgriSense AI (${langLabels[lang] || 'English'})</div>
-                <button class="speak-btn" onclick="speakText(this, '${escapedText}')" title="Speak" style="background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px; display: flex; align-items: center; transition: color 0.2s ease;">
+                <button class="speak-btn" title="Speak" style="background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px; display: flex; align-items: center; transition: color 0.2s ease;">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
                 </button>
               </div>
               <span>${formatMarkdown(data.reply)}</span>
             </div>
           `;
+          
+          const speakBtn = replyDiv.querySelector('.speak-btn');
+          speakBtn.addEventListener('click', () => {
+            speakText(speakBtn, data.reply);
+          });
+
           container.appendChild(replyDiv);
           container.scrollTop = container.scrollHeight;
 
