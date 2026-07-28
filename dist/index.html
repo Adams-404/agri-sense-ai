@@ -3230,56 +3230,55 @@
       document.getElementById('diseaseLoading').classList.remove('hidden');
       document.getElementById('diseaseResult').classList.add('hidden');
 
-      // Simulate AI analysis
-      setTimeout(() => {
-        document.getElementById('diseaseLoading').classList.add('hidden');
-        document.getElementById('diseaseResult').classList.remove('hidden');
+      // Construct API host dynamically (localhost:8000 in dev; relative path in production)
+      const apiHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+        ? 'http://localhost:8000' 
+        : '';
+      const imageData = document.getElementById('previewImg').src;
 
-        const diseases = [
-          {
-            name: 'Cassava Mosaic Disease', emoji: '🍃', conf: '94.2%',
-            treatment: 'Remove and destroy infected plants. Use resistant varieties like TME 419. Apply insecticide to control whitefly vectors.',
-            prevention: 'Plant certified virus-free cuttings. Use intercropping with legumes. Maintain field sanitation.'
-          },
-          {
-            name: 'Maize Rust', emoji: '🌽', conf: '91.7%',
-            treatment: 'Apply fungicides containing tebuconazole or propiconazole. Remove infected leaves. Improve air circulation.',
-            prevention: 'Plant resistant hybrids. Practice crop rotation. Avoid overhead irrigation.'
-          },
-          {
-            name: 'Tomato Late Blight', emoji: '🍅', conf: '96.1%',
-            treatment: 'Apply copper-based fungicides immediately. Remove and destroy affected fruits and leaves.',
-            prevention: 'Use resistant varieties. Ensure proper spacing. Water at soil level not on leaves.'
-          },
-          {
-            name: 'Yam Anthracnose', emoji: '🥔', conf: '88.9%',
-            treatment: 'Remove infected vines. Apply mancozeb or copper fungicides. Improve drainage.',
-            prevention: 'Use disease-free setts. Practice crop rotation. Plant in well-drained soil.'
-          },
-          {
-            name: 'Rice Blast', emoji: '🌾', conf: '93.5%',
-            treatment: 'Apply tricyclazole or carbendazim. Reduce nitrogen fertilizer. Flood fields to suppress disease.',
-            prevention: 'Plant resistant varieties. Use balanced fertilization. Space planting to reduce humidity.'
-          },
-          {
-            name: 'Sorghum Smut', emoji: '🌿', conf: '90.3%',
-            treatment: 'Remove and destroy infected heads before spores release. Apply seed treatment fungicides.',
-            prevention: 'Use certified treated seeds. Practice crop rotation. Remove crop residues.'
+      fetch(`${apiHost}/api/detect`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: imageData })
+      })
+        .then(res => {
+          if (!res.ok) throw new Error('Diagnosis failed');
+          return res.json();
+        })
+        .then(data => {
+          document.getElementById('diseaseLoading').classList.add('hidden');
+          document.getElementById('diseaseResult').classList.remove('hidden');
+
+          document.getElementById('diseaseName').textContent = data.name;
+          document.getElementById('diseaseConfidence').textContent = `Confidence: ${data.conf}`;
+          
+          // Select standard emojis based on disease name or default to a leaf
+          const emojiMap = {
+            'cassava': '🍃', 'maize': '🌽', 'tomato': '🍅', 'yam': '🥔', 'rice': '🌾', 'sorghum': '🌿'
+          };
+          let emoji = '🍃';
+          const nameLower = data.name.toLowerCase();
+          for (const [key, value] of Object.entries(emojiMap)) {
+            if (nameLower.includes(key)) {
+              emoji = value;
+              break;
+            }
           }
-        ];
+          document.getElementById('diseaseEmoji').textContent = emoji;
+          document.getElementById('treatmentText').textContent = data.treatment;
+          document.getElementById('preventionText').textContent = data.prevention;
 
-        const result = diseases[Math.floor(Math.random() * diseases.length)];
-        document.getElementById('diseaseName').textContent = result.name;
-        document.getElementById('diseaseConfidence').textContent = `Confidence: ${result.conf}`;
-        document.getElementById('diseaseEmoji').textContent = result.emoji;
-        document.getElementById('treatmentText').textContent = result.treatment;
-        document.getElementById('preventionText').textContent = result.prevention;
-
-        // Update dashboard
-        updateDash('diseases');
-        showToast('✅ Diagnosis complete!', 'success');
-      }, 2500);
+          // Update dashboard
+          updateDash('diseases');
+          showToast('✅ Diagnosis complete!', 'success');
+        })
+        .catch(err => {
+          console.error('Diagnosis error:', err);
+          document.getElementById('diseaseLoading').classList.add('hidden');
+          showToast('❌ Unable to connect to the AI diagnostics server. Please check the backend.', 'error');
+        });
     }
+
 
 
     // ===== CHAT =====
@@ -3358,18 +3357,8 @@
     }
 
     // ===== MARKETPLACE =====
-    let products = [
-      { name: 'Fresh Tomatoes', category: 'Vegetables', price: 6500, unit: 'crate', location: 'Kano State', phone: '+2348012345678', desc: 'Farm-fresh Roma tomatoes' },
-      { name: 'Organic Maize', category: 'Grains', price: 32000, unit: 'bag', location: 'Kaduna State', phone: '+2348023456789', desc: 'White maize, freshly harvested' },
-      { name: 'Cassava Tubers', category: 'Tubers', price: 8500, unit: 'bag', location: 'Benue State', phone: '+2348034567890', desc: 'Sweet cassava, ready for gari processing' },
-      { name: 'Yam Tubers', category: 'Tubers', price: 12000, unit: 'bag', location: 'Oyo State', phone: '+2348045678901', desc: 'White yam, best for pounding' },
-      { name: 'Fresh Peppers', category: 'Vegetables', price: 4500, unit: 'crate', location: 'Kano State', phone: '+2348056789012', desc: 'Red tattasai and rodo' },
-      { name: 'Honey (Pure)', category: 'Other', price: 3500, unit: 'kg', location: 'Adamawa State', phone: '+2348067890123', desc: 'Natural forest honey' },
-      { name: 'Soybeans', category: 'Grains', price: 28000, unit: 'bag', location: 'Benue State', phone: '+2348078901234', desc: 'High-protein soybeans' },
-      { name: 'Goat (Live)', category: 'Livestock', price: 45000, unit: 'piece', location: 'Sokoto State', phone: '+2348089012345', desc: 'Healthy adult goat' },
-      { name: 'Fresh Fish', category: 'Livestock', price: 2500, unit: 'kg', location: 'Lagos State', phone: '+2348090123456', desc: 'Fresh tilapia from local pond' },
-      { name: 'Groundnut', category: 'Grains', price: 22000, unit: 'bag', location: 'Kano State', phone: '+2348101234567', desc: 'Dried groundnuts, premium quality' }
-    ];
+    let products = [];
+
 
     function renderMarketplace() {
       const grid = document.getElementById('marketGrid');
@@ -3436,24 +3425,8 @@
       updateDash('products');
     }
 
-    // ===== MARKET PRICES =====
-    const priceData = [
-      { crop: 'Maize (White)', market: 'Dawanau, Kano', price: 28500, unit: 'bag (100kg)', trend: 'up' },
-      { crop: 'Maize (Yellow)', market: 'Bata, Nasarawa', price: 27000, unit: 'bag (100kg)', trend: 'down' },
-      { crop: 'Rice (Local)', market: 'Aba, Abia', price: 45000, unit: 'bag (50kg)', trend: 'up' },
-      { crop: 'Rice (Imported)', market: 'Mile 12, Lagos', price: 52000, unit: 'bag (50kg)', trend: 'up' },
-      { crop: 'Tomatoes', market: 'Yankaba, Kano', price: 5800, unit: 'crate', trend: 'down' },
-      { crop: 'Peppers (Rodo)', market: 'Kurmi, Kano', price: 4200, unit: 'crate', trend: 'up' },
-      { crop: 'Onions', market: 'Gwadabawa, Sokoto', price: 8500, unit: 'bag', trend: 'stable' },
-      { crop: 'Cassava', market: 'Otukpo, Benue', price: 7500, unit: 'bag', trend: 'up' },
-      { crop: 'Yam', market: 'Bodija, Ibadan', price: 11000, unit: 'bag', trend: 'stable' },
-      { crop: 'Groundnut', market: 'Sabon Gari, Kano', price: 24000, unit: 'bag', trend: 'down' },
-      { crop: 'Soybeans', market: 'Makurdi, Benue', price: 26500, unit: 'bag', trend: 'up' },
-      { crop: 'Cowpea', market: 'Mando, Kaduna', price: 32000, unit: 'bag', trend: 'up' },
-      { crop: 'Sorghum', market: 'Gusau, Zamfara', price: 19500, unit: 'bag', trend: 'down' },
-      { crop: 'Millet', market: 'Potiskum, Yobe', price: 18000, unit: 'bag', trend: 'stable' },
-      { crop: 'Cocoa', market: 'Akure, Ondo', price: 850000, unit: 'tonne', trend: 'up' }
-    ];
+    const priceData = [];
+
 
     function renderPrices() {
       const tbody = document.getElementById('priceBody');
@@ -3472,24 +3445,14 @@
     }
 
     // ===== WEATHER =====
-    const weatherData = {
-      'Kano': { temp: 32, condition: '☀️ Sunny', humidity: 45, wind: 12, rain: 0, uv: 6, advice: 'Good day for planting. Soil moisture levels are adequate.', crops: 'Maize, Millet, Sorghum, Groundnut' },
-      'Kaduna': { temp: 29, condition: '⛅ Partly Cloudy', humidity: 52, wind: 10, rain: 10, uv: 5, advice: 'Good conditions for transplanting seedlings.', crops: 'Maize, Yam, Cassava, Rice' },
-      'Lagos': { temp: 30, condition: '🌧️ Light Rain', humidity: 78, wind: 15, rain: 60, uv: 3, advice: 'Rain expected. Hold off on fertilizer application.', crops: 'Cassava, Vegetables, Rice, Plantain' },
-      'Abuja': { temp: 31, condition: '☀️ Sunny', humidity: 40, wind: 8, rain: 0, uv: 7, advice: 'Ideal for groundnut and soybean planting.', crops: 'Maize, Sorghum, Soybean, Groundnut' },
-      'Ibadan': { temp: 28, condition: '⛅ Partly Cloudy', humidity: 65, wind: 9, rain: 20, uv: 4, advice: 'Good for yam mound preparation.', crops: 'Yam, Cassava, Maize, Cocoa' },
-      'Maiduguri': { temp: 36, condition: '☀️ Sunny', humidity: 25, wind: 18, rain: 0, uv: 9, advice: 'Very hot. Irrigate crops in the early morning or evening.', crops: 'Millet, Sorghum, Cowpea, Groundnut' },
-      'Jos': { temp: 25, condition: '⛅ Cloudy', humidity: 58, wind: 11, rain: 15, uv: 4, advice: 'Cool conditions good for vegetable farming.', crops: 'Potatoes, Cabbage, Tomatoes, Carrots' },
-      'Sokoto': { temp: 34, condition: '☀️ Sunny', humidity: 30, wind: 14, rain: 0, uv: 8, advice: 'Dry conditions. Focus on drought-resistant crops.', crops: 'Sorghum, Millet, Cowpea, Groundnut' },
-      'Enugu': { temp: 29, condition: '⛅ Partly Cloudy', humidity: 62, wind: 7, rain: 30, uv: 5, advice: 'Good for cassava and yam planting.', crops: 'Yam, Cassava, Maize, Palm Oil' },
-      'Port Harcourt': { temp: 28, condition: '🌧️ Rainy', humidity: 82, wind: 13, rain: 70, uv: 2, advice: 'Heavy rain expected. Ensure proper drainage.', crops: 'Cassava, Plantain, Oil Palm, Vegetables' }
-    };
+    const weatherData = {};
 
     const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     function updateWeather() {
       const region = document.getElementById('weatherRegion').value;
-      const data = weatherData[region] || weatherData['Kano'];
+      const defaultData = { temp: 0, condition: 'N/A', humidity: 0, wind: 0, rain: 0, uv: 0, advice: 'No weather data available.', crops: 'None' };
+      const data = weatherData[region] || defaultData;
 
       document.getElementById('weatherCity').textContent = region;
       document.getElementById('weatherTemp').textContent = `${data.temp}°C`;
@@ -3521,15 +3484,10 @@
       }
     }
 
+
     // ===== FORUM =====
-    let forumPosts = [
-      { title: 'Best practices for cassava farming in dry season?', topic: 'Techniques', author: 'Aliyu B.', date: '2 hours ago', content: 'I need advice on how to maintain cassava during the dry months. Any tips?' },
-      { title: 'Fall armyworm outbreak in Kaduna', topic: 'Pests', author: 'Fatima S.', date: '5 hours ago', content: 'There is a serious armyworm infestation in my area. What is the best treatment?' },
-      { title: 'Tomato prices dropping in Kano market', topic: 'Market', author: 'Chinedu O.', date: '1 day ago', content: 'Tomato prices have dropped 30% this week. Anyone know why?' },
-      { title: 'When to plant maize in Benue?', topic: 'Crops', author: 'Terseer A.', date: '2 days ago', content: 'What is the optimal planting window for maize in Benue State this season?' },
-      { title: 'Organic fertilizer recommendations', topic: 'Techniques', author: 'Grace O.', date: '3 days ago', content: 'Looking for affordable organic fertilizer options for my vegetable farm.' },
-      { title: 'Rainfall forecast for August in the North', topic: 'Weather', author: 'Sani M.', date: '4 days ago', content: 'Any predictions for rainfall patterns this August in northern Nigeria?' }
-    ];
+    let forumPosts = [];
+
 
     function renderForum() {
       const container = document.getElementById('forumPosts');
@@ -3610,13 +3568,8 @@
     }
 
     // ===== NEWS =====
-    const newsArticles = [
-      { title: 'Federal Government Launches New Agricultural Extension Program', source: 'NAN', date: '2 days ago', summary: 'The FG has announced a ₦50 billion program to train 10,000 extension officers across Nigeria.' },
-      { title: 'Cassava Value Chain: Nigeria Targets ₦20 Trillion Export by 2027', source: 'Business Day', date: '4 days ago', summary: 'New processing technologies and export partnerships aimed at boosting cassava revenue.' },
-      { title: 'Dry Season Farming Gets Boost with New Irrigation Scheme', source: 'Daily Trust', date: '1 week ago', summary: 'The government launches 15 new irrigation projects across northern states to support dry season farming.' },
-      { title: 'Climate-Smart Agriculture: Nigeria Adopts New Farming Techniques', source: 'Premium Times', date: '1 week ago', summary: 'Farmers trained in drought-resistant crops and water-efficient techniques to combat climate change.' },
-      { title: 'Maize Production Hits Record High in 2025 Season', source: 'AgriNews NG', date: '2 weeks ago', summary: 'Nigerian maize production reaches 15 million metric tonnes, driven by improved varieties and good rainfall.' }
-    ];
+    const newsArticles = [];
+
 
     function renderNews() {
       const grid = document.getElementById('newsGrid');
