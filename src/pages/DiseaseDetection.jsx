@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useApp } from '../context/AppContext'
-import { diseases } from '../data/diseases'
+
 
 export default function DiseaseDetection() {
   const { showToast, updateDash } = useApp()
@@ -23,18 +23,32 @@ export default function DiseaseDetection() {
     reader.readAsDataURL(f)
   }
 
-  const analyze = () => {
+  const analyze = async () => {
     if (!file) { showToast('Please upload a crop image first.', 'error'); return }
     setLoading(true)
     setResult(null)
-    setTimeout(() => {
-      const d = diseases[Math.floor(Math.random() * diseases.length)]
-      setResult(d)
-      setLoading(false)
+    try {
+      const response = await fetch('/api/detect', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ image: preview }),
+      })
+      if (!response.ok) {
+        throw new Error('Failed to diagnose the crop image.')
+      }
+      const data = await response.json()
+      setResult(data)
       updateDash('diseases')
       showToast('Diagnosis complete!', 'success')
-    }, 2500)
+    } catch (error) {
+      showToast(error.message || 'An error occurred during diagnosis.', 'error')
+    } finally {
+      setLoading(false)
+    }
   }
+
 
   return (
     <section className="page">

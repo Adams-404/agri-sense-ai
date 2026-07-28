@@ -68,6 +68,54 @@ async def chat(request: ChatRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+class DetectRequest(BaseModel):
+    image: str
+
+@app.post("/api/detect")
+async def detect(request: DetectRequest):
+    try:
+        system_prompt = (
+            "You are an expert crop disease diagnostics AI. "
+            "Analyze the provided image of a crop and diagnose any diseases present. "
+            "You must respond with a JSON object in this exact schema:\n"
+            "{\n"
+            "  \"name\": \"Name of the disease (or 'Healthy' if no disease is found)\",\n"
+            "  \"conf\": \"Confidence level as a percentage string (e.g., '92.5%')\",\n"
+            "  \"treatment\": \"Detailed treatment recommendations, including specific organic or chemical options suited for Nigerian farming\",\n"
+            "  \"prevention\": \"Detailed preventive actions to avoid future outbreaks\"\n"
+            "}\n"
+            "Be highly practical, concise, and accurate."
+        )
+        
+        completion = client.chat.completions.create(
+            model="qwen/qwen3.6-27b",
+            response_format={"type": "json_object"},
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": "Analyze this crop image and diagnose the disease."},
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": request.image
+                            }
+                        }
+                    ]
+                }
+            ],
+            temperature=0.2,
+        )
+        
+        import json
+        response_text = completion.choices[0].message.content
+        parsed_response = json.loads(response_text)
+        return parsed_response
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 

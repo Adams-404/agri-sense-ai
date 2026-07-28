@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { useApp } from '../context/AppContext'
-import { responses } from '../data/chatResponses'
+
 
 export default function ChatAssistant() {
   const { currentLang, setCurrentLang, langLabels, showToast, updateDash } = useApp()
@@ -15,21 +15,34 @@ export default function ChatAssistant() {
     endRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
-  const send = () => {
+  const send = async () => {
     const msg = input.trim()
     if (!msg) return
     setMessages(prev => [...prev, { role: 'user', text: msg }])
     setInput('')
     setLoading(true)
 
-    setTimeout(() => {
-      const langResponses = responses[currentLang] || responses.en
-      const reply = langResponses[Math.floor(Math.random() * langResponses.length)]
-      setMessages(prev => [...prev, { role: 'assistant', text: reply, lang: langLabels[currentLang] || 'English' }])
-      setLoading(false)
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: msg, language: currentLang }),
+      })
+      if (!response.ok) {
+        throw new Error('Failed to get response from AI.')
+      }
+      const data = await response.json()
+      setMessages(prev => [...prev, { role: 'assistant', text: data.reply, lang: langLabels[currentLang] || 'English' }])
       updateDash('chats')
-    }, 1500 + Math.random() * 1500)
+    } catch (error) {
+      showToast(error.message || 'An error occurred.', 'error')
+    } finally {
+      setLoading(false)
+    }
   }
+
 
   return (
     <section className="page">
