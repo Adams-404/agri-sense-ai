@@ -1847,7 +1847,12 @@
       pointer-events: none;
       z-index: 1;
     }
+
+    .speak-btn:hover {
+      color: var(--primary) !important;
+    }
   </style>
+
 </head>
 
 <body>
@@ -2239,9 +2244,16 @@
           <div class="chat-messages" id="chatMessages">
             <div class="chat-message assistant">
               <div class="chat-message-bubble">
-                <div class="msg-label">🌿 AgriSense AI</div>Sannu! I'm your farming assistant. Ask me anything about crops, soil, pests, or farming techniques.
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; gap: 8px;">
+                  <div class="msg-label" style="margin-bottom: 0;">🌿 AgriSense AI</div>
+                  <button class="speak-btn" onclick="speakText(this, 'Sannu! I\'m your farming assistant. Ask me anything about crops, soil, pests, or farming techniques.')" title="Speak" style="background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px; display: flex; align-items: center; transition: color 0.2s ease;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                  </button>
+                </div>
+                <span>Sannu! I'm your farming assistant. Ask me anything about crops, soil, pests, or farming techniques.</span>
               </div>
             </div>
+
           </div>
           <div class="chat-input-wrapper">
             <div class="chat-input-box">
@@ -3324,7 +3336,18 @@
 
           const replyDiv = document.createElement('div');
           replyDiv.className = 'chat-message assistant';
-          replyDiv.innerHTML = `<div class="chat-message-bubble"><div class="msg-label">🌿 AgriSense AI (${langLabels[lang] || 'English'})</div>${formatMarkdown(data.reply)}</div>`;
+          const escapedText = data.reply.replace(/'/g, "\\'");
+          replyDiv.innerHTML = `
+            <div class="chat-message-bubble">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; gap: 8px;">
+                <div class="msg-label" style="margin-bottom: 0;">🌿 AgriSense AI (${langLabels[lang] || 'English'})</div>
+                <button class="speak-btn" onclick="speakText(this, '${escapedText}')" title="Speak" style="background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px; display: flex; align-items: center; transition: color 0.2s ease;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                </button>
+              </div>
+              <span>${formatMarkdown(data.reply)}</span>
+            </div>
+          `;
           container.appendChild(replyDiv);
           container.scrollTop = container.scrollHeight;
 
@@ -3355,6 +3378,68 @@
       d.textContent = text;
       return d.innerHTML;
     }
+
+    let currentUtterance = null;
+    let currentSpeakBtn = null;
+
+    function speakText(btn, text) {
+      if (window.speechSynthesis.speaking && currentSpeakBtn === btn) {
+        window.speechSynthesis.cancel();
+        setBtnSpeakIcon(btn, false);
+        currentUtterance = null;
+        currentSpeakBtn = null;
+        return;
+      }
+
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        if (currentSpeakBtn) setBtnSpeakIcon(currentSpeakBtn, false);
+      }
+
+      const cleanText = text.replace(/<\/?[^>]+(>|$)/g, "").replace(/\*\*/g, "");
+      const utterance = new SpeechSynthesisUtterance(cleanText);
+      
+      const voices = window.speechSynthesis.getVoices();
+      const langMap = {
+        en: 'en', ha: 'ha', yo: 'yo', ig: 'ig', ful: 'ff', kr: 'kr'
+      };
+      const langCode = langMap[currentLang] || 'en';
+      const voice = voices.find(v => v.lang.startsWith(langCode));
+      if (voice) utterance.voice = voice;
+      utterance.lang = langCode;
+
+      utterance.onend = () => {
+        setBtnSpeakIcon(btn, false);
+        if (currentUtterance === utterance) {
+          currentUtterance = null;
+          currentSpeakBtn = null;
+        }
+      };
+
+      utterance.onerror = () => {
+        setBtnSpeakIcon(btn, false);
+        if (currentUtterance === utterance) {
+          currentUtterance = null;
+          currentSpeakBtn = null;
+        }
+      };
+
+      setBtnSpeakIcon(btn, true);
+      currentUtterance = utterance;
+      currentSpeakBtn = btn;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function setBtnSpeakIcon(btn, isSpeaking) {
+      if (isSpeaking) {
+        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>`;
+        btn.title = "Stop";
+      } else {
+        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`;
+        btn.title = "Speak";
+      }
+    }
+
 
     // ===== MARKETPLACE =====
     let products = [];
